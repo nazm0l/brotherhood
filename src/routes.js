@@ -39,10 +39,7 @@ export default function Router() {
       path: 'reset-password',
       element: <ResetPassword />,
     },
-    {
-      path: 'landing',
-      element: <PaymentPage />,
-    },
+
     {
       path: 'create-brotherhood-user',
       element: <RegistrationPage />,
@@ -59,6 +56,10 @@ export default function Router() {
         {
           path: 'login',
           element: <LoginPage />,
+        },
+        {
+          path: 'landing',
+          element: <PaymentPage />,
         },
       ],
     },
