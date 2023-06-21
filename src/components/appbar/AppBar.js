@@ -14,6 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Logo from './blogo.png';
 
 const drawerWidth = 240;
 const navItems = ['Home', 'About', 'Contact', 'Login'];
@@ -29,7 +30,7 @@ function DrawerAppBar(props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        Brotherhood ERP
+        <img src={Logo} width="80px" alt="logo" />
       </Typography>
       <Divider />
       <List>
@@ -60,9 +61,9 @@ function DrawerAppBar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
-            Brotherhood ERP
-          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, marginLeft: '40px' }}>
+            <img src={Logo} width="100px" alt="logo" />
+          </Box>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
               <Button key={item} sx={{ color: '#fff' }}>
