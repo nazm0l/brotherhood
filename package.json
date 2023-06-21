@@ -1,7 +1,7 @@
 {
   "name": "@minimal/material-kit-react",
   "author": "minimals.cc",
-  "licence": "MIT",
+  "license": "MIT",
   "version": "1.7.0",
   "private": false,
   "scripts": {
@@ -12,8 +12,8 @@
     "lint": "eslint --ext .js,.jsx ./src",
     "lint:fix": "eslint --fix --ext .js,.jsx ./src",
     "clear-all": "rm -rf build node_modules",
-    "re-start": "rm -rf build node_modules && npm install && npm start",
-    "re-build": "rm -rf build node_modules && npm install && npm build"
+    "re-start": "rm -rf build node_modules && yarn install && yarn start",
+    "re-build": "rm -rf build node_modules && yarn install && yarn build"
   },
   "eslintConfig": {
     "extends": [
