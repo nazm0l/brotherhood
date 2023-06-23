@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 // @mui
-import { Stack, TextField, Box, Grid } from '@mui/material';
+import { Stack, TextField, Box, Grid, Typography, Button } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import axios from 'axios';
 // components
@@ -42,7 +42,9 @@ export default function LoginForm() {
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         {/* personal information */}
         <Grid container spacing={2} component="fieldset" sx={{ border: 1, borderColor: '#dddddd' }}>
-          <legend>Personal Information</legend>
+          <legend>
+            <Typography variant="h6">Personal Information</Typography>
+          </legend>
           <Grid item lg={6} xs={12} sm={12}>
             <Stack spacing={2}>
               <TextField
@@ -99,8 +101,10 @@ export default function LoginForm() {
           </Grid>
         </Grid>
         {/* Contact Information */}
-        <Grid container spacing={2} component="fieldset" sx={{ marginTop: '10px', border: 1, borderColor: '#dddddd' }}>
-          <legend>Contact Information</legend>
+        <Grid container spacing={2} component="fieldset" sx={{ marginTop: '20px', border: 1, borderColor: '#dddddd' }}>
+          <legend>
+            <Typography variant="h6">Contact Information</Typography>
+          </legend>
           <Grid item lg={6} xs={12} sm={12}>
             <Stack spacing={2}>
               <TextField
@@ -158,8 +162,10 @@ export default function LoginForm() {
           </Grid>
         </Grid>
         {/* Additional Information */}
-        <Grid container spacing={2} component="fieldset" sx={{ marginTop: '10px', border: 1, borderColor: '#dddddd' }}>
-          <legend>Additional Information</legend>
+        <Grid container spacing={2} component="fieldset" sx={{ marginTop: '20px', border: 1, borderColor: '#dddddd' }}>
+          <legend>
+            <Typography variant="h6">Additional Information</Typography>
+          </legend>
           <Grid item lg={6} xs={12} sm={12}>
             <Stack spacing={2}>
               <TextField
@@ -217,9 +223,14 @@ export default function LoginForm() {
             </Stack>
           </Grid>
         </Grid>
-        <LoadingButton sx={{ marginTop: '30px' }} fullWidth size="large" type="submit" variant="contained">
-          Confirm Register
-        </LoadingButton>
+        <Stack direction="row" marginTop="30px" justifyContent="flex-end" gap={3}>
+          <LoadingButton sx={{ marginTop: '30px' }} fullWidth size="large" type="submit" variant="contained">
+            Confirm Register
+          </LoadingButton>
+          <LoadingButton sx={{ marginTop: '30px' }} fullWidth size="large" color="error" variant="contained">
+            Cancel
+          </LoadingButton>
+        </Stack>
       </Box>
     </>
   );

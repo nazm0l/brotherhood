@@ -49,7 +49,7 @@ export default function LoginPage() {
       </Helmet>
 
       <StyledRoot>
-        <Logo
+        {/* <Logo
           sx={{
             position: 'fixed',
             top: { xs: 16, sm: 24, md: 40 },
@@ -64,12 +64,12 @@ export default function LoginPage() {
             </Typography>
             <img src="/assets/illustrations/illustration_login.png" alt="login" />
           </StyledSection>
-        )}
+        )} */}
 
         <Container maxWidth="md">
           <StyledContent>
             <Typography variant="h4" gutterBottom>
-              Register to Brotherhood
+              Register to Brotherhood ERP
             </Typography>
 
             <Typography variant="body2" sx={{ mb: 5 }}>

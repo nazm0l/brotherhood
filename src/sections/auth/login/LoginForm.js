@@ -175,8 +175,9 @@ export default function LoginForm() {
               </Button>
               <Button
                 variant="contained"
+                color="error"
                 onClick={handleClose}
-                sx={{ backgroundColor: '#CB4154', padding: { xs: '5px 30px', md: '8px 30px' } }}
+                sx={{ padding: { xs: '5px 30px', md: '8px 30px' } }}
               >
                 Cancel
               </Button>
