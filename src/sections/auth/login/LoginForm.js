@@ -50,11 +50,6 @@ export default function LoginForm() {
       return;
     }
 
-    console.log({
-      username,
-      password,
-    });
-
     setLoading(true);
 
     try {
@@ -99,7 +94,21 @@ export default function LoginForm() {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
+    // Handle form submission here
+    console.log('Form submitted:', data);
+
+    const response = await axios.post(
+      'https://spread-admin-api-staging.azurewebsites.net/api/SpreadUser/Spread-user-reset-password',
+      JSON.stringify(data),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    console.log(response.data);
+
+    setOpen(false);
   };
 
   return (
@@ -146,7 +155,7 @@ export default function LoginForm() {
               Forgot your password?
             </Typography>
             <Typography variant="body" align="justify" sx={{ color: 'text.secondary' }}>
-              Please enter your email to get the password via your email. Email field
+              Please enter your email to get the password via your email.
             </Typography>
           </Stack>
           <DialogContent sx={{ padding: '20px 40px 40px 40px' }}>

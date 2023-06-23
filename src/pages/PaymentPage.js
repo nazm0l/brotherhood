@@ -41,7 +41,6 @@ export default function PaymentPage() {
 
   const onSubmit = async (data) => {
     // Handle form submission here
-    console.log('Form submitted:', { ...data, reference: 'user-reg', campaign: 'UR-23', amount: 100 });
     setLoading(true);
 
     try {

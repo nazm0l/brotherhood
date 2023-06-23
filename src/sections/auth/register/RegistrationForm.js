@@ -2,18 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 // @mui
-import {
-  Stack,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Checkbox,
-  Typography,
-  Box,
-  InputLabel,
-  Select,
-  Grid,
-} from '@mui/material';
+import { Stack, TextField, Box, Grid } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import axios from 'axios';
 // components
@@ -165,27 +154,6 @@ export default function LoginForm() {
                 error={Boolean(errors.permanentAddress)}
                 helperText={errors.permanentAddress?.message}
               />
-              {/* <TextField
-                name="school"
-                label="School Name"
-                {...register('school', { required: 'School is required' })}
-                error={Boolean(errors.school)}
-                helperText={errors.school?.message}
-              />
-              <TextField
-                name="college"
-                label="College Name"
-                {...register('college', { required: 'College is required' })}
-                error={Boolean(errors.college)}
-                helperText={errors.college?.message}
-              />
-              <TextField
-                name="university"
-                label="University Name"
-                {...register('university', { required: 'University is required' })}
-                error={Boolean(errors.university)}
-                helperText={errors.university?.message}
-              /> */}
             </Stack>
           </Grid>
         </Grid>

@@ -10,22 +10,21 @@ import {
   IconButton,
   List,
   ListItem,
-  ListItemButton,
   ListItemText,
   Toolbar,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Button from '@mui/material/Button';
 import Logo from './blogo.png';
 
 const drawerWidth = 240;
 const navItems = [
-  { name: 'Home', link: '/' },
+  { name: 'Main Website', link: '#' },
   { name: 'About', link: '/about' },
   { name: 'Support', link: '/support' },
   { name: 'Pay Premium', link: '/pay-premium' },
   { name: 'Donation', link: '/donation' },
-  { name: 'Register', link: '/register' },
+  { name: 'Register', link: '/landing' },
+  { name: 'Unfinished Registration', link: '#' },
   { name: 'Login', link: '/login' },
 ];
 
@@ -40,12 +39,14 @@ function DrawerAppBar(props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Box sx={{ backgroundColor: '#3eb3af', display: 'grid', placeItems: 'center' }}>
-        <img src={Logo} width="80px" alt="logo" />
+        <Link to="/">
+          <img src={Logo} width="80px" alt="logo" />
+        </Link>
       </Box>
       <Divider />
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
+        {navItems.map((item, index) => (
+          <ListItem key={index} disablePadding>
             <Link
               style={{
                 fontSize: '1.2rem',
@@ -82,10 +83,12 @@ function DrawerAppBar(props) {
             <MenuIcon />
           </IconButton>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, marginLeft: '40px' }}>
-            <img src={Logo} width="100px" alt="logo" />
+            <Link to="/">
+              <img src={Logo} width="100px" alt="logo" />
+            </Link>
           </Box>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
+            {navItems.map((item, index) => (
               <Link
                 to={item.link}
                 style={{
@@ -94,7 +97,7 @@ function DrawerAppBar(props) {
                   padding: '10px',
                   color: '#fff',
                 }}
-                key={item}
+                key={index}
                 sx={{ color: '#fff' }}
               >
                 {item.name}
