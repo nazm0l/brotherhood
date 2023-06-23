@@ -1,7 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Container, CircularProgress } from '@mui/material';
+import { Container } from '@mui/material';
+
+import load from './load.svg';
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +28,7 @@ export default function Loading() {
 
       <Container>
         <StyledContent sx={{ textAlign: 'center', alignItems: 'center' }}>
-          <CircularProgress size={50} />;
+          <img src={load} alt="Loading..." width="100%" />
         </StyledContent>
       </Container>
     </>

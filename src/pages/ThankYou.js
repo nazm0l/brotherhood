@@ -18,7 +18,7 @@ const StyledContent = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Page404() {
+export default function ThankYou() {
   return (
     <>
       <Helmet>

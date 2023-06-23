@@ -4,6 +4,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Button, Typography, Container, Box } from '@mui/material';
 
+import uc from '../images/uc.svg';
+
 // ----------------------------------------------------------------------
 
 const StyledContent = styled('div')(({ theme }) => ({
@@ -18,7 +20,7 @@ const StyledContent = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function Page404() {
+export default function PayPremiumPage() {
   return (
     <>
       <Helmet>
@@ -27,9 +29,7 @@ export default function Page404() {
 
       <Container>
         <StyledContent sx={{ textAlign: 'center', alignItems: 'center' }}>
-          <Typography variant="h3" paragraph>
-            Welcome to pay premium!
-          </Typography>
+          <img src={uc} alt="Under Construction" width="70%" />
         </StyledContent>
       </Container>
     </>

@@ -224,10 +224,10 @@ export default function LoginForm() {
           </Grid>
         </Grid>
         <Stack direction="row" marginTop="30px" justifyContent="flex-end" gap={3}>
-          <LoadingButton sx={{ marginTop: '30px' }} fullWidth size="large" type="submit" variant="contained">
+          <LoadingButton fullWidth size="large" type="submit" variant="contained">
             Confirm Register
           </LoadingButton>
-          <LoadingButton sx={{ marginTop: '30px' }} fullWidth size="large" color="error" variant="contained">
+          <LoadingButton fullWidth size="large" color="error" variant="contained">
             Cancel
           </LoadingButton>
         </Stack>

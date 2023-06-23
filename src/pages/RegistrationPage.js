@@ -66,7 +66,7 @@ export default function LoginPage() {
           </StyledSection>
         )} */}
 
-        <Container maxWidth="md">
+        <Container maxWidth="md" sx={{ marginTop: { md: '30px' } }}>
           <StyledContent>
             <Typography variant="h4" gutterBottom>
               Register to Brotherhood ERP
