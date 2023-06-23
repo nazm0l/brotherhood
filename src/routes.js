@@ -11,6 +11,10 @@ import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
 import ResetPassword from './pages/ResetPassword';
 import RegistrationPage from './pages/RegistrationPage';
+import AboutPage from './pages/AboutPage';
+import SupportPage from './pages/SupportPage';
+import PayPremiumPage from './pages/PayPremiumPage';
+import DonationPage from './pages/DonationPage';
 import ThankYou from './pages/ThankYou';
 import PaymentPage from './pages/PaymentPage';
 import RequireAuth from './sections/auth/RequireAuth';
@@ -56,6 +60,22 @@ export default function Router() {
         {
           path: 'login',
           element: <LoginPage />,
+        },
+        {
+          path: 'about',
+          element: <AboutPage />,
+        },
+        {
+          path: 'support',
+          element: <SupportPage />,
+        },
+        {
+          path: 'pay-premium',
+          element: <PayPremiumPage />,
+        },
+        {
+          path: 'donation',
+          element: <DonationPage />,
         },
         {
           path: 'landing',

@@ -77,7 +77,7 @@ export default function PaymentPage() {
         <Loading />
       ) : (
         <Container>
-          <StyledContent sx={{ textAlign: 'center', alignItems: 'center' }}>
+          <StyledContent sx={{ textAlign: 'center', alignItems: 'center', marginTop: { sm: '30px' } }}>
             <Typography variant="h3" paragraph>
               Welcome to Brotherhood!
             </Typography>
