@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // sections
-import { AppCurrentVisits, AppWebsiteVisits, AppWidgetSummary } from '../sections/@dashboard/app';
+import { AppCurrentVisits, AppBlog, AppWidgetSummary } from '../sections/@dashboard/app';
 
 // ----------------------------------------------------------------------
 
@@ -13,7 +13,7 @@ export default function DashboardAppPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard | Minimal UI </title>
+        <title> Dashboard | Brotherhood ERP </title>
       </Helmet>
 
       <Container maxWidth="xl">
@@ -57,7 +57,7 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
-            <AppWebsiteVisits />
+            <AppBlog />
           </Grid>
         </Grid>
       </Container>
