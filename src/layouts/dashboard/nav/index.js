@@ -68,7 +68,7 @@ export default function Nav({ openNav, onCloseNav }) {
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                someone@mail.com{auth.email}
+                {auth.email}
               </Typography>
             </Box>
           </StyledAccount>

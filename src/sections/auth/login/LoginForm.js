@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
+// eslint-disable-next-line camelcase
+import jwt_decode from 'jwt-decode';
 // @mui
 import {
   Link,
@@ -62,7 +64,18 @@ export default function LoginForm() {
       const accessToken = response?.data?.accessToken;
       localStorage.setItem('accessToken', accessToken);
 
-      setAuth({ accessToken });
+      const decoded = jwt_decode(accessToken);
+
+      const authData = {
+        userId: decoded?.user_id,
+        role: decoded?.['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'],
+        user: decoded?.['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
+        email: decoded?.['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'],
+      };
+
+      console.log(decoded, authData.userId, authData.role);
+
+      setAuth({ ...authData, accessToken });
 
       if (response?.data?.requiresPasswordReset === true) {
         navigate('/reset-password', { replace: true });
@@ -79,9 +92,9 @@ export default function LoginForm() {
       console.log(error);
       if (error.response?.status === 400) {
         toast.error('Invalid user');
+      } else {
+        toast.error('Something went wrong');
       }
-
-      toast.error('Something went wrong');
     }
   };
 
