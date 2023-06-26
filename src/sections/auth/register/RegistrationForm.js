@@ -1,8 +1,19 @@
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 // @mui
-import { Stack, TextField, Box, Grid, Typography, Button } from '@mui/material';
+import {
+  Stack,
+  TextField,
+  Box,
+  Grid,
+  Typography,
+  Button,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControl,
+} from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import axios from 'axios';
 // components
@@ -14,6 +25,7 @@ export default function LoginForm() {
 
   const {
     handleSubmit,
+    control,
     register,
     formState: { errors },
   } = useForm();
@@ -79,12 +91,32 @@ export default function LoginForm() {
                 error={Boolean(errors.professionalStatus)}
                 helperText={errors.professionalStatus?.message}
               />
-              <TextField
+              {/* <TextField
                 name="maritalStatus"
                 label="Marital Status"
                 {...register('maritalStatus', { required: 'Marital Status is required' })}
                 error={Boolean(errors.maritalStatus)}
                 helperText={errors.maritalStatus?.message}
+              /> */}
+              <Controller
+                name="maritalStatus"
+                control={control}
+                defaultValue=""
+                rules={{ required: 'Marital Status is required' }}
+                render={({ field }) => (
+                  <FormControl error={Boolean(errors.maritalStatus)} fullWidth>
+                    <InputLabel id="marital-status-label">Marital Status</InputLabel>
+                    <Select labelId="marital-status-label" id="marital-status" {...field}>
+                      <MenuItem value="Married">Married</MenuItem>
+                      <MenuItem value="Unmarried">Unmarried</MenuItem>
+                    </Select>
+                    {errors.maritalStatus && (
+                      <Typography variant="caption" color="error">
+                        {errors.maritalStatus.message}
+                      </Typography>
+                    )}
+                  </FormControl>
+                )}
               />
               <TextField
                 name="dateOfBirth"
@@ -181,19 +213,70 @@ export default function LoginForm() {
                 error={Boolean(errors.nid)}
                 helperText={errors.nid?.message}
               />
-              <TextField
+              {/* <TextField
                 name="bloodGroup"
                 label="Blood Group"
                 {...register('bloodGroup', { required: 'Blood Group is required' })}
                 error={Boolean(errors.bloodGroup)}
                 helperText={errors.bloodGroup?.message}
+              /> */}
+
+              <Controller
+                name="bloodGroup"
+                control={control}
+                defaultValue=""
+                rules={{ required: 'Blood Group is required' }}
+                render={({ field }) => (
+                  <FormControl error={Boolean(errors.bloodGroup)} fullWidth>
+                    <InputLabel
+                      id="blood-group-label"
+                      sx={{
+                        '&.Mui-focused': {
+                          color: 'primary.main',
+                        },
+                      }}
+                    >
+                      Blood Group
+                    </InputLabel>
+                    <Select labelId="blood-group-label" id="blood-group" {...field}>
+                      <MenuItem value="A+">A+</MenuItem>
+                      <MenuItem value="A-">A-</MenuItem>
+                      <MenuItem value="B+">B+</MenuItem>
+                      <MenuItem value="B-">B-</MenuItem>
+                      <MenuItem value="AB+">AB+</MenuItem>
+                      <MenuItem value="AB-">AB-</MenuItem>
+                      <MenuItem value="O+">O+</MenuItem>
+                      <MenuItem value="O-">O-</MenuItem>
+                    </Select>
+                    {errors.bloodGroup && (
+                      <Typography variant="caption" color="error">
+                        {errors.bloodGroup.message}
+                      </Typography>
+                    )}
+                  </FormControl>
+                )}
               />
-              <TextField
+
+              <Controller
                 name="religion"
-                label="Religion"
-                {...register('religion', { required: 'Religion is required' })}
-                error={Boolean(errors.religion)}
-                helperText={errors.religion?.message}
+                control={control}
+                defaultValue=""
+                rules={{ required: 'Religion is required' }}
+                render={({ field }) => (
+                  <FormControl error={Boolean(errors.religion)} fullWidth>
+                    <InputLabel id="religion-status-label">Religion</InputLabel>
+                    <Select labelId="religion-status-label" id="religion-status" {...field}>
+                      <MenuItem value="Islam">Islam</MenuItem>
+                      <MenuItem value="Hindu/Sanatan">Hindu/Sanatan</MenuItem>
+                      <MenuItem value="Other">Other</MenuItem>
+                    </Select>
+                    {errors.religion && (
+                      <Typography variant="caption" color="error">
+                        {errors.religion.message}
+                      </Typography>
+                    )}
+                  </FormControl>
+                )}
               />
             </Stack>
           </Grid>
