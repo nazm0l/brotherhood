@@ -75,7 +75,7 @@ export default function LoginPage() {
             <Typography variant="body2" sx={{ mb: 5 }}>
               Already have an account? {''}
               <Link to="/login" variant="subtitle2">
-                Get started
+                Login now
               </Link>
             </Typography>
             <RegistrationForm />

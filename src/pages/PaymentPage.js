@@ -46,7 +46,7 @@ export default function PaymentPage() {
     try {
       const response = await axios.post(
         'https://spread-brotherhood-api-staging.azurewebsites.net/api/PaymentInitiator/registration-payment',
-        JSON.stringify({ ...data, reference: 'user-reg', campaign: 'UR-23', amount: 2 }),
+        JSON.stringify({ ...data, reference: 'user-reg', campaign: 'UR-23', amount: 1 }),
         {
           headers: {
             'Content-Type': 'application/json',
