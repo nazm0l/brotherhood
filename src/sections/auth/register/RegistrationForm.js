@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 // components
 
 // ----------------------------------------------------------------------
@@ -34,19 +35,23 @@ export default function LoginForm() {
     // Handle form submission here
     console.log('Form submitted:', data);
 
-    const response = await axios.post(
-      'https://spread-admin-api-staging.azurewebsites.net/api/BrotherhoodUser/CreateBrotherhood',
-      JSON.stringify(data),
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    try {
+      const response = await axios.post(
+        'https://spread-admin-api-staging.azurewebsites.net/api/BrotherhoodUser/CreateBrotherhood',
+        JSON.stringify(data),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
-    console.log(response);
+      console.log(response);
+    } catch (error) {
+      toast.error(error.message);
+    }
 
-    navigate('/thank-you');
+    navigate('/success');
   };
 
   return (
