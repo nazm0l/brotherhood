@@ -22,9 +22,9 @@ export default function Footer() {
               <img
                 src="https://spread360.com.bd/wp-content/uploads/2022/12/logo-final1.png"
                 alt="Spre’ad360"
-                width="150px"
+                width="130px"
               />
-              <Typography color="black" variant="body">
+              <Typography sx={{ wordBreak: 'break-word', textAlign: 'center' }} color="white" variant="body">
                 Tech partner : Spre’ad360 (www.spread360.com.bd)
               </Typography>
             </Stack>

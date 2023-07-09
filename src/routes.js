@@ -15,7 +15,7 @@ import AboutPage from './pages/AboutPage';
 import SupportPage from './pages/SupportPage';
 import PayPremiumPage from './pages/PayPremiumPage';
 import DonationPage from './pages/DonationPage';
-import ThankYou from './pages/ThankYou';
+import Success from './pages/Success';
 import PaymentPage from './pages/PaymentPage';
 import RequireAuth from './sections/auth/RequireAuth';
 
@@ -45,7 +45,7 @@ export default function Router() {
     },
     {
       path: 'success',
-      element: <ThankYou />,
+      element: <Success />,
     },
     {
       path: '/',
