@@ -64,11 +64,11 @@ export default function Nav({ openNav, onCloseNav }) {
 
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                Logged in as {auth.role}
+                Logged in as {auth?.role}
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {auth.email}
+                {auth?.email}
               </Typography>
             </Box>
           </StyledAccount>

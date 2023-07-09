@@ -17,6 +17,7 @@ import PayPremiumPage from './pages/PayPremiumPage';
 import DonationPage from './pages/DonationPage';
 import Success from './pages/Success';
 import PaymentPage from './pages/PaymentPage';
+import PaymentHistoryPage from './pages/PaymentHistoryPage';
 import RequireAuth from './sections/auth/RequireAuth';
 
 // ----------------------------------------------------------------------
@@ -26,15 +27,16 @@ export default function Router() {
     {
       path: '/dashboard',
       element: (
-        <RequireAuth>
-          <DashboardLayout />
-        </RequireAuth>
+        // <RequireAuth>
+        <DashboardLayout />
+        // </RequireAuth>
       ),
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'user', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
+        { path: 'payment-history', element: <PaymentHistoryPage /> },
         { path: 'blog', element: <BlogPage /> },
       ],
     },
