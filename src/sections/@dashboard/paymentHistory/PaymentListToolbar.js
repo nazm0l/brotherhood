@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 // @mui
 import { styled, alpha } from '@mui/material/styles';
 import { Toolbar, Tooltip, IconButton, Typography, OutlinedInput, InputAdornment } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
 // component
 import Iconify from '../../../components/iconify';
 
@@ -34,11 +35,13 @@ const StyledSearch = styled(OutlinedInput)(({ theme }) => ({
 
 PaymentListToolbar.propTypes = {
   numSelected: PropTypes.number,
-  filterName: PropTypes.string,
-  onFilterName: PropTypes.func,
+  filterTrxId: PropTypes.string,
+  pickDate: PropTypes.string,
+  onFilterTrxId: PropTypes.func,
+  setPickDate: PropTypes.func,
 };
 
-export default function PaymentListToolbar({ numSelected, filterName, onFilterName }) {
+export default function PaymentListToolbar({ numSelected, filterTrxId, onFilterTrxId, pickDate, setPickDate }) {
   return (
     <StyledRoot
       sx={{
@@ -54,8 +57,8 @@ export default function PaymentListToolbar({ numSelected, filterName, onFilterNa
         </Typography>
       ) : (
         <StyledSearch
-          value={filterName}
-          onChange={onFilterName}
+          value={filterTrxId}
+          onChange={onFilterTrxId}
           placeholder="Search Trx Id..."
           startAdornment={
             <InputAdornment position="start">
@@ -69,19 +72,7 @@ export default function PaymentListToolbar({ numSelected, filterName, onFilterNa
         Total - 50
       </Typography>
 
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <Iconify icon="eva:trash-2-fill" />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <Iconify icon="ic:round-filter-list" />
-          </IconButton>
-        </Tooltip>
-      )}
+      <DatePicker label="Select Date" value={pickDate} onChange={(newValue) => setPickDate(newValue)} />
     </StyledRoot>
   );
 }

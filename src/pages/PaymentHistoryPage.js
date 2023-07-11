@@ -76,7 +76,7 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    return filter(array, (_user) => _user.transactionId.toLowerCase().indexOf(query.toLowerCase()) !== -1);
   }
   return stabilizedThis.map((el) => el[0]);
 }
@@ -87,6 +87,8 @@ export default function PaymentHistoryPage() {
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
+
+  const [pickDate, setPickDate] = useState('');
 
   const [order, setOrder] = useState('asc');
 
@@ -160,6 +162,8 @@ export default function PaymentHistoryPage() {
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
                   onRequestSort={handleRequestSort}
+                  date={pickDate}
+                  setPickDate={setPickDate}
                 />
                 <TableBody>
                   {filteredPayment.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, i) => {

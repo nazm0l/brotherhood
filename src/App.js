@@ -1,6 +1,8 @@
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { ToastContainer } from 'react-toastify';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 // routes
 import Router from './routes';
 // theme
@@ -16,12 +18,14 @@ export default function App() {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <ThemeProvider>
-          <ScrollToTop />
-          <StyledChart />
-          <Router />
-          <ToastContainer />
-        </ThemeProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <ThemeProvider>
+            <ScrollToTop />
+            <StyledChart />
+            <Router />
+            <ToastContainer />
+          </ThemeProvider>
+        </LocalizationProvider>
       </BrowserRouter>
     </HelmetProvider>
   );
