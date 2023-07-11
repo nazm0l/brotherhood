@@ -73,8 +73,6 @@ export default function LoginForm() {
         email: decoded?.['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'],
       };
 
-      console.log(decoded, authData.userId, authData.role);
-
       setAuth({ ...authData, accessToken });
 
       if (response?.data?.requiresPasswordReset === true) {
@@ -85,8 +83,6 @@ export default function LoginForm() {
       navigate('/dashboard', { replace: true });
 
       setLoading(false);
-
-      console.log(response.data);
     } catch (error) {
       setLoading(false);
       console.log(error);

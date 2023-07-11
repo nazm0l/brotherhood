@@ -23,22 +23,30 @@ import {
   TablePagination,
 } from '@mui/material';
 // components
+import Loading from '../components/loading/Loading';
 import Label from '../components/label';
 import Iconify from '../components/iconify';
 import Scrollbar from '../components/scrollbar';
+
+// ----------------------------------------------------------------------
+import Nagad from '../images/Nagad.svg';
+import bKash from '../images/bkash.svg';
+
 // sections
-import { PaymentListHead } from '../sections/@dashboard/paymentHistory';
+import { PaymentListHead, PaymentListToolbar } from '../sections/@dashboard/paymentHistory';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', alignRight: false },
-  { id: 'email', label: 'Email', alignRight: false },
+  { id: 'phone', label: 'Phone', alignRight: false },
+  { id: 'transactionId', label: 'Trx Id', alignRight: false },
+  { id: 'paymentAmount', label: 'Payment Amount', alignRight: false },
+  { id: 'storeAmount', label: 'Store Amount', alignRight: false },
   { id: 'vendor', label: 'Vendor', alignRight: false },
   { id: 'Campaign', label: 'Campaign', alignRight: false },
+  { id: 'reference', label: 'Reference', alignRight: false },
   { id: 'date', label: 'Date', alignRight: false },
-  { id: 'paymentAmount', label: 'Payment Amount', alignRight: false },
-  { id: 'transactionId', label: 'Transaction Id', alignRight: false },
   { id: '' },
 ];
 
@@ -82,16 +90,14 @@ export default function PaymentHistoryPage() {
 
   const [order, setOrder] = useState('asc');
 
-  const [selected, setSelected] = useState([]);
-
   const [orderBy, setOrderBy] = useState('name');
 
-  const [filterName, setFilterName] = useState('');
+  const [filterTrxId, setFilterTrxId] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const fetchData = async () => {
-    const url = 'https://spread-brotherhood-api-staging.azurewebsites.net/api/UserPaymentHistory';
+    const url = `https://spread-brotherhood-api-staging.azurewebsites.net/api/UserPaymentHistory?take=500`;
 
     const response = await fetch(url);
     const data = await response.json();
@@ -116,30 +122,6 @@ export default function PaymentHistoryPage() {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = paymentData.map((n) => n.name);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-    }
-    setSelected(newSelected);
-  };
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -149,11 +131,16 @@ export default function PaymentHistoryPage() {
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
+  const handleFilterByTrxId = (event) => {
+    setPage(0);
+    setFilterTrxId(event.target.value);
+  };
+
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - paymentData.length) : 0;
 
-  const filteredUsers = applySortFilter(paymentData, getComparator(order, orderBy), filterName);
+  const filteredPayment = applySortFilter(paymentData, getComparator(order, orderBy), filterTrxId);
 
-  const isNotFound = !filteredUsers.length && !!filterName;
+  const isNotFound = !filteredPayment.length && !!filterTrxId;
 
   return (
     <>
@@ -162,14 +149,8 @@ export default function PaymentHistoryPage() {
       </Helmet>
 
       <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4" gutterBottom>
-            Payment History
-          </Typography>
-        </Stack>
-
         <Card>
-          {/* <paymentDataToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} /> */}
+          <PaymentListToolbar filterTrxId={filterTrxId} onFilterTrxId={handleFilterByTrxId} />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
@@ -178,42 +159,62 @@ export default function PaymentHistoryPage() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={paymentData.length}
-                  numSelected={selected.length}
                   onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
-                  {paymentData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, email, vendor, campaign, dateTime, paymentAmount, transactionId } = row;
-                    const selectedUser = selected.indexOf(name) !== -1;
+                  {filteredPayment.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, i) => {
+                    const {
+                      id,
+                      name,
+                      phone,
+                      transactionId,
+                      paymentAmount,
+                      storeAmount,
+                      vendor,
+                      campaign,
+                      reference,
+                      dateTime,
+                    } = row;
 
                     return (
-                      <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
+                      <TableRow hover key={id} tabIndex={-1} role="checkbox">
+                        <TableCell>
+                          <Typography variant="subtitle2" alignItems="center" noWrap>
+                            {i + 1}
+                          </Typography>
                         </TableCell>
 
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={name} src="" />
                             <Typography variant="subtitle2" noWrap>
                               {name}
                             </Typography>
                           </Stack>
                         </TableCell>
 
-                        <TableCell align="left">{email}</TableCell>
+                        <TableCell align="left">{phone}</TableCell>
 
-                        <TableCell align="left">{vendor}</TableCell>
+                        <TableCell align="left">{transactionId}</TableCell>
+
+                        <TableCell align="center">৳ {paymentAmount}</TableCell>
+
+                        <TableCell align="center">৳ {storeAmount}</TableCell>
+
+                        <TableCell align="left">
+                          {vendor === 'bKash' ? (
+                            <img src={bKash} alt="bkash" width={40} height={32} />
+                          ) : vendor === 'Nagad' ? (
+                            <img src={Nagad} alt="nagad" height="30" width="50" />
+                          ) : (
+                            vendor
+                          )}
+                        </TableCell>
 
                         <TableCell align="left">{campaign}</TableCell>
 
+                        <TableCell align="left">{reference}</TableCell>
+
                         <TableCell align="left">{dateTime.substring(0, 10)}</TableCell>
-
-                        <TableCell align="center">{paymentAmount}</TableCell>
-
-                        <TableCell align="left">{transactionId}</TableCell>
 
                         <TableCell align="right">
                           <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
@@ -245,7 +246,7 @@ export default function PaymentHistoryPage() {
 
                           <Typography variant="body2">
                             No results found for &nbsp;
-                            <strong>&quot;{filterName}&quot;</strong>.
+                            <strong>&quot;{filterTrxId}&quot;</strong>.
                             <br /> Try checking for typos or using complete words.
                           </Typography>
                         </Paper>
@@ -258,7 +259,7 @@ export default function PaymentHistoryPage() {
           </Scrollbar>
 
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[10, 25]}
             component="div"
             count={paymentData.length}
             rowsPerPage={rowsPerPage}
@@ -278,7 +279,7 @@ export default function PaymentHistoryPage() {
         PaperProps={{
           sx: {
             p: 1,
-            width: 140,
+            width: 200,
             '& .MuiMenuItem-root': {
               px: 1,
               typography: 'body2',
@@ -289,12 +290,12 @@ export default function PaymentHistoryPage() {
       >
         <MenuItem>
           <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-          Edit
+          Download receipt
         </MenuItem>
 
-        <MenuItem sx={{ color: 'error.main' }}>
+        <MenuItem>
           <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
-          Delete
+          Send receipt
         </MenuItem>
       </Popover>
     </>

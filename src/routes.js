@@ -27,16 +27,19 @@ export default function Router() {
     {
       path: '/dashboard',
       element: (
-        // <RequireAuth>
-        <DashboardLayout />
-        // </RequireAuth>
+        <RequireAuth>
+          <DashboardLayout />
+        </RequireAuth>
       ),
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'user', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
-        { path: 'payment-history', element: <PaymentHistoryPage /> },
+        {
+          path: 'payment-history',
+          element: <PaymentHistoryPage />,
+        },
         { path: 'blog', element: <BlogPage /> },
       ],
     },
