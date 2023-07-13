@@ -19,6 +19,7 @@ import Success from './pages/Success';
 import PaymentPage from './pages/PaymentPage';
 import PaymentHistoryPage from './pages/PaymentHistoryPage';
 import RequireAuth from './sections/auth/RequireAuth';
+import RequireAdmin from './sections/auth/RequireAdmin';
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +39,11 @@ export default function Router() {
         { path: 'products', element: <ProductsPage /> },
         {
           path: 'payment-history',
-          element: <PaymentHistoryPage />,
+          element: (
+            <RequireAdmin>
+              <PaymentHistoryPage />
+            </RequireAdmin>
+          ),
         },
         { path: 'blog', element: <BlogPage /> },
       ],

@@ -84,6 +84,8 @@ function applySortFilter(array, comparator, query) {
 export default function PaymentHistoryPage() {
   const [paymentData, setPaymentData] = useState([]);
 
+  const [totalCount, setTotalCount] = useState(0);
+
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
@@ -98,17 +100,21 @@ export default function PaymentHistoryPage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const fetchData = async () => {
-    const url = `https://spread-brotherhood-api-staging.azurewebsites.net/api/UserPaymentHistory?take=500`;
-
-    const response = await fetch(url);
-    const data = await response.json();
-    setPaymentData(data);
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      const take = rowsPerPage; // Number of data to load per page
+      const skip = page * rowsPerPage; // Number of data to skip
+
+      const url = `https://spread-brotherhood-api-staging.azurewebsites.net/api/UserPaymentHistory?take=${take}&skip=${skip}`;
+
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log(data);
+      setPaymentData(data);
+    };
+
     fetchData();
-  }, []);
+  }, [page, rowsPerPage]);
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
@@ -184,7 +190,7 @@ export default function PaymentHistoryPage() {
                       <TableRow hover key={id} tabIndex={-1} role="checkbox">
                         <TableCell>
                           <Typography variant="subtitle2" alignItems="center" noWrap>
-                            {i + 1}
+                            {page * rowsPerPage + i + 1}
                           </Typography>
                         </TableCell>
 

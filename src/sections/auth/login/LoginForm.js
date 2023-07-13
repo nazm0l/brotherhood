@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 // eslint-disable-next-line camelcase
@@ -33,11 +33,14 @@ export default function LoginForm() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const { setAuth } = useAuth();
+  const location = useLocation();
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
+
+  const from = location.state?.from?.pathname || '/dashboard';
 
   const handleLoginForm = async (e) => {
     e.preventDefault();
@@ -64,23 +67,23 @@ export default function LoginForm() {
       const accessToken = response?.data?.accessToken;
       localStorage.setItem('accessToken', accessToken);
 
-      const decoded = jwt_decode(accessToken);
+      // const decoded = jwt_decode(accessToken);
 
-      const authData = {
-        userId: decoded?.user_id,
-        role: decoded?.['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'],
-        user: decoded?.['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
-        email: decoded?.['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'],
-      };
+      // const authData = {
+      //   userId: decoded?.user_id,
+      //   role: decoded?.['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'],
+      //   user: decoded?.['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'],
+      //   email: decoded?.['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'],
+      // };
 
-      setAuth({ ...authData, accessToken });
+      // setAuth({ ...authData, accessToken });
 
-      if (response?.data?.requiresPasswordReset === true) {
-        navigate('/reset-password', { replace: true });
-        return;
-      }
+      // if (response?.data?.requiresPasswordReset === true) {
+      //   navigate('/reset-password', { replace: true });
+      //   return;
+      // }
 
-      navigate('/dashboard', { replace: true });
+      navigate(from, { replace: true });
 
       setLoading(false);
     } catch (error) {
