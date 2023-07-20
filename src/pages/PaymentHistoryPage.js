@@ -84,8 +84,6 @@ function applySortFilter(array, comparator, query) {
 export default function PaymentHistoryPage() {
   const [paymentData, setPaymentData] = useState([]);
 
-  const [totalCount, setTotalCount] = useState(0);
-
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
@@ -101,20 +99,41 @@ export default function PaymentHistoryPage() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const take = rowsPerPage; // Number of data to load per page
-      const skip = page * rowsPerPage; // Number of data to skip
+    fetch('https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/Pull?take=10&skip=0', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data: ', data);
+        setPaymentData(data);
+      })
+      .catch((err) => console.log('err: ', err));
 
-      const url = `https://spread-brotherhood-api-staging.azurewebsites.net/api/UserPaymentHistory?take=${take}&skip=${skip}`;
+    // const fetchData = async () => {
+    //   const take = rowsPerPage; // Number of data to load per page
+    //   const skip = page * rowsPerPage; // Number of data to skip
+    //   console.log('failed');
+    //   const url = `https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/Pull?take=${take}&skip=${skip}`;
 
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log(data);
-      setPaymentData(data);
-    };
+    //   const response = await fetch(url, {
+    //     method: 'GET',
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    //     },
+    //   });
+    //   const data = await response.json();
+    //   console.log('data: ', data);
+    //   setPaymentData(data);
+    // };
 
-    fetchData();
-  }, [page, rowsPerPage]);
+    // fetchData();
+  }, []);
+
+  console.log('paymentData: ', paymentData);
+  console.log(localStorage.getItem('accessToken'));
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
@@ -146,7 +165,7 @@ export default function PaymentHistoryPage() {
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - paymentData.length) : 0;
 
-  const filteredPayment = applySortFilter(paymentData, getComparator(order, orderBy), filterTrxId);
+  const filteredPayment = applySortFilter(paymentData.paymentHistory, getComparator(order, orderBy), filterTrxId);
 
   const isNotFound = !filteredPayment.length && !!filterTrxId;
 
@@ -271,7 +290,7 @@ export default function PaymentHistoryPage() {
           <TablePagination
             rowsPerPageOptions={[10, 25]}
             component="div"
-            count={paymentData.length}
+            count={paymentData.totalItem}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

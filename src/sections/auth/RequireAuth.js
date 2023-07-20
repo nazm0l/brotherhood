@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useLocation, Navigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 

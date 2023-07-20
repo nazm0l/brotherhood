@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
     if (accessToken) {
       // Parse the stored access token to get the user information
       const decoded = jwt_decode(accessToken);
+      console.log(decoded);
       const authData = {
         userId: decoded?.user_id,
         role: decoded?.['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'],
