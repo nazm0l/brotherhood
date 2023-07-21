@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { NavLink as RouterLink } from 'react-router-dom';
 // @mui
-import { Box, List, ListItemText } from '@mui/material';
+import { Box, List, ListItemText, Typography } from '@mui/material';
 //
 import { StyledNavItem, StyledNavItemIcon } from './styles';
 
@@ -19,6 +19,9 @@ export default function NavSection({ data = [], ...other }) {
           <NavItem key={item.title} item={item} />
         ))}
       </List>
+      <Typography variant="caption" sx={{ px: 2, my: 2, display: 'block', color: 'text.secondary' }}>
+        More menu coming soon...
+      </Typography>
     </Box>
   );
 }

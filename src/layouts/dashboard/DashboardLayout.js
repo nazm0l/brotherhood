@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
 //
+import useResponsive from '../../hooks/useResponsive';
 import Header from './header';
 import Nav from './nav';
 
@@ -33,10 +34,11 @@ const Main = styled('div')(({ theme }) => ({
 
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
+  const mdDown = useResponsive('down', 'md');
 
   return (
     <StyledRoot>
-      {/* <Header onOpenNav={() => setOpen(true)} /> */}
+      {mdDown && <Header onOpenNav={() => setOpen(true)} />}
 
       <Nav openNav={open} onCloseNav={() => setOpen(false)} />
 

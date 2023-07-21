@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 // @mui
 import { styled, alpha } from '@mui/material/styles';
-import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
+import { Box, Link, Button, Drawer, Typography, Avatar, Stack, ListItem } from '@mui/material';
 // mock
 import account from '../../../_mock/account';
 // hooks
@@ -37,7 +37,7 @@ Nav.propTypes = {
 
 export default function Nav({ openNav, onCloseNav }) {
   const { pathname } = useLocation();
-  const { auth } = useAuth();
+  const { auth, setAuth } = useAuth();
 
   const isDesktop = useResponsive('up', 'lg');
 
@@ -47,6 +47,12 @@ export default function Nav({ openNav, onCloseNav }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+  const handleLogout = () => {
+    console.log('logout');
+    setAuth(null);
+    localStorage.removeItem('accessToken');
+  };
 
   const renderContent = (
     <Scrollbar
@@ -78,6 +84,23 @@ export default function Nav({ openNav, onCloseNav }) {
       <NavSection data={navConfig} />
 
       <Box sx={{ flexGrow: 1 }} />
+
+      <ListItem sx={{ py: 0 }}>
+        <Avatar
+          src="/static/mock-images/avatars/avatar_default.jpg"
+          alt="photoURL"
+          sx={{ width: '20px', height: '20px', marginRight: '10px' }}
+        />
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          Profile
+        </Typography>
+      </ListItem>
+
+      <Stack direction="row" justifyContent="center" sx={{ p: 2.5 }}>
+        <Button variant="contained" color="primary" sx={{ width: 1, boxShadow: 3 }} onClick={handleLogout}>
+          Logout
+        </Button>
+      </Stack>
     </Scrollbar>
   );
 
