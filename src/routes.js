@@ -20,6 +20,7 @@ import PaymentPage from './pages/PaymentPage';
 import PaymentHistoryPage from './pages/PaymentHistoryPage';
 import RequireAuth from './sections/auth/RequireAuth';
 import RequireAdmin from './sections/auth/RequireAdmin';
+import ProfilePage from './pages/ProfilePage';
 
 // ----------------------------------------------------------------------
 
@@ -46,6 +47,7 @@ export default function Router() {
           ),
         },
         { path: 'blog', element: <BlogPage /> },
+        { path: 'profile', element: <ProfilePage /> },
       ],
     },
 

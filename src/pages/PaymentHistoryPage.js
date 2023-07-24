@@ -35,6 +35,47 @@ import bKash from '../images/bkash.svg';
 // sections
 import { PaymentListHead, PaymentListToolbar } from '../sections/@dashboard/paymentHistory';
 
+// data
+
+const data = [
+  {
+    id: '1',
+    name: 'John Doe',
+    phone: '01700000000',
+    transactionId: '123456789',
+    paymentAmount: '1000',
+    storeAmount: '1000',
+    vendor: 'bKash',
+    campaign: 'Campaign 1',
+    reference: 'Reference 1',
+    dateTime: '2021-10-10',
+  },
+  {
+    id: '2',
+    name: 'John Kumar',
+    phone: '01700000000',
+    transactionId: '123456789',
+    paymentAmount: '1000',
+    storeAmount: '1000',
+    vendor: 'Nagad',
+    campaign: 'Campaign 1',
+    reference: 'Reference 1',
+    dateTime: '2021-10-10',
+  },
+  {
+    id: '3',
+    name: 'John Cena',
+    phone: '01700000000',
+    transactionId: '123456789',
+    paymentAmount: '1000',
+    storeAmount: '1000',
+    vendor: 'bKash',
+    campaign: 'Campaign 1',
+    reference: 'Reference 1',
+    dateTime: '2021-10-10',
+  },
+];
+
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
@@ -84,6 +125,8 @@ function applySortFilter(array, comparator, query) {
 export default function PaymentHistoryPage() {
   const [paymentData, setPaymentData] = useState([]);
 
+  const [dataCount, setDataCount] = useState(0);
+
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
@@ -99,7 +142,13 @@ export default function PaymentHistoryPage() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
-    fetch('https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/Pull?take=10&skip=0', {
+    const take = rowsPerPage; // Number of data to load per page
+    console.log('Taking:', take);
+    const skip = page * rowsPerPage; // Number of data to skip
+    console.log('Skipping:', skip);
+    const url = `https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/admin-payment-report?take=${take}&skip=${skip}`;
+
+    fetch(url, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -108,32 +157,17 @@ export default function PaymentHistoryPage() {
       .then((res) => res.json())
       .then((data) => {
         console.log('data: ', data);
-        setPaymentData(data);
+        setPaymentData(data.paymentHistory);
+        setDataCount(data.totalItem);
       })
       .catch((err) => console.log('err: ', err));
+  }, [page, rowsPerPage]);
 
-    // const fetchData = async () => {
-    //   const take = rowsPerPage; // Number of data to load per page
-    //   const skip = page * rowsPerPage; // Number of data to skip
-    //   console.log('failed');
-    //   const url = `https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/Pull?take=${take}&skip=${skip}`;
+  // Finance
 
-    //   const response = await fetch(url, {
-    //     method: 'GET',
-    //     headers: {
-    //       Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-    //     },
-    //   });
-    //   const data = await response.json();
-    //   console.log('data: ', data);
-    //   setPaymentData(data);
-    // };
-
-    // fetchData();
-  }, []);
+  useEffect(() => {}, []);
 
   console.log('paymentData: ', paymentData);
-  console.log(localStorage.getItem('accessToken'));
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
@@ -163,11 +197,17 @@ export default function PaymentHistoryPage() {
     setFilterTrxId(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - paymentData.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - dataCount) : 0;
 
-  const filteredPayment = applySortFilter(paymentData.paymentHistory, getComparator(order, orderBy), filterTrxId);
+  const filteredPayment = applySortFilter(paymentData, getComparator(order, orderBy), filterTrxId);
 
   const isNotFound = !filteredPayment.length && !!filterTrxId;
+
+  // Add console logs to various parts of the component
+  console.log('page:', page);
+  console.log('rowsPerPage:', rowsPerPage);
+  console.log('dataCount:', dataCount);
+  console.log('filteredPayment:', filteredPayment);
 
   return (
     <>
@@ -290,7 +330,7 @@ export default function PaymentHistoryPage() {
           <TablePagination
             rowsPerPageOptions={[10, 25]}
             component="div"
-            count={paymentData.totalItem}
+            count={dataCount}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

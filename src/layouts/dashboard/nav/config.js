@@ -36,11 +36,6 @@ const navConfig = [
     path: '/dashboard/profile',
     icon: icon('ic_profile'),
   },
-  {
-    title: 'logout',
-    path: '/dashboard/logout',
-    icon: icon('ic_logout'),
-  },
 ];
 
 export default navConfig;
