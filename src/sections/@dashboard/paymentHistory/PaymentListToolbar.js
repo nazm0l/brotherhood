@@ -69,8 +69,8 @@ export default function PaymentListToolbar({ numSelected, filterTrxId, onFilterT
       )}
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-        <DatePicker label="Start Date" value={pickDate} onChange={(newValue) => setPickDate(newValue)} />
-        <DatePicker label="End Date" value={pickDate} onChange={(newValue) => setPickDate(newValue)} />
+        <DatePicker label="Start Date" value={pickDate} onClick={(newValue) => setPickDate(newValue)} />
+        <DatePicker label="End Date" value={pickDate} onClick={(newValue) => setPickDate(newValue)} />
       </Box>
     </StyledRoot>
   );

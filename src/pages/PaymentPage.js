@@ -73,7 +73,9 @@ export default function PaymentPage() {
       </Helmet>
 
       {loading ? (
-        <Loading />
+        <Container maxWidth="lg" sx={{ height: '90vh', display: 'flex', alignItems: 'center', justifyItems: 'center' }}>
+          <Loading />
+        </Container>
       ) : (
         <Container>
           <StyledContent sx={{ textAlign: 'center', alignItems: 'center', marginTop: { sm: '30px' } }}>

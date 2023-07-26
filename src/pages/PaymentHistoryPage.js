@@ -37,47 +37,6 @@ import bKash from '../images/bkash.svg';
 // sections
 import { PaymentListHead, PaymentListToolbar } from '../sections/@dashboard/paymentHistory';
 
-// data
-
-const data = [
-  {
-    id: '1',
-    name: 'John Doe',
-    phone: '01700000000',
-    transactionId: '123456789',
-    paymentAmount: '1000',
-    storeAmount: '1000',
-    vendor: 'bKash',
-    campaign: 'Campaign 1',
-    reference: 'Reference 1',
-    dateTime: '2021-10-10',
-  },
-  {
-    id: '2',
-    name: 'John Kumar',
-    phone: '01700000000',
-    transactionId: '123456789',
-    paymentAmount: '1000',
-    storeAmount: '1000',
-    vendor: 'Nagad',
-    campaign: 'Campaign 1',
-    reference: 'Reference 1',
-    dateTime: '2021-10-10',
-  },
-  {
-    id: '3',
-    name: 'John Cena',
-    phone: '01700000000',
-    transactionId: '123456789',
-    paymentAmount: '1000',
-    storeAmount: '1000',
-    vendor: 'bKash',
-    campaign: 'Campaign 1',
-    reference: 'Reference 1',
-    dateTime: '2021-10-10',
-  },
-];
-
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
@@ -133,7 +92,7 @@ export default function PaymentHistoryPage() {
 
   const [page, setPage] = useState(0);
 
-  const [pickDate, setPickDate] = useState('');
+  const [pickDate, setPickDate] = useState(Date.now());
 
   const [order, setOrder] = useState('asc');
 
@@ -165,11 +124,10 @@ export default function PaymentHistoryPage() {
       .catch((err) => console.log('err: ', err));
   }, [page, rowsPerPage]);
 
-  // Finance
-
-  useEffect(() => {}, []);
+  // Console
 
   console.log('paymentData: ', paymentData);
+  console.log('pickDate: ', pickDate);
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);

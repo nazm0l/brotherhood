@@ -43,6 +43,7 @@ export default function PaymentHistoryCard({ title, value }) {
 
         <Typography variant="h3">{value}</Typography>
       </Box>
+      <Icon icon="akar-icons:arrow-right" width={24} height={24} />
     </Card>
   );
 }

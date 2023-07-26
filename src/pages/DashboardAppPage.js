@@ -5,11 +5,13 @@ import { Grid, Container, Typography } from '@mui/material';
 // sections
 import { AppCurrentVisits, AppBlog, AppWidgetSummary } from '../sections/@dashboard/app';
 import AppWelcome from '../components/app-welcome/AppWelcome';
+import useAuth from '../hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
   const theme = useTheme();
+  const { auth } = useAuth();
 
   return (
     <>
@@ -24,11 +26,11 @@ export default function DashboardAppPage() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
-            <AppWelcome displayName="Kholil" />
+            <AppWelcome displayName={auth.user} />
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <AppWelcome displayName="Kholil" />
+            <AppWelcome displayName={auth.role} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
