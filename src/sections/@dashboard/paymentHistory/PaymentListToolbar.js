@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 // @mui
 import { styled, alpha } from '@mui/material/styles';
-import { Toolbar, Tooltip, IconButton, Typography, OutlinedInput, InputAdornment } from '@mui/material';
+import { Toolbar, Tooltip, IconButton, Typography, OutlinedInput, InputAdornment, Box } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 // component
 import Iconify from '../../../components/iconify';
@@ -68,11 +68,10 @@ export default function PaymentListToolbar({ numSelected, filterTrxId, onFilterT
         />
       )}
 
-      <Typography variant="h6" component="div">
-        Total - 50
-      </Typography>
-
-      <DatePicker label="Select Date" value={pickDate} onChange={(newValue) => setPickDate(newValue)} />
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        <DatePicker label="Start Date" value={pickDate} onChange={(newValue) => setPickDate(newValue)} />
+        <DatePicker label="End Date" value={pickDate} onChange={(newValue) => setPickDate(newValue)} />
+      </Box>
     </StyledRoot>
   );
 }

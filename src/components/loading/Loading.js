@@ -7,14 +7,11 @@ import load from './load.svg';
 
 // ----------------------------------------------------------------------
 
-const StyledContent = styled('div')(({ theme }) => ({
-  maxWidth: 480,
-  margin: 'auto',
-  minHeight: '100vh',
+const StyledContent = styled('div')(() => ({
+  width: '100%',
   display: 'flex',
   justifyContent: 'center',
-  flexDirection: 'column',
-  padding: theme.spacing(12, 0),
+  alignItems: 'center',
 }));
 
 // ----------------------------------------------------------------------
@@ -26,9 +23,9 @@ export default function Loading() {
         <title> Loading... </title>
       </Helmet>
 
-      <Container>
+      <Container maxWidth="lg">
         <StyledContent sx={{ textAlign: 'center', alignItems: 'center' }}>
-          <img src={load} alt="Loading..." width="100%" />
+          <img src={load} alt="Loading..." width="200px" />
         </StyledContent>
       </Container>
     </>

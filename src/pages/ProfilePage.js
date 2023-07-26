@@ -38,11 +38,7 @@ export default function DashboardAppPage() {
         <title> Dashboard | Brotherhood ERP </title>
       </Helmet>
 
-      <Container maxWidth="xl">
-        {/* <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back
-        </Typography> */}
-
+      <Container maxWidth="lg">
         <Grid container spacing={3}>
           <Grid item xs={12} md={12}>
             <AppWelcome displayName="Kholil" />
