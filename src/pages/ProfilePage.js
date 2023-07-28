@@ -6,6 +6,7 @@ import { Grid, Container, Typography, Stack, Tabs, Icon, Tab, Box } from '@mui/m
 // sections
 import { capitalCase } from 'change-case';
 import AccountGeneral from '../components/accounts/AccountGeneral';
+import AccountChangePassword from '../components/accounts/AccountChangePassword';
 import { AppBlog } from '../sections/@dashboard/app';
 import AppWelcome from '../components/app-welcome/AppWelcome';
 
@@ -24,7 +25,7 @@ export default function DashboardAppPage() {
     {
       value: 'change_password',
       icon: '',
-      component: <p>Change password</p>,
+      component: <AccountChangePassword />,
     },
   ];
 

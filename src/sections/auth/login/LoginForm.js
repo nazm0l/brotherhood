@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
-// eslint-disable-next-line camelcase
-import jwt_decode from 'jwt-decode';
 // @mui
 import {
   Link,
@@ -23,7 +21,6 @@ import { LoadingButton } from '@mui/lab';
 import Loading from '../../../components/loading/Loading';
 import Iconify from '../../../components/iconify';
 import axios from '../../../api/axios';
-import useAuth from '../../../hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +30,6 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { setAuth } = useAuth();
   const location = useLocation();
   const {
     handleSubmit,
