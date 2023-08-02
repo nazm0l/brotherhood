@@ -94,7 +94,7 @@ export default function Nav({ openNav, onCloseNav }) {
       <NavSection data={managementNavConfig} />
       <Box sx={{ flexGrow: 1 }} />
       <Stack direction="row" justifyContent="center" sx={{ p: 2.5 }}>
-        <Button variant="contained" color="primary" sx={{ width: 1, boxShadow: 3 }} onClick={handleLogout}>
+        <Button variant="contained" color="error" sx={{ width: 1, boxShadow: 3 }} onClick={handleLogout}>
           Logout
         </Button>
       </Stack>

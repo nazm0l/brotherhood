@@ -22,14 +22,14 @@ export const generalNavConfig = [
     icon: icon('ic_payment'),
   },
   {
+    title: 'Donation',
+    path: '/dashboard/blog',
+    icon: icon('ic_blog'),
+  },
+  {
     title: 'product',
     path: '/dashboard/products',
     icon: icon('ic_cart'),
-  },
-  {
-    title: 'blog',
-    path: '/dashboard/blog',
-    icon: icon('ic_blog'),
   },
 ];
 
@@ -38,5 +38,10 @@ export const managementNavConfig = [
     title: 'profile',
     path: '/dashboard/profile',
     icon: icon('ic_profile'),
+  },
+  {
+    title: 'communication',
+    path: '/dashboard/communication',
+    icon: icon('ic_user'),
   },
 ];

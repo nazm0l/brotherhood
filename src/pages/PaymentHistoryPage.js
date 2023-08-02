@@ -178,11 +178,11 @@ export default function PaymentHistoryPage() {
       <Container maxWidth={'lg'} sx={{ marginBottom: '30px' }}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={3}>
-            <PaymentHistoryCard title="Total User" value={dataCount} />
+            <PaymentHistoryCard title="Total Store Amount" value={5000012} />
           </Grid>
 
           <Grid item xs={12} md={3}>
-            <PaymentHistoryCard title="Total Payment Amount" value={5000000} />
+            <PaymentHistoryCard title="Total Payment Amount" value={50000} />
           </Grid>
 
           <Grid item xs={12} md={3}>
@@ -190,7 +190,7 @@ export default function PaymentHistoryPage() {
           </Grid>
 
           <Grid item xs={12} md={3}>
-            <PaymentHistoryCard title="Total Campaign Run" value={10} />
+            <PaymentHistoryCard title="Total Donation Amount" value={10} />
           </Grid>
         </Grid>
       </Container>
