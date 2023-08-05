@@ -41,15 +41,7 @@ export default function DashboardAppPage() {
 
       <Container maxWidth="lg">
         <Grid container spacing={3}>
-          <Grid item xs={12} md={12}>
-            <AppWelcome displayName="Kholil" />
-          </Grid>
-
           <Grid item xs={12} sm={12} md={12}>
-            <Typography variant="h4" sx={{ mb: 5 }}>
-              User Details
-            </Typography>
-
             <Stack spacing={5}>
               <Tabs
                 value={currentTab}

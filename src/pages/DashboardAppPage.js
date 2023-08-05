@@ -20,17 +20,13 @@ export default function DashboardAppPage() {
       </Helmet>
 
       <Container maxWidth="xl">
-        {/* <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back
-        </Typography> */}
-
         <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
             <AppWelcome displayName={auth.user} />
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <AppWelcome displayName={auth.role} />
+            <Typography variant="h4">Slider appeared here</Typography>
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>

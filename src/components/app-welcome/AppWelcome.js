@@ -3,6 +3,8 @@ import { Link as RouterLink } from 'react-router-dom';
 // material
 import { Button, Card, CardContent, Typography, styled } from '@mui/material';
 
+import illus from '../../images/appillus.svg';
+
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Card)(({ theme }) => ({
@@ -35,8 +37,7 @@ export default function AppWelcome({ displayName }) {
         }}
       >
         <Typography gutterBottom variant="h4">
-          Welcome back,
-          <br /> {!displayName ? '...' : displayName}!
+          Welcome back, {!displayName ? '...' : displayName}!
         </Typography>
 
         <Typography variant="body2" sx={{ pb: { xs: 3, xl: 5 }, maxWidth: 480, mx: 'auto' }}>
@@ -48,13 +49,7 @@ export default function AppWelcome({ displayName }) {
         </Button>
       </CardContent>
 
-      {/* <SeoIllustration
-        sx={{
-          p: 3,
-          width: 360,
-          margin: { xs: 'auto', md: 'inherit' },
-        }}
-      /> */}
+      <img alt="welcome" src={illus} width={320} style={{ margin: 'auto' }} />
     </RootStyle>
   );
 }
