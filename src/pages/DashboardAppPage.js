@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // sections
+import AppDonationTable from '../components/app-donation/AppDonationTable';
 import { AppCurrentVisits, AppBlog, AppWidgetSummary } from '../sections/@dashboard/app';
 import AppWelcome from '../components/app-welcome/AppWelcome';
 import useAuth from '../hooks/useAuth';
@@ -30,22 +31,29 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
+            <AppWidgetSummary title="Total Active Users" total={1420} icon={'clarity:users-solid'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="Total Store Amount" total={10206} color="info" icon={'nimbus:money'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
+            <AppWidgetSummary title="Total Donation Received" total={1723} color="warning" icon={'nimbus:money'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
+            <AppWidgetSummary title="Withdrawn Money" total={1006} color="error" icon={'vaadin:money-withdraw'} />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} md={12} lg={12}>
+            <Typography variant="h5" sx={{ marginBottom: '30px' }}>
+              Recent donated users
+            </Typography>
+            <AppDonationTable />
+          </Grid>
+
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits
               title="Current Visits"
               chartData={[
@@ -65,7 +73,7 @@ export default function DashboardAppPage() {
 
           <Grid item xs={12} md={6} lg={8}>
             <AppBlog />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </>
