@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 // @mui
@@ -43,6 +44,8 @@ const StyledContent = styled('div')(({ theme }) => ({
 export default function LoginPage() {
   const mdUp = useResponsive('up', 'md');
 
+  const [loading, setLoading] = useState(false);
+
   return (
     <>
       <Helmet>
@@ -78,7 +81,7 @@ export default function LoginPage() {
               </Typography>
             </Divider> */}
 
-            <LoginForm />
+            <LoginForm setLoading={setLoading} />
           </StyledContent>
         </Container>
       </StyledRoot>

@@ -91,7 +91,7 @@ export default function UserPage() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
-    fetch('https://spread-admin-api-staging.azurewebsites.net/api/BrotherhoodUser/UserList', {
+    fetch('https://spread-admin-api-staging.azurewebsites.net/api/UserManagement/UserList', {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

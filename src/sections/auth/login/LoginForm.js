@@ -24,12 +24,12 @@ import axios from '../../../api/axios';
 
 // ----------------------------------------------------------------------
 
-export default function LoginForm() {
+// eslint-disable-next-line react/prop-types
+export default function LoginForm({ setLoading }) {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
   const location = useLocation();
   const {
     handleSubmit,
@@ -105,44 +105,40 @@ export default function LoginForm() {
 
   return (
     <>
-      {loading ? (
-        <Loading />
-      ) : (
-        <Box component="form" onSubmit={handleLoginForm}>
-          <Stack spacing={3}>
-            <TextField name="username" label="Username" />
+      <Box component="form" onSubmit={handleLoginForm}>
+        <Stack spacing={3}>
+          <TextField name="username" label="Username" />
 
-            <TextField
-              name="password"
-              label="Password"
-              type={showPassword ? 'text' : 'password'}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                      <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
+          <TextField
+            name="password"
+            label="Password"
+            type={showPassword ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                    <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Stack>
+
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
+          <Stack direction="row" alignItems="center">
+            <Checkbox name="remember" label="Remember me" />
+            <Typography variant="body2">Remember me</Typography>
           </Stack>
+          <Link variant="subtitle2" underline="hover" sx={{ cursor: 'pointer' }} onClick={handleClickOpen}>
+            Forgot password?
+          </Link>
+        </Stack>
 
-          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-            <Stack direction="row" alignItems="center">
-              <Checkbox name="remember" label="Remember me" />
-              <Typography variant="body2">Remember me</Typography>
-            </Stack>
-            <Link variant="subtitle2" underline="hover" sx={{ cursor: 'pointer' }} onClick={handleClickOpen}>
-              Forgot password?
-            </Link>
-          </Stack>
-
-          <LoadingButton fullWidth size="large" type="submit" variant="contained">
-            Login
-          </LoadingButton>
-        </Box>
-      )}
+        <LoadingButton fullWidth size="large" type="submit" variant="contained">
+          Login
+        </LoadingButton>
+      </Box>
 
       <Box>
         <Dialog open={open} onClose={handleClose} component="form" onSubmit={handleSubmit(onSubmit)}>
