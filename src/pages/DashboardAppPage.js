@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // sections
+import UserCard from '../components/user-card/UserCard';
 import AppDonationTable from '../components/app-donation/AppDonationTable';
 import { AppCurrentVisits, AppBlog, AppWidgetSummary } from '../sections/@dashboard/app';
 import AppWelcome from '../components/app-welcome/AppWelcome';
@@ -53,10 +54,20 @@ export default function DashboardAppPage() {
             <AppDonationTable />
           </Grid>
 
-          <Grid item xs={12} md={12} lg={12}>
+          <Grid item xs={12} md={4} lg={3}>
             <Typography variant="h5" sx={{ marginBottom: '30px' }}>
               Panel/Board Members
             </Typography>
+
+            <UserCard
+              user={{
+                name: 'Md Najmul',
+                cover: 'https://t4.ftcdn.net/jpg/03/08/69/75/360_F_308697506_9dsBYHXm9FwuW0qcEqimAEXUvzTwfzwe.jpg',
+                position: 'Senior',
+                avatarUrl:
+                  'https://static.vecteezy.com/system/resources/previews/002/002/403/original/man-with-beard-avatar-character-isolated-icon-free-vector.jpg',
+              }}
+            />
           </Grid>
 
           {/* <Grid item xs={12} md={6} lg={4}>

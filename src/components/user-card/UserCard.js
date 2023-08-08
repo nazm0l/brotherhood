@@ -4,10 +4,6 @@ import { Icon } from '@iconify/react';
 import styled from '@emotion/styled';
 import { alpha } from '@mui/material/styles';
 import { Box, Grid, Card, Typography, Divider, Avatar } from '@mui/material';
-// utils
-import { fShortenNumber } from '../../../../utils/formatNumber';
-//
-import SvgIconStyle from '../../../SvgIconStyle';
 
 // ----------------------------------------------------------------------
 
@@ -42,13 +38,13 @@ const CoverImgStyle = styled('img')({
 
 // ----------------------------------------------------------------------
 
-function InfoItem(number) {
+function InfoItem() {
   return (
-    <Grid item xs={4}>
+    <Grid item xs={12}>
       <Typography variant="caption" sx={{ mb: 0.5, color: 'text.secondary', display: 'block' }}>
-        Follower
+        Phone: 01777444444
       </Typography>
-      <Typography variant="subtitle1">{fShortenNumber(number)}</Typography>
+      <Typography variant="caption">Email: abc@gmail.com</Typography>
     </Grid>
   );
 }
@@ -58,12 +54,12 @@ UserCard.propTypes = {
 };
 
 export default function UserCard({ user, ...other }) {
-  const { name, cover, position, follower, totalPost, avatarUrl, following } = user;
+  const { name, cover, position, avatarUrl } = user;
 
   return (
     <Card {...other}>
       <CardMediaStyle>
-        <SvgIconStyle
+        {/* <SvgIconStyle
           color="paper"
           src="/static/icons/shape-avatar.svg"
           sx={{
@@ -73,7 +69,7 @@ export default function UserCard({ user, ...other }) {
             bottom: -26,
             position: 'absolute',
           }}
-        />
+        /> */}
         <Avatar
           alt={name}
           src={avatarUrl}
@@ -94,15 +90,13 @@ export default function UserCard({ user, ...other }) {
       <Typography variant="body2" align="center" sx={{ color: 'text.secondary' }}>
         {position}
       </Typography>
-
-      <Box sx={{ textAlign: 'center', mt: 2, mb: 2.5 }}>social</Box>
+      {/* 
+      <Box sx={{ textAlign: 'center', mt: 2, mb: 2.5 }}>social</Box> */}
 
       <Divider />
 
       <Grid container sx={{ py: 3, textAlign: 'center' }}>
-        {InfoItem(follower)}
-        {InfoItem(following)}
-        {InfoItem(totalPost)}
+        {InfoItem()}
       </Grid>
     </Card>
   );
