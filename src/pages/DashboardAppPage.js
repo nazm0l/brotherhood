@@ -4,6 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // sections
 import UserCard from '../components/user-card/UserCard';
+import AppSlider from '../components/app-slider/AppSlider';
 import AppDonationTable from '../components/app-donation/AppDonationTable';
 import { AppCurrentVisits, AppBlog, AppWidgetSummary } from '../sections/@dashboard/app';
 import AppWelcome from '../components/app-welcome/AppWelcome';
@@ -28,7 +29,7 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} md={4}>
-            <Typography variant="h4">Slider appeared here</Typography>
+            <AppSlider />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>

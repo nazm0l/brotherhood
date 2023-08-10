@@ -90,7 +90,7 @@ export default function UserPage() {
 
   useEffect(() => {
     fetch('https://spread-admin-api-staging.azurewebsites.net/api/UserManagement/UserList', {
-      method: 'GET',
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },

@@ -44,7 +44,9 @@ function InfoItem() {
       <Typography variant="caption" sx={{ mb: 0.5, color: 'text.secondary', display: 'block' }}>
         Phone: 01777444444
       </Typography>
-      <Typography variant="caption">Email: abc@gmail.com</Typography>
+      <Typography variant="caption" sx={{ mb: 0.5, color: 'text.secondary', display: 'block' }}>
+        Email: abc@gmail.com
+      </Typography>
     </Grid>
   );
 }
