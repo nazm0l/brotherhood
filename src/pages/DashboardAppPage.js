@@ -50,7 +50,7 @@ export default function DashboardAppPage() {
 
           <Grid item xs={12} md={12} lg={12}>
             <Typography variant="h4" sx={{ marginY: '15px', textAlign: 'center' }}>
-              Recent Donated Users
+              Recent Donations
             </Typography>
             <AppDonationTable />
           </Grid>

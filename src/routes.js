@@ -46,7 +46,7 @@ export default function Router() {
             </RequireAdmin>
           ),
         },
-        { path: 'blog', element: <BlogPage /> },
+        { path: 'donation', element: <BlogPage /> },
         { path: 'profile', element: <ProfilePage /> },
       ],
     },

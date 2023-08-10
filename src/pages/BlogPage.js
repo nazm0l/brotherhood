@@ -1,6 +1,22 @@
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Controller, useForm } from 'react-hook-form';
 // @mui
-import { Grid, Button, Container, Stack } from '@mui/material';
+import {
+  Grid,
+  Button,
+  Container,
+  Stack,
+  Box,
+  Dialog,
+  Typography,
+  DialogContent,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from '@mui/material';
 // components
 import Iconify from '../components/iconify';
 import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../sections/@dashboard/blog';
@@ -18,6 +34,23 @@ const SORT_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function BlogPage() {
+  const [open, setOpen] = useState(false);
+
+  const {
+    handleSubmit,
+    control,
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       <Helmet>
@@ -26,14 +59,9 @@ export default function BlogPage() {
 
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="end" mb={5}>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleClickOpen}>
             New Donation Campaign
           </Button>
-        </Stack>
-
-        <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
-          <BlogPostsSearch posts={POSTS} />
-          <BlogPostsSort options={SORT_OPTIONS} />
         </Stack>
 
         <Grid container spacing={3}>
@@ -41,6 +69,133 @@ export default function BlogPage() {
             <BlogPostCard key={post.id} post={post} index={index} />
           ))}
         </Grid>
+
+        <Box>
+          <Dialog open={open} onClose={handleClose} component="form" onSubmit={handleSubmit}>
+            <Stack spacing={2} sx={{ padding: '20px 40px 10px 40px' }}>
+              <Typography variant="h4" align="center" sx={{ color: 'text.dark' }}>
+                Add New Donation Campaign
+              </Typography>
+              <Typography variant="body" align="justify" sx={{ color: 'text.secondary' }}>
+                Please add campaign details to create a new donation campaign.
+              </Typography>
+            </Stack>
+            <DialogContent sx={{ padding: '20px 40px 40px 40px' }}>
+              <Stack flexBasis={1} spacing={2}>
+                <TextField name="name" autoFocus label="Name" />
+                <TextField name="description" autoFocus label="Description" multiline minRows={3} maxRows={4} />
+                <Stack direction={{ md: 'row', xs: 'column' }} spacing={2}>
+                  <TextField name="baseAmount" label="Base Amount" fullWidth />
+                  <TextField name="goalAmount" label="Goal Amount" fullWidth />
+                </Stack>
+                <Stack direction={{ md: 'row', xs: 'column' }} spacing={2}>
+                  <Controller
+                    name="isRunning"
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: 'Value is required' }}
+                    render={({ field }) => (
+                      <FormControl error={Boolean(errors.runningGroup)} fullWidth>
+                        <InputLabel
+                          id="running-group-label"
+                          sx={{
+                            '&.Mui-focused': {
+                              color: 'primary.main',
+                            },
+                          }}
+                        >
+                          Running
+                        </InputLabel>
+                        <Select labelId="running-group-label" id="running-group" {...field}>
+                          <MenuItem value="A+">Yes</MenuItem>
+                          <MenuItem value="A-">No</MenuItem>
+                        </Select>
+                        {errors.runningGroup && (
+                          <Typography variant="caption" color="error">
+                            {errors.runningGroup.message}
+                          </Typography>
+                        )}
+                      </FormControl>
+                    )}
+                  />
+                  <Controller
+                    name="takingFund"
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: 'Value is required' }}
+                    render={({ field }) => (
+                      <FormControl error={Boolean(errors.takingFundGroup)} fullWidth>
+                        <InputLabel
+                          id="takingFund-group-label"
+                          sx={{
+                            '&.Mui-focused': {
+                              color: 'primary.main',
+                            },
+                          }}
+                        >
+                          Taking Fund
+                        </InputLabel>
+                        <Select labelId="takingFund-group-label" id="takingFund-group" {...field}>
+                          <MenuItem value="A+">Yes</MenuItem>
+                          <MenuItem value="A-">No</MenuItem>
+                        </Select>
+                        {errors.takingFundGroup && (
+                          <Typography variant="caption" color="error">
+                            {errors.takingFundGroup.message}
+                          </Typography>
+                        )}
+                      </FormControl>
+                    )}
+                  />
+                </Stack>
+
+                <TextField
+                  name="image"
+                  type="date"
+                  label="Campaign End Date"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+
+                <Typography variant="title1" sx={{ color: 'text.dark', marginTop: '20px' }}>
+                  Upload Campaign Media:
+                </Typography>
+
+                <Stack direction={{ md: 'row', xs: 'column' }} spacing={2}>
+                  <TextField
+                    name="image"
+                    type="file"
+                    label="Campaign Image"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                  <TextField
+                    name="image"
+                    type="file"
+                    label="Campaign Video"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </Stack>
+              </Stack>
+              <Stack direction="row" marginTop="30px" justifyContent="flex-end" gap={3}>
+                <Button variant="contained" type="submit" sx={{ padding: { xs: '5px 30px', md: '8px 40px' } }}>
+                  Create Campaign
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={handleClose}
+                  sx={{ backgroundColor: '#CB4154', padding: { xs: '5px 30px', md: '8px 30px' } }}
+                >
+                  Cancel
+                </Button>
+              </Stack>
+            </DialogContent>
+          </Dialog>
+        </Box>
       </Container>
     </>
   );

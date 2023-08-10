@@ -186,7 +186,7 @@ export default function PaymentHistoryPage() {
           </Grid>
 
           <Grid item xs={12} md={3}>
-            <PaymentHistoryCard title="Total Store Amount" value={5010000} />
+            <PaymentHistoryCard title="bKash Nagad Cards Rocket DBBL" value={5010000} />
           </Grid>
 
           <Grid item xs={12} md={3}>

@@ -23,7 +23,7 @@ export const generalNavConfig = [
   },
   {
     title: 'Donation',
-    path: '/dashboard/blog',
+    path: '/dashboard/donation',
     icon: icon('ic_blog'),
   },
   {

@@ -21,7 +21,7 @@ const PERCENT = 2.6;
 
 export default function PaymentHistoryCard({ title, value }) {
   return (
-    <Card sx={{ display: 'flex', alignItems: 'center', p: 3 }}>
+    <Card sx={{ display: 'flex', alignItems: 'center', p: 3, backgroundColor: '#F1F0E8' }}>
       <Box sx={{ flexGrow: 1 }}>
         <Typography variant="subtitle2">{title}</Typography>
         <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}>
