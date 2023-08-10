@@ -12,7 +12,6 @@ export default function UserListHead({ headLabel }) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell>id</TableCell>
         {headLabel.map((headCell) => (
           <TableCell key={headCell.id} align={headCell.alignRight ? 'right' : 'left'}>
             <TableSortLabel>{headCell.label}</TableSortLabel>

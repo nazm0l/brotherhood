@@ -21,7 +21,6 @@ import { DonationListHead, DonationListToolbar } from '../../sections/@dashboard
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'id', label: 'ID', alignRight: false },
   { id: 'name', label: 'Name', alignRight: false },
   { id: 'donatedAmount', label: 'Donated Amount', alignRight: false },
   { id: 'date', label: 'Date', alignRight: false },
@@ -60,12 +59,13 @@ export default function UserPage() {
                   const { name, bloodGroup, professionalStatus } = row;
 
                   return (
-                    <TableRow hover key={i} tabIndex={-1} role="checkbox">
-                      <TableCell>{i + 1}</TableCell>
-
-                      <TableCell component="th" scope="row" padding="none">
+                    <TableRow hover key={i}>
+                      <TableCell component="th" scope="row">
                         <Stack direction="row" alignItems="center" spacing={2}>
-                          <Avatar alt={name} src="" />
+                          <Avatar
+                            alt={name}
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkX67S46v2G23e7kPeno02ODOGqyWf66NqEzaVBRt61A&s"
+                          />
                           <Typography variant="subtitle2" noWrap>
                             {name}
                           </Typography>
@@ -76,7 +76,6 @@ export default function UserPage() {
 
                       <TableCell align="left">{bloodGroup}</TableCell>
 
-                      <TableCell align="left">{name ? 'Yes' : 'No'}</TableCell>
                       <TableCell align="left">{name ? 'Yes' : 'No'}</TableCell>
                       <TableCell align="left">{name ? 'Yes' : 'No'}</TableCell>
 

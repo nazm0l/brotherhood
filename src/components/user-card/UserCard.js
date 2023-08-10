@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react';
 // material
 import styled from '@emotion/styled';
 import { alpha } from '@mui/material/styles';
-import { Box, Grid, Card, Typography, Divider, Avatar } from '@mui/material';
+import { Grid, Card, Typography, Divider, Avatar } from '@mui/material';
 
 // ----------------------------------------------------------------------
 

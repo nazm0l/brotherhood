@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Grid, Container, Typography } from '@mui/material';
+import { Grid, Container, Typography, Divider } from '@mui/material';
 // sections
 import UserCard from '../components/user-card/UserCard';
 import AppSlider from '../components/app-slider/AppSlider';
@@ -49,14 +49,14 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} md={12} lg={12}>
-            <Typography variant="h5" sx={{ marginBottom: '30px' }}>
-              Recent donated users
+            <Typography variant="h4" sx={{ marginY: '15px', textAlign: 'center' }}>
+              Recent Donated Users
             </Typography>
             <AppDonationTable />
           </Grid>
 
           <Grid item xs={12} md={4} lg={3}>
-            <Typography variant="h5" sx={{ marginBottom: '30px' }}>
+            <Typography variant="h4" sx={{ marginY: '15px', textAlign: 'center' }}>
               Panel/Board Members
             </Typography>
 
