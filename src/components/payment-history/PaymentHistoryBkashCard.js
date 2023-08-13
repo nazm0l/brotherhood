@@ -19,29 +19,15 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 const PERCENT = 2.6;
 
-export default function PaymentHistoryCard({ title, value, color }) {
+export default function PaymentHistoryBkashCard({ value, color }) {
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', p: 3, backgroundColor: color }}>
       <Box sx={{ flexGrow: 1 }}>
-        <Typography variant="subtitle2">{title}</Typography>
-        <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}>
-          {/* <IconWrapperStyle
-            sx={{
-              ...(PERCENT < 0 && {
-                color: 'error.main',
-                bgcolor: alpha(theme.palette.error.main, 0.16)
-              })
-            }}
-          >
-            <Icon width={16} height={16} icon={PERCENT >= 0 ? trendingUpFill : trendingDownFill} />
-          </IconWrapperStyle> */}
-          <Typography component="span" variant="subtitle2">
-            {PERCENT > 0 && '+'}
-            10%
-          </Typography>
-        </Stack>
-
-        <Typography variant="h3">{value}</Typography>
+        <Typography variant="subtitle2">bKash: {value}</Typography>
+        <Typography variant="subtitle2">Nagad: {value}</Typography>
+        <Typography variant="subtitle2">Rocket: {value}</Typography>
+        <Typography variant="subtitle2">Cards: {value}</Typography>
+        <Typography variant="subtitle2">DBBL: {value}</Typography>
       </Box>
       <Icon icon="akar-icons:arrow-right" width={24} height={24} />
     </Card>

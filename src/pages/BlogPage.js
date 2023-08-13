@@ -25,12 +25,6 @@ import POSTS from '../_mock/blog';
 
 // ----------------------------------------------------------------------
 
-const SORT_OPTIONS = [
-  { value: 'latest', label: 'Latest' },
-  { value: 'popular', label: 'Popular' },
-  { value: 'oldest', label: 'Oldest' },
-];
-
 // ----------------------------------------------------------------------
 
 export default function BlogPage() {
@@ -71,7 +65,7 @@ export default function BlogPage() {
         </Grid>
 
         <Box>
-          <Dialog open={open} onClose={handleClose} component="form" onSubmit={handleSubmit}>
+          <Dialog maxWidth="lg" open={open} onClose={handleClose} component="form" onSubmit={handleSubmit}>
             <Stack spacing={2} sx={{ padding: '20px 40px 10px 40px' }}>
               <Typography variant="h4" align="center" sx={{ color: 'text.dark' }}>
                 Add New Donation Campaign
@@ -83,7 +77,7 @@ export default function BlogPage() {
             <DialogContent sx={{ padding: '20px 40px 40px 40px' }}>
               <Stack flexBasis={1} spacing={2}>
                 <TextField name="name" autoFocus label="Name" />
-                <TextField name="description" autoFocus label="Description" multiline minRows={3} maxRows={4} />
+                <TextField name="description" label="Description" multiline minRows={3} maxRows={4} />
                 <Stack direction={{ md: 'row', xs: 'column' }} spacing={2}>
                   <TextField name="baseAmount" label="Base Amount" fullWidth />
                   <TextField name="goalAmount" label="Goal Amount" fullWidth />

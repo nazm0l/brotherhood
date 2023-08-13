@@ -10,6 +10,7 @@ import useResponsive from '../hooks/useResponsive';
 import Logo from '../components/logo';
 // sections
 import { LoginForm } from '../sections/auth/login';
+import Loading from '../components/loading/Loading';
 
 // ----------------------------------------------------------------------
 
@@ -52,39 +53,38 @@ export default function LoginPage() {
         <title> Login | Brotherhood ERP </title>
       </Helmet>
 
-      <StyledRoot>
-        {mdUp && (
-          <StyledSection>
-            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              Brotherhood ERP
-            </Typography>
-            <img src="/assets/illustrations/illustration_login.png" alt="login" />
-          </StyledSection>
-        )}
-
-        <Container maxWidth="sm">
-          <StyledContent>
-            <Typography variant="h4" gutterBottom>
-              Sign in to Brotherhood
-            </Typography>
-
-            <Typography variant="body2" sx={{ mb: 5 }}>
-              Don’t have an account? {''}
-              <Link to="/landing" variant="subtitle2">
-                Get started
-              </Link>
-            </Typography>
-
-            {/* <Divider sx={{ my: 3 }}>
-              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                OR
-              </Typography>
-            </Divider> */}
-
-            <LoginForm setLoading={setLoading} />
-          </StyledContent>
+      {loading ? (
+        <Container sx={{ minHeight: '90vh', display: 'grid', placeItems: 'center' }}>
+          <Loading />
         </Container>
-      </StyledRoot>
+      ) : (
+        <StyledRoot>
+          {mdUp && (
+            <StyledSection>
+              <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+                Brotherhood ERP
+              </Typography>
+              <img src="/assets/illustrations/illustration_login.png" alt="login" />
+            </StyledSection>
+          )}
+
+          <Container maxWidth="sm">
+            <StyledContent>
+              <Typography variant="h4" gutterBottom>
+                Sign in to Brotherhood
+              </Typography>
+
+              <Typography variant="body2" sx={{ mb: 5 }}>
+                Don’t have an account? {''}
+                <Link to="/landing" variant="subtitle2">
+                  Get started
+                </Link>
+              </Typography>
+              <LoginForm setLoading={setLoading} />
+            </StyledContent>
+          </Container>
+        </StyledRoot>
+      )}
     </>
   );
 }

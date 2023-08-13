@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 // @mui
@@ -64,8 +64,6 @@ export default function LoginForm({ setLoading }) {
       const accessToken = response?.data?.accessToken;
       localStorage.setItem('accessToken', accessToken);
 
-      navigate(from, { replace: true });
-
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -75,6 +73,7 @@ export default function LoginForm({ setLoading }) {
         toast.error('Something went wrong');
       }
     }
+    navigate(from, { replace: true });
   };
 
   const handleClickOpen = () => {

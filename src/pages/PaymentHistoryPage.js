@@ -11,7 +11,6 @@ import {
   Avatar,
   Button,
   Popover,
-  Checkbox,
   TableRow,
   MenuItem,
   TableBody,
@@ -29,6 +28,7 @@ import Label from '../components/label';
 import Iconify from '../components/iconify';
 import Scrollbar from '../components/scrollbar';
 import PaymentHistoryCard from '../components/payment-history/PaymentHistoryCard';
+import PaymentHistoryBkashCard from '../components/payment-history/PaymentHistoryBkashCard';
 
 // ----------------------------------------------------------------------
 import Nagad from '../images/Nagad.svg';
@@ -178,19 +178,19 @@ export default function PaymentHistoryPage() {
       <Container maxWidth={'lg'} sx={{ marginBottom: '30px' }}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={3}>
-            <PaymentHistoryCard title="Total Store Amount" value={5000012} />
+            <PaymentHistoryCard title="Total Store Amount" value={5000012} color="#F1F0E8" />
           </Grid>
 
           <Grid item xs={12} md={3}>
-            <PaymentHistoryCard title="Total Payment Amount" value={50000} />
+            <PaymentHistoryCard title="Total Payment Amount" value={50000} color="#C8FFE0" />
           </Grid>
 
           <Grid item xs={12} md={3}>
-            <PaymentHistoryCard title="bKash Nagad Cards Rocket DBBL" value={5010000} />
+            <PaymentHistoryCard title="Total Donation Amount" value={10} color="#EDE4FF" />
           </Grid>
 
           <Grid item xs={12} md={3}>
-            <PaymentHistoryCard title="Total Donation Amount" value={10} />
+            <PaymentHistoryBkashCard value={5010} color="#F79BD3" />
           </Grid>
         </Grid>
       </Container>
