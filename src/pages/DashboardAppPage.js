@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 // @mui
 import { useTheme } from '@mui/material/styles';
@@ -15,6 +16,18 @@ import useAuth from '../hooks/useAuth';
 export default function DashboardAppPage() {
   const theme = useTheme();
   const { auth } = useAuth();
+  const [userList, setUserList] = useState([]);
+
+  useEffect(() => {
+    fetch('https://spread-admin-api-staging.azurewebsites.net/api/UserManagement/UserList/user-list', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setUserList(data));
+  }, []);
 
   return (
     <>
@@ -33,7 +46,7 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Total Active Users" total={1420} icon={'clarity:users-solid'} />
+            <AppWidgetSummary title="Total Active Users" total={userList.length} icon={'clarity:users-solid'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
@@ -52,7 +65,7 @@ export default function DashboardAppPage() {
             <Typography variant="h5" sx={{ marginY: '15px' }}>
               Recent Donations
             </Typography>
-            <AppDonationTable />
+            <AppDonationTable userList={userList} />
           </Grid>
 
           <Grid item xs={12} md={4} lg={3}>

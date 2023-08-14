@@ -31,20 +31,7 @@ const TABLE_HEAD = [
 
 // ----------------------------------------------------------------------
 
-export default function UserPage() {
-  const [userList, setUserList] = useState([]);
-
-  useEffect(() => {
-    fetch('https://spread-admin-api-staging.azurewebsites.net/api/UserManagement/UserList/user-list', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => setUserList(data));
-  }, []);
-
+export default function AppDonationTable({ userList }) {
   return (
     <>
       <Container maxWidth="xl">
