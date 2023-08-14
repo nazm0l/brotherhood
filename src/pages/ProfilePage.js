@@ -2,13 +2,11 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Grid, Container, Typography, Stack, Tabs, Icon, Tab, Box } from '@mui/material';
+import { Grid, Container, Stack, Tabs, Tab, Box } from '@mui/material';
 // sections
 import { capitalCase } from 'change-case';
 import AccountGeneral from '../components/accounts/AccountGeneral';
 import AccountChangePassword from '../components/accounts/AccountChangePassword';
-import { AppBlog } from '../sections/@dashboard/app';
-import AppWelcome from '../components/app-welcome/AppWelcome';
 
 // ----------------------------------------------------------------------
 

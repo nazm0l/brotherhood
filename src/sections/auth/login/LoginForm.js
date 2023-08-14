@@ -63,7 +63,7 @@ export default function LoginForm({ setLoading }) {
 
       const accessToken = response?.data?.accessToken;
       localStorage.setItem('accessToken', accessToken);
-
+      navigate(from, { replace: true });
       setLoading(false);
     } catch (error) {
       setLoading(false);

@@ -49,14 +49,14 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} md={12} lg={12}>
-            <Typography variant="h4" sx={{ marginY: '15px', textAlign: 'center' }}>
+            <Typography variant="h5" sx={{ marginY: '15px' }}>
               Recent Donations
             </Typography>
             <AppDonationTable />
           </Grid>
 
           <Grid item xs={12} md={4} lg={3}>
-            <Typography variant="h4" sx={{ marginY: '15px', textAlign: 'center' }}>
+            <Typography variant="h5" sx={{ marginY: '15px' }}>
               Panel/Board Members
             </Typography>
 

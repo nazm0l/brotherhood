@@ -1,17 +1,6 @@
 // material
 
-import {
-  Card,
-  Stack,
-  Switch,
-  Grid,
-  TextField,
-  Typography,
-  FormHelperText,
-  FormControlLabel,
-  Box,
-  FormControl,
-} from '@mui/material';
+import { Card, Stack, Grid, TextField, Typography, Box, FormControl } from '@mui/material';
 
 import { LoadingButton } from '@mui/lab';
 
@@ -49,15 +38,12 @@ export default function AccountGeneral() {
             <Box
               component="img"
               alt="profile"
-              src="/static/mock-images/avatars/avatar_default.jpg"
+              src="https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png"
               sx={{ width: 500, height: 280, mx: 'auto', mb: 5, borderRadius: '50%' }}
             />
-
-            <FormHelperText error sx={{ px: 2, textAlign: 'center' }}>
-              {''}
-            </FormHelperText>
-
-            <FormControlLabel control={<Switch />} labelPlacement="start" label="Public Profile" sx={{ mt: 5 }} />
+            <Typography variant="subtitle1" sx={{ mb: 2 }}>
+              Mr John Doe
+            </Typography>
           </Card>
         </Grid>
 

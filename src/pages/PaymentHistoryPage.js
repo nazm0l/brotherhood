@@ -107,7 +107,7 @@ export default function PaymentHistoryPage() {
     console.log('Taking:', take);
     const skip = page * rowsPerPage; // Number of data to skip
     console.log('Skipping:', skip);
-    const url = `https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/admin-payment-report?take=${take}&skip=${skip}`;
+    const url = `https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/user-payment-history?take=${take}&skip=${skip}`;
 
     fetch(url, {
       method: 'GET',
@@ -118,11 +118,28 @@ export default function PaymentHistoryPage() {
       .then((res) => res.json())
       .then((data) => {
         console.log('data: ', data);
-        setPaymentData(data.paymentHistory);
-        setDataCount(data.totalItem);
+        setPaymentData(data);
+        setDataCount(data.length);
       })
       .catch((err) => console.log('err: ', err));
   }, [page, rowsPerPage]);
+
+  // payment summary
+
+  useEffect(() => {
+    fetch('https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/payment-summary', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('data: ', data);
+      })
+      .catch((err) => console.log('err: ', err));
+  }, []);
 
   // Console
 

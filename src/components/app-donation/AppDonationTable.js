@@ -35,7 +35,7 @@ export default function UserPage() {
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
-    fetch('https://spread-admin-api-staging.azurewebsites.net/api/UserManagement/UserList', {
+    fetch('https://spread-admin-api-staging.azurewebsites.net/api/UserManagement/UserList/user-list', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -55,7 +55,7 @@ export default function UserPage() {
             <Table>
               <DonationListHead headLabel={TABLE_HEAD} rowCount={userList.length} />
               <TableBody>
-                {userList.slice(1, 10).map((row, i) => {
+                {userList.slice(0, 10).map((row, i) => {
                   const { name, bloodGroup, professionalStatus } = row;
 
                   return (
