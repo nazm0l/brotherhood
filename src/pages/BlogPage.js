@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Controller, useForm } from 'react-hook-form';
 // @mui
@@ -19,9 +19,7 @@ import {
 } from '@mui/material';
 // components
 import Iconify from '../components/iconify';
-import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../sections/@dashboard/blog';
-// mock
-import POSTS from '../_mock/blog';
+import { BlogPostCard } from '../sections/@dashboard/blog';
 
 // ----------------------------------------------------------------------
 
@@ -29,19 +27,53 @@ import POSTS from '../_mock/blog';
 
 export default function BlogPage() {
   const [open, setOpen] = useState(false);
+  const [donations, setDonations] = useState([]);
 
   const {
     handleSubmit,
     control,
-    register,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name: '',
+      description: '',
+      baseAmount: 0,
+      goalAmount: 0,
+      isRunning: '',
+      takingFund: '',
+      date: '2021-10-10',
+      image: '',
+      video: '',
+    },
+  });
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    fetch('https://spread-admin-api-staging.azurewebsites.net/api/Donation/get-donation-campaign', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setDonations(data));
+  }, []);
+
+  // Define validation rules
+  const rules = {
+    required: 'This field is required',
+  };
+
+  const onSubmit = (data) => {
+    console.log(data); // Handle form submission
     setOpen(false);
   };
 
@@ -59,13 +91,13 @@ export default function BlogPage() {
         </Stack>
 
         <Grid container spacing={3}>
-          {POSTS.map((post, index) => (
-            <BlogPostCard key={post.id} post={post} index={index} />
+          {donations.map((donation, index) => (
+            <BlogPostCard key={donation.donationId} donation={donation} index={index} />
           ))}
         </Grid>
 
         <Box>
-          <Dialog maxWidth="lg" open={open} onClose={handleClose} component="form" onSubmit={handleSubmit}>
+          <Dialog maxWidth="lg" open={open} onClose={handleClose} component="form" onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2} sx={{ padding: '20px 40px 10px 40px' }}>
               <Typography variant="h4" align="center" sx={{ color: 'text.dark' }}>
                 Add New Donation Campaign
@@ -76,18 +108,73 @@ export default function BlogPage() {
             </Stack>
             <DialogContent sx={{ padding: '20px 40px 40px 40px' }}>
               <Stack flexBasis={1} spacing={2}>
-                <TextField name="name" autoFocus label="Name" />
-                <TextField name="description" label="Description" multiline minRows={3} maxRows={4} />
+                <Controller
+                  name="name"
+                  control={control}
+                  rules={rules}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      label="Name"
+                      autoFocus
+                      error={fieldState.invalid}
+                      helperText={fieldState.invalid && 'Please enter your name'}
+                    />
+                  )}
+                />
+                <Controller
+                  name="description"
+                  control={control}
+                  rules={rules}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      label="Description"
+                      multiline
+                      minRows={3}
+                      maxRows={4}
+                      error={fieldState.invalid}
+                      helperText={fieldState.invalid && 'Please enter your name'}
+                    />
+                  )}
+                />
                 <Stack direction={{ md: 'row', xs: 'column' }} spacing={2}>
-                  <TextField name="baseAmount" label="Base Amount" fullWidth />
-                  <TextField name="goalAmount" label="Goal Amount" fullWidth />
+                  <Controller
+                    name="baseAmount"
+                    control={control}
+                    rules={rules}
+                    render={({ field, fieldState }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        label="Base Amount"
+                        error={fieldState.invalid}
+                        helperText={fieldState.invalid && 'Please enter base amount'}
+                      />
+                    )}
+                  />
+                  <Controller
+                    name="goalAmount"
+                    control={control}
+                    rules={rules}
+                    render={({ field, fieldState }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        label="Goal Amount"
+                        error={fieldState.invalid}
+                        helperText={fieldState.invalid && 'Please enter goal amount'}
+                      />
+                    )}
+                  />
                 </Stack>
                 <Stack direction={{ md: 'row', xs: 'column' }} spacing={2}>
                   <Controller
                     name="isRunning"
                     control={control}
-                    defaultValue=""
-                    rules={{ required: 'Value is required' }}
+                    rules={rules}
                     render={({ field }) => (
                       <FormControl error={Boolean(errors.runningGroup)} fullWidth>
                         <InputLabel
@@ -101,8 +188,8 @@ export default function BlogPage() {
                           Running
                         </InputLabel>
                         <Select labelId="running-group-label" id="running-group" {...field}>
-                          <MenuItem value="A+">Yes</MenuItem>
-                          <MenuItem value="A-">No</MenuItem>
+                          <MenuItem value="Yes">Yes</MenuItem>
+                          <MenuItem value="No">No</MenuItem>
                         </Select>
                         {errors.runningGroup && (
                           <Typography variant="caption" color="error">
@@ -115,8 +202,7 @@ export default function BlogPage() {
                   <Controller
                     name="takingFund"
                     control={control}
-                    defaultValue=""
-                    rules={{ required: 'Value is required' }}
+                    rules={rules}
                     render={({ field }) => (
                       <FormControl error={Boolean(errors.takingFundGroup)} fullWidth>
                         <InputLabel
@@ -130,8 +216,8 @@ export default function BlogPage() {
                           Taking Fund
                         </InputLabel>
                         <Select labelId="takingFund-group-label" id="takingFund-group" {...field}>
-                          <MenuItem value="A+">Yes</MenuItem>
-                          <MenuItem value="A-">No</MenuItem>
+                          <MenuItem value="Yes">Yes</MenuItem>
+                          <MenuItem value="No">No</MenuItem>
                         </Select>
                         {errors.takingFundGroup && (
                           <Typography variant="caption" color="error">
@@ -143,13 +229,23 @@ export default function BlogPage() {
                   />
                 </Stack>
 
-                <TextField
-                  name="image"
-                  type="date"
-                  label="Campaign End Date"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                <Controller
+                  name="date"
+                  control={control}
+                  rules={rules}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      type="date"
+                      label="Campaign End Date"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      error={fieldState.invalid}
+                      helperText={fieldState.invalid && 'Please enter end date'}
+                    />
+                  )}
                 />
 
                 <Typography variant="title1" sx={{ color: 'text.dark', marginTop: '20px' }}>
@@ -157,21 +253,41 @@ export default function BlogPage() {
                 </Typography>
 
                 <Stack direction={{ md: 'row', xs: 'column' }} spacing={2}>
-                  <TextField
+                  <Controller
                     name="image"
-                    type="file"
-                    label="Campaign Image"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
+                    control={control}
+                    rules={rules}
+                    render={({ field, fieldState }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        type="file"
+                        label="Campaign Image"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        error={fieldState.invalid}
+                        helperText={fieldState.invalid && 'Please upload campaign image'}
+                      />
+                    )}
                   />
-                  <TextField
-                    name="image"
-                    type="file"
-                    label="Campaign Video"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
+                  <Controller
+                    name="video"
+                    control={control}
+                    rules={rules}
+                    render={({ field, fieldState }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        type="file"
+                        label="Campaign Video"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        error={fieldState.invalid}
+                        helperText={fieldState.invalid && 'Please upload campaign video'}
+                      />
+                    )}
                   />
                 </Stack>
               </Stack>

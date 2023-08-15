@@ -117,7 +117,6 @@ export default function PaymentHistoryPage() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log('data: ', data);
         setPaymentData(data);
         setDataCount(data.length);
       })
@@ -140,11 +139,6 @@ export default function PaymentHistoryPage() {
       })
       .catch((err) => console.log('err: ', err));
   }, []);
-
-  // Console
-
-  console.log('paymentData: ', paymentData);
-  console.log('pickDate: ', pickDate);
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);

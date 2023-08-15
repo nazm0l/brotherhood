@@ -52,19 +52,19 @@ const StyledCover = styled('img')({
 // ----------------------------------------------------------------------
 
 BlogPostCard.propTypes = {
-  post: PropTypes.object.isRequired,
+  donation: PropTypes.object.isRequired,
   index: PropTypes.number,
 };
 
-export default function BlogPostCard({ post, index }) {
-  const { cover, title, view, comment, share, author, createdAt } = post;
+export default function BlogPostCard({ donation, index }) {
+  const { title, description, baseAmount, goalAmount, takingFund, isRunning, createdDate, closedDate } = donation;
   const latestPostLarge = index === 0;
   const latestPost = index === 1 || index === 2;
 
   const POST_INFO = [
-    { number: comment, icon: 'eva:message-circle-fill' },
-    { number: view, icon: 'eva:eye-fill' },
-    { number: share, icon: 'eva:share-fill' },
+    { number: baseAmount, icon: 'dashicons:money-alt' },
+    { number: goalAmount, icon: 'dashicons:money-alt' },
+    { boolean: takingFund, icon: 'streamline-emojis:money-bag' },
   ];
 
   return (
@@ -105,8 +105,8 @@ export default function BlogPostCard({ post, index }) {
             }}
           />
           <StyledAvatar
-            alt={author.name}
-            src={author.avatarUrl}
+            alt="Md Najmul Hossen"
+            src="https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes.png"
             sx={{
               ...((latestPostLarge || latestPost) && {
                 zIndex: 9,
@@ -118,7 +118,10 @@ export default function BlogPostCard({ post, index }) {
             }}
           />
 
-          <StyledCover alt={title} src={cover} />
+          <StyledCover
+            alt={title}
+            src="https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+          />
         </StyledCardMedia>
 
         <CardContent
@@ -132,7 +135,7 @@ export default function BlogPostCard({ post, index }) {
           }}
         >
           <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
-            {fDate(createdAt)}
+            {fDate(createdDate)}
           </Typography>
 
           <StyledTitle
@@ -148,6 +151,9 @@ export default function BlogPostCard({ post, index }) {
           >
             {title}
           </StyledTitle>
+          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+            {description}
+          </Typography>
 
           <StyledInfo>
             {POST_INFO.map((info, index) => (
@@ -162,8 +168,8 @@ export default function BlogPostCard({ post, index }) {
                   }),
                 }}
               >
-                <Iconify icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} />
-                <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
+                <Iconify icon={info.icon} sx={{ width: 36, height: 36, mr: 0.5 }} />
+                <Typography variant="h6">{fShortenNumber(info.number)}</Typography>
               </Box>
             ))}
           </StyledInfo>
