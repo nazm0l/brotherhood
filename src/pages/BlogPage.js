@@ -17,6 +17,7 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
+import { toast } from 'react-toastify';
 // components
 import Iconify from '../components/iconify';
 import { BlogPostCard } from '../sections/@dashboard/blog';
@@ -39,11 +40,11 @@ export default function BlogPage() {
       description: '',
       baseAmount: 0,
       goalAmount: 0,
-      isRunning: '',
-      takingFund: '',
-      date: '2021-10-10',
-      image: '',
-      video: '',
+      isRunning: true,
+      takingFund: true,
+      date: '',
+      image: null,
+      video: null,
     },
   });
 
@@ -72,8 +73,29 @@ export default function BlogPage() {
     required: 'This field is required',
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data); // Handle form submission
+
+    try {
+      const response = await fetch(
+        'https://spread-admin-api-staging.azurewebsites.net/api/Donation/create-donation-campaign',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }
+      );
+      if (response.status === 200) {
+        toast.success('Campaign created successfully!');
+      } else {
+        toast.error('Something went wrong!');
+      }
+    } catch (error) {
+      toast.error('Something went wrong!', error);
+    }
+
     setOpen(false);
   };
 
@@ -109,14 +131,14 @@ export default function BlogPage() {
             <DialogContent sx={{ padding: '20px 40px 40px 40px' }}>
               <Stack flexBasis={1} spacing={2}>
                 <Controller
-                  name="name"
+                  name="title"
                   control={control}
                   rules={rules}
                   render={({ field, fieldState }) => (
                     <TextField
                       {...field}
                       fullWidth
-                      label="Name"
+                      label="Title"
                       autoFocus
                       error={fieldState.invalid}
                       helperText={fieldState.invalid && 'Please enter your name'}
@@ -188,8 +210,8 @@ export default function BlogPage() {
                           Running
                         </InputLabel>
                         <Select labelId="running-group-label" id="running-group" {...field}>
-                          <MenuItem value="Yes">Yes</MenuItem>
-                          <MenuItem value="No">No</MenuItem>
+                          <MenuItem value>Yes</MenuItem>
+                          <MenuItem value={false}>No</MenuItem>
                         </Select>
                         {errors.runningGroup && (
                           <Typography variant="caption" color="error">
@@ -216,8 +238,8 @@ export default function BlogPage() {
                           Taking Fund
                         </InputLabel>
                         <Select labelId="takingFund-group-label" id="takingFund-group" {...field}>
-                          <MenuItem value="Yes">Yes</MenuItem>
-                          <MenuItem value="No">No</MenuItem>
+                          <MenuItem value>Yes</MenuItem>
+                          <MenuItem value={false}>No</MenuItem>
                         </Select>
                         {errors.takingFundGroup && (
                           <Typography variant="caption" color="error">
@@ -230,7 +252,7 @@ export default function BlogPage() {
                 </Stack>
 
                 <Controller
-                  name="date"
+                  name="closedDate"
                   control={control}
                   rules={rules}
                   render={({ field, fieldState }) => (
@@ -254,9 +276,8 @@ export default function BlogPage() {
 
                 <Stack direction={{ md: 'row', xs: 'column' }} spacing={2}>
                   <Controller
-                    name="image"
+                    name="imagePath"
                     control={control}
-                    rules={rules}
                     render={({ field, fieldState }) => (
                       <TextField
                         {...field}
@@ -267,14 +288,13 @@ export default function BlogPage() {
                           shrink: true,
                         }}
                         error={fieldState.invalid}
-                        helperText={fieldState.invalid && 'Please upload campaign image'}
+                        helperText={fieldState.invalid && 'Please upload image'}
                       />
                     )}
                   />
                   <Controller
-                    name="video"
+                    name="videoPath"
                     control={control}
-                    rules={rules}
                     render={({ field, fieldState }) => (
                       <TextField
                         {...field}
@@ -285,7 +305,7 @@ export default function BlogPage() {
                           shrink: true,
                         }}
                         error={fieldState.invalid}
-                        helperText={fieldState.invalid && 'Please upload campaign video'}
+                        helperText={fieldState.invalid && 'Please upload video'}
                       />
                     )}
                   />
