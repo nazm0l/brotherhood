@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 // @mui
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Link, Card, Grid, Avatar, Typography, CardContent } from '@mui/material';
+import { Box, Card, Grid, Avatar, Typography, CardContent } from '@mui/material';
 // utils
 import { fDate } from '../../../utils/formatTime';
 import { fShortenNumber } from '../../../utils/formatNumber';
@@ -16,8 +17,9 @@ const StyledCardMedia = styled('div')({
   paddingTop: 'calc(100% * 3 / 4)',
 });
 
-const StyledTitle = styled(Link)({
+const StyledTitle = styled('div')({
   height: 44,
+  textDecoration: 'none',
   overflow: 'hidden',
   WebkitLineClamp: 2,
   display: '-webkit-box',
@@ -62,119 +64,120 @@ export default function BlogPostCard({ donation, index }) {
   const latestPost = index === 1 || index === 2;
 
   const POST_INFO = [
-    { number: baseAmount, icon: 'dashicons:money-alt' },
-    { number: goalAmount, icon: 'dashicons:money-alt' },
-    { boolean: takingFund, icon: 'streamline-emojis:money-bag' },
+    { number: baseAmount, title: 'Minimum amount : ' },
+    { number: goalAmount, title: 'Total raised : ' },
   ];
 
   return (
     <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
-      <Card sx={{ position: 'relative' }}>
-        <StyledCardMedia
-          sx={{
-            ...((latestPostLarge || latestPost) && {
-              pt: 'calc(100% * 4 / 3)',
-              '&:after': {
-                top: 0,
-                content: "''",
-                width: '100%',
-                height: '100%',
-                position: 'absolute',
-                bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72),
-              },
-            }),
-            ...(latestPostLarge && {
-              pt: {
-                xs: 'calc(100% * 4 / 3)',
-                sm: 'calc(100% * 3 / 4.66)',
-              },
-            }),
-          }}
-        >
-          <SvgColor
-            color="paper"
-            src="/assets/icons/shape-avatar.svg"
-            sx={{
-              width: 80,
-              height: 36,
-              zIndex: 9,
-              bottom: -15,
-              position: 'absolute',
-              color: 'background.paper',
-              ...((latestPostLarge || latestPost) && { display: 'none' }),
-            }}
-          />
-          <StyledAvatar
-            alt="Md Najmul Hossen"
-            src="https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes.png"
+      <Link to="/dashboard/communication" style={{ textDecoration: 'none' }}>
+        <Card sx={{ position: 'relative' }}>
+          <StyledCardMedia
             sx={{
               ...((latestPostLarge || latestPost) && {
-                zIndex: 9,
-                top: 24,
-                left: 24,
-                width: 40,
-                height: 40,
+                pt: 'calc(100% * 4 / 3)',
+                '&:after': {
+                  top: 0,
+                  content: "''",
+                  width: '100%',
+                  height: '100%',
+                  position: 'absolute',
+                  bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72),
+                },
               }),
-            }}
-          />
-
-          <StyledCover
-            alt={title}
-            src="https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-          />
-        </StyledCardMedia>
-
-        <CardContent
-          sx={{
-            pt: 4,
-            ...((latestPostLarge || latestPost) && {
-              bottom: 0,
-              width: '100%',
-              position: 'absolute',
-            }),
-          }}
-        >
-          <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
-            {fDate(createdDate)}
-          </Typography>
-
-          <StyledTitle
-            color="inherit"
-            variant="subtitle2"
-            underline="hover"
-            sx={{
-              ...(latestPostLarge && { typography: 'h5', height: 60 }),
-              ...((latestPostLarge || latestPost) && {
-                color: 'common.white',
+              ...(latestPostLarge && {
+                pt: {
+                  xs: 'calc(100% * 4 / 3)',
+                  sm: 'calc(100% * 3 / 4.66)',
+                },
               }),
             }}
           >
-            {title}
-          </StyledTitle>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            {description}
-          </Typography>
+            <SvgColor
+              color="paper"
+              src="/assets/icons/shape-avatar.svg"
+              sx={{
+                width: 80,
+                height: 36,
+                zIndex: 9,
+                bottom: -15,
+                position: 'absolute',
+                color: 'background.paper',
+                ...((latestPostLarge || latestPost) && { display: 'none' }),
+              }}
+            />
+            <StyledAvatar
+              alt="Md Najmul Hossen"
+              src="https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes.png"
+              sx={{
+                ...((latestPostLarge || latestPost) && {
+                  zIndex: 9,
+                  top: 24,
+                  left: 24,
+                  width: 40,
+                  height: 40,
+                }),
+              }}
+            />
 
-          <StyledInfo>
-            {POST_INFO.map((info, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  ml: index === 0 ? 0 : 1.5,
-                  ...((latestPostLarge || latestPost) && {
-                    color: 'grey.500',
-                  }),
-                }}
-              >
-                <Iconify icon={info.icon} sx={{ width: 36, height: 36, mr: 0.5 }} />
-                <Typography variant="h6">{fShortenNumber(info.number)}</Typography>
-              </Box>
-            ))}
-          </StyledInfo>
-        </CardContent>
-      </Card>
+            <StyledCover
+              alt={title}
+              src="https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+            />
+          </StyledCardMedia>
+
+          <CardContent
+            sx={{
+              pt: 4,
+              ...((latestPostLarge || latestPost) && {
+                bottom: 0,
+                width: '100%',
+                position: 'absolute',
+              }),
+            }}
+          >
+            <Typography gutterBottom variant="caption" sx={{ color: 'text.disabled', display: 'block' }}>
+              {fDate(createdDate)}
+            </Typography>
+
+            <StyledTitle
+              color="inherit"
+              variant="subtitle2"
+              underline="hover"
+              sx={{
+                ...(latestPostLarge && { typography: 'h5', height: 60 }),
+                ...((latestPostLarge || latestPost) && {
+                  color: 'common.white',
+                }),
+              }}
+            >
+              {title}
+            </StyledTitle>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              {description}
+            </Typography>
+
+            <StyledInfo>
+              {POST_INFO.map((info, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    ml: index === 0 ? 0 : 1.5,
+                    ...((latestPostLarge || latestPost) && {
+                      color: 'grey.500',
+                    }),
+                  }}
+                >
+                  <Typography variant="caption"> {info.title}</Typography>
+                  <Typography variant="h6"> {info.number} Tk</Typography>
+                </Box>
+              ))}
+            </StyledInfo>
+          </CardContent>
+        </Card>
+      </Link>
     </Grid>
   );
 }

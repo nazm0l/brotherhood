@@ -7,7 +7,7 @@ import BlogPage from './pages/BlogPage';
 import UserPage from './pages/UserPage';
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
-import ProductsPage from './pages/ProductsPage';
+import CommunicationPage from './pages/CommunicationPage';
 import DashboardAppPage from './pages/DashboardAppPage';
 import ResetPassword from './pages/ResetPassword';
 import RegistrationPage from './pages/RegistrationPage';
@@ -37,7 +37,7 @@ export default function Router() {
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'user', element: <UserPage /> },
-        { path: 'products', element: <ProductsPage /> },
+        { path: 'communication', element: <CommunicationPage /> },
         {
           path: 'payment-history',
           element: (

@@ -38,15 +38,15 @@ export default function BlogPage() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      name: '',
+      title: '',
       description: '',
       baseAmount: 0,
       goalAmount: 0,
       isRunning: true,
       takingFund: true,
-      date: '',
-      image: null,
-      video: null,
+      closedDate: '',
+      imagePath: '',
+      videoPath: '',
     },
   });
 

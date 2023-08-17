@@ -26,11 +26,6 @@ export const generalNavConfig = [
     path: '/dashboard/donation',
     icon: icon('ic_blog'),
   },
-  {
-    title: 'product',
-    path: '/dashboard/products',
-    icon: icon('ic_cart'),
-  },
 ];
 
 export const managementNavConfig = [
