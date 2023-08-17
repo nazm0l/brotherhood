@@ -88,6 +88,10 @@ export default function PaymentHistoryPage() {
 
   const [dataCount, setDataCount] = useState(0);
 
+  const [summaryData, setSummaryData] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
@@ -126,19 +130,28 @@ export default function PaymentHistoryPage() {
   // payment summary
 
   useEffect(() => {
-    fetch('https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/payment-summary', {
+    getPaymentSummary();
+  }, []);
+
+  const getPaymentSummary = async () => {
+    setLoading(true);
+
+    await fetch('https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/payment-summary', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
+      body: JSON.stringify({}),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log('data: ', data);
+        setSummaryData(data);
       })
       .catch((err) => console.log('err: ', err));
-  }, []);
+
+    setLoading(false);
+  };
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
@@ -186,153 +199,161 @@ export default function PaymentHistoryPage() {
         <title> Payment History | Brotherhood ERP </title>
       </Helmet>
 
-      <Container maxWidth={'lg'} sx={{ marginBottom: '30px' }}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={3}>
-            <PaymentHistoryCard title="Total Store Amount" value={5000012} color="#F1F0E8" />
-          </Grid>
+      {loading ? (
+        <Container sx={{ display: 'flex', height: '90vh', placeItems: 'center' }}>
+          <Loading />
+        </Container>
+      ) : (
+        <>
+          {' '}
+          <Container maxWidth={'lg'} sx={{ marginBottom: '30px' }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={3}>
+                <PaymentHistoryCard title="Total Store Amount" value={summaryData.totalStoreAmout} color="#F1F0E8" />
+              </Grid>
 
-          <Grid item xs={12} md={3}>
-            <PaymentHistoryCard title="Total Payment Amount" value={50000} color="#C8FFE0" />
-          </Grid>
+              <Grid item xs={12} md={3}>
+                <PaymentHistoryCard title="Total Payment Amount" value={summaryData.receivedAmout} color="#C8FFE0" />
+              </Grid>
 
-          <Grid item xs={12} md={3}>
-            <PaymentHistoryCard title="Total Donation Amount" value={10} color="#EDE4FF" />
-          </Grid>
+              <Grid item xs={12} md={3}>
+                <PaymentHistoryCard title="Total Donation Amount" value={summaryData.byDonation} color="#EDE4FF" />
+              </Grid>
 
-          <Grid item xs={12} md={3}>
-            <PaymentHistoryBkashCard value={5010} color="#F79BD3" />
-          </Grid>
-        </Grid>
-      </Container>
+              <Grid item xs={12} md={3}>
+                <PaymentHistoryBkashCard summaryData={summaryData} color="#F79BD3" />
+              </Grid>
+            </Grid>
+          </Container>
+          <Container>
+            <Card>
+              <PaymentListToolbar filterTrxId={filterTrxId} onFilterTrxId={handleFilterByTrxId} />
 
-      <Container>
-        <Card>
-          <PaymentListToolbar filterTrxId={filterTrxId} onFilterTrxId={handleFilterByTrxId} />
+              <Scrollbar>
+                <TableContainer sx={{ minWidth: 800 }}>
+                  {dataCount === 0 ? (
+                    <Loading />
+                  ) : (
+                    <Table>
+                      <PaymentListHead
+                        order={order}
+                        orderBy={orderBy}
+                        headLabel={TABLE_HEAD}
+                        onRequestSort={handleRequestSort}
+                        date={pickDate}
+                        setPickDate={setPickDate}
+                      />
+                      <TableBody>
+                        {filteredPayment.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, i) => {
+                          const {
+                            id,
+                            name,
+                            phone,
+                            transactionId,
+                            paymentAmount,
+                            storeAmount,
+                            vendor,
+                            campaign,
+                            reference,
+                            dateTime,
+                          } = row;
 
-          <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
-              {dataCount === 0 ? (
-                <Loading />
-              ) : (
-                <Table>
-                  <PaymentListHead
-                    order={order}
-                    orderBy={orderBy}
-                    headLabel={TABLE_HEAD}
-                    onRequestSort={handleRequestSort}
-                    date={pickDate}
-                    setPickDate={setPickDate}
-                  />
-                  <TableBody>
-                    {filteredPayment.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, i) => {
-                      const {
-                        id,
-                        name,
-                        phone,
-                        transactionId,
-                        paymentAmount,
-                        storeAmount,
-                        vendor,
-                        campaign,
-                        reference,
-                        dateTime,
-                      } = row;
+                          return (
+                            <TableRow hover key={id} tabIndex={-1} role="checkbox">
+                              <TableCell>
+                                <Typography variant="subtitle2" alignItems="center" noWrap>
+                                  {page * rowsPerPage + i + 1}
+                                </Typography>
+                              </TableCell>
 
-                      return (
-                        <TableRow hover key={id} tabIndex={-1} role="checkbox">
-                          <TableCell>
-                            <Typography variant="subtitle2" alignItems="center" noWrap>
-                              {page * rowsPerPage + i + 1}
-                            </Typography>
-                          </TableCell>
+                              <TableCell component="th" scope="row" padding="none">
+                                <Stack direction="row" alignItems="center" spacing={2}>
+                                  <Typography variant="subtitle2" noWrap>
+                                    {name}
+                                  </Typography>
+                                </Stack>
+                              </TableCell>
 
-                          <TableCell component="th" scope="row" padding="none">
-                            <Stack direction="row" alignItems="center" spacing={2}>
-                              <Typography variant="subtitle2" noWrap>
-                                {name}
-                              </Typography>
-                            </Stack>
-                          </TableCell>
+                              <TableCell align="left">{phone}</TableCell>
 
-                          <TableCell align="left">{phone}</TableCell>
+                              <TableCell align="left">{transactionId}</TableCell>
 
-                          <TableCell align="left">{transactionId}</TableCell>
+                              <TableCell align="center">৳ {paymentAmount}</TableCell>
 
-                          <TableCell align="center">৳ {paymentAmount}</TableCell>
+                              <TableCell align="center">৳ {storeAmount}</TableCell>
 
-                          <TableCell align="center">৳ {storeAmount}</TableCell>
+                              <TableCell align="left">
+                                {vendor === 'bKash' ? (
+                                  <img src={bKash} alt="bkash" width={40} height={32} />
+                                ) : vendor === 'Nagad' ? (
+                                  <img src={Nagad} alt="nagad" height="30" width="50" />
+                                ) : (
+                                  vendor
+                                )}
+                              </TableCell>
 
-                          <TableCell align="left">
-                            {vendor === 'bKash' ? (
-                              <img src={bKash} alt="bkash" width={40} height={32} />
-                            ) : vendor === 'Nagad' ? (
-                              <img src={Nagad} alt="nagad" height="30" width="50" />
-                            ) : (
-                              vendor
-                            )}
-                          </TableCell>
+                              <TableCell align="left">{campaign}</TableCell>
 
-                          <TableCell align="left">{campaign}</TableCell>
+                              <TableCell align="left">{reference}</TableCell>
 
-                          <TableCell align="left">{reference}</TableCell>
+                              <TableCell align="left">{dateTime.substring(0, 10)}</TableCell>
 
-                          <TableCell align="left">{dateTime.substring(0, 10)}</TableCell>
+                              <TableCell align="right">
+                                <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
+                                  <Iconify icon={'eva:more-vertical-fill'} />
+                                </IconButton>
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                        {emptyRows > 0 && (
+                          <TableRow style={{ height: 53 * emptyRows }}>
+                            <TableCell colSpan={6} />
+                          </TableRow>
+                        )}
+                      </TableBody>
 
-                          <TableCell align="right">
-                            <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                              <Iconify icon={'eva:more-vertical-fill'} />
-                            </IconButton>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                    {emptyRows > 0 && (
-                      <TableRow style={{ height: 53 * emptyRows }}>
-                        <TableCell colSpan={6} />
-                      </TableRow>
-                    )}
-                  </TableBody>
+                      {isNotFound && (
+                        <TableBody>
+                          <TableRow>
+                            <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                              <Paper
+                                sx={{
+                                  textAlign: 'center',
+                                }}
+                              >
+                                <Typography variant="h6" paragraph>
+                                  Not found
+                                </Typography>
 
-                  {isNotFound && (
-                    <TableBody>
-                      <TableRow>
-                        <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                          <Paper
-                            sx={{
-                              textAlign: 'center',
-                            }}
-                          >
-                            <Typography variant="h6" paragraph>
-                              Not found
-                            </Typography>
-
-                            <Typography variant="body2">
-                              No results found for &nbsp;
-                              <strong>&quot;{filterTrxId}&quot;</strong>.
-                              <br /> Try checking for typos or using complete words.
-                            </Typography>
-                          </Paper>
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
+                                <Typography variant="body2">
+                                  No results found for &nbsp;
+                                  <strong>&quot;{filterTrxId}&quot;</strong>.
+                                  <br /> Try checking for typos or using complete words.
+                                </Typography>
+                              </Paper>
+                            </TableCell>
+                          </TableRow>
+                        </TableBody>
+                      )}
+                    </Table>
                   )}
-                </Table>
-              )}
-            </TableContainer>
-          </Scrollbar>
+                </TableContainer>
+              </Scrollbar>
 
-          <TablePagination
-            rowsPerPageOptions={[10, 25]}
-            component="div"
-            count={dataCount}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Card>
-      </Container>
+              <TablePagination
+                rowsPerPageOptions={[10, 25]}
+                component="div"
+                count={dataCount}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </Card>
+          </Container>{' '}
+        </>
+      )}
 
       <Popover
         open={Boolean(open)}
