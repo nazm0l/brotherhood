@@ -1,6 +1,5 @@
 import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
-import { sentenceCase } from 'change-case';
 import { useEffect, useState } from 'react';
 // @mui
 import {
@@ -89,8 +88,6 @@ export default function PaymentHistoryPage() {
 
   const [dataCount, setDataCount] = useState(0);
 
-  const [summaryData, setSummaryData] = useState([]);
-
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
@@ -127,32 +124,6 @@ export default function PaymentHistoryPage() {
       })
       .catch((err) => console.log('err: ', err));
   }, [page, rowsPerPage]);
-
-  // payment summary
-
-  // useEffect(() => {
-  //   getPaymentSummary();
-  // }, []);
-
-  // const getPaymentSummary = async () => {
-  //   setLoading(true);
-
-  //   await fetch('https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/payment-summary', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-  //     },
-  //     body: JSON.stringify({}),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setSummaryData(data);
-  //     })
-  //     .catch((err) => console.log('err: ', err));
-
-  //   setLoading(false);
-  // };
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);

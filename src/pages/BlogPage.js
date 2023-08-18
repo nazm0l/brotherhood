@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-boolean-value */
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Controller, useForm } from 'react-hook-form';
@@ -16,6 +17,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Divider,
 } from '@mui/material';
 import { toast } from 'react-toastify';
 // components
@@ -42,8 +44,8 @@ export default function BlogPage() {
       description: '',
       baseAmount: 0,
       goalAmount: 0,
-      isRunning: true,
-      takingFund: true,
+      isRunning: '',
+      takingFund: '',
       closedDate: '',
       imagePath: '',
       videoPath: '',
@@ -82,7 +84,7 @@ export default function BlogPage() {
   };
 
   const onSubmit = async (data) => {
-    console.log(data); // Handle form submission
+    console.log(data);
     setLoading(true);
     try {
       const response = await fetch(
@@ -126,10 +128,30 @@ export default function BlogPage() {
             </Button>
           </Stack>
 
+          <Typography variant="h6" sx={{ color: 'green', marginBottom: '20px' }}>
+            On Going Campaigns
+          </Typography>
+          <Divider variant="fullWidth" sx={{ marginBottom: '30px' }} />
           <Grid container spacing={3}>
-            {donations.map((donation, index) => (
-              <BlogPostCard key={donation.donationId} donation={donation} index={index} />
-            ))}
+            {donations.map(
+              (donation, index) =>
+                donation.isRunning === true && (
+                  <BlogPostCard key={donation.donationId} donation={donation} index={index} />
+                )
+            )}
+          </Grid>
+
+          <Typography variant="h6" sx={{ color: 'red', marginY: '20px' }}>
+            Closed Campaigns
+          </Typography>
+          <Divider variant="fullWidth" sx={{ marginBottom: '30px' }} />
+          <Grid container spacing={3}>
+            {donations.map(
+              (donation, index) =>
+                donation.isRunning === false && (
+                  <BlogPostCard key={donation.donationId} donation={donation} index={index} />
+                )
+            )}
           </Grid>
 
           <Box>
@@ -210,7 +232,6 @@ export default function BlogPage() {
                     <Controller
                       name="isRunning"
                       control={control}
-                      rules={rules}
                       render={({ field }) => (
                         <FormControl error={Boolean(errors.runningGroup)} fullWidth>
                           <InputLabel
@@ -224,8 +245,8 @@ export default function BlogPage() {
                             Running
                           </InputLabel>
                           <Select labelId="running-group-label" id="running-group" {...field}>
-                            <MenuItem value>Yes</MenuItem>
-                            <MenuItem value={false}>No</MenuItem>
+                            <MenuItem value="true">Yes</MenuItem>
+                            <MenuItem value="false">No</MenuItem>
                           </Select>
                           {errors.runningGroup && (
                             <Typography variant="caption" color="error">
@@ -238,7 +259,6 @@ export default function BlogPage() {
                     <Controller
                       name="takingFund"
                       control={control}
-                      rules={rules}
                       render={({ field }) => (
                         <FormControl error={Boolean(errors.takingFundGroup)} fullWidth>
                           <InputLabel
@@ -252,8 +272,8 @@ export default function BlogPage() {
                             Taking Fund
                           </InputLabel>
                           <Select labelId="takingFund-group-label" id="takingFund-group" {...field}>
-                            <MenuItem value>Yes</MenuItem>
-                            <MenuItem value={false}>No</MenuItem>
+                            <MenuItem value="true">Yes</MenuItem>
+                            <MenuItem value="false">No</MenuItem>
                           </Select>
                           {errors.takingFundGroup && (
                             <Typography variant="caption" color="error">
