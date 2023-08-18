@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography, Divider } from '@mui/material';
 // sections
+import usePaymentSummary from '../hooks/usePaymentSummary';
 import Loading from '../components/loading/Loading';
 import UserCard from '../components/user-card/UserCard';
 import AppSlider from '../components/app-slider/AppSlider';
@@ -18,14 +19,13 @@ export default function DashboardAppPage() {
   const theme = useTheme();
   const { auth } = useAuth();
   const [userList, setUserList] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [paymentSummary, loading] = usePaymentSummary();
 
   useEffect(() => {
     getDonationList();
   }, []);
 
   const getDonationList = async () => {
-    setLoading(true);
     await fetch('https://spread-admin-api-staging.azurewebsites.net/api/UserManagement/UserList/user-list', {
       method: 'POST',
       headers: {
@@ -34,7 +34,6 @@ export default function DashboardAppPage() {
     })
       .then((response) => response.json())
       .then((data) => setUserList(data));
-    setLoading(false);
   };
 
   return (
@@ -63,15 +62,30 @@ export default function DashboardAppPage() {
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
-              <AppWidgetSummary title="Total Store Amount" total={10206} color="info" icon={'nimbus:money'} />
+              <AppWidgetSummary
+                title="Total Store Amount"
+                total={paymentSummary.totalStoreAmout}
+                color="info"
+                icon={'nimbus:money'}
+              />
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
-              <AppWidgetSummary title="Total Donation Received" total={1723} color="warning" icon={'nimbus:money'} />
+              <AppWidgetSummary
+                title="Total Donation Received"
+                total={paymentSummary.byDonation}
+                color="warning"
+                icon={'nimbus:money'}
+              />
             </Grid>
 
             <Grid item xs={12} sm={6} md={3}>
-              <AppWidgetSummary title="Withdrawn Money" total={1006} color="error" icon={'vaadin:money-withdraw'} />
+              <AppWidgetSummary
+                title="Total Payment"
+                total={paymentSummary.receivedAmout}
+                color="error"
+                icon={'vaadin:money-withdraw'}
+              />
             </Grid>
 
             <Grid item xs={12} md={12} lg={12}>

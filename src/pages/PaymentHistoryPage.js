@@ -23,6 +23,7 @@ import {
   Grid,
 } from '@mui/material';
 // components
+import usePaymentSummary from '../hooks/usePaymentSummary';
 import Loading from '../components/loading/Loading';
 import Label from '../components/label';
 import Iconify from '../components/iconify';
@@ -90,8 +91,6 @@ export default function PaymentHistoryPage() {
 
   const [summaryData, setSummaryData] = useState([]);
 
-  const [loading, setLoading] = useState(true);
-
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
@@ -105,6 +104,8 @@ export default function PaymentHistoryPage() {
   const [filterTrxId, setFilterTrxId] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const [paymentSummary, loading] = usePaymentSummary();
 
   useEffect(() => {
     const take = rowsPerPage; // Number of data to load per page
@@ -129,29 +130,29 @@ export default function PaymentHistoryPage() {
 
   // payment summary
 
-  useEffect(() => {
-    getPaymentSummary();
-  }, []);
+  // useEffect(() => {
+  //   getPaymentSummary();
+  // }, []);
 
-  const getPaymentSummary = async () => {
-    setLoading(true);
+  // const getPaymentSummary = async () => {
+  //   setLoading(true);
 
-    await fetch('https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/payment-summary', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-      body: JSON.stringify({}),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setSummaryData(data);
-      })
-      .catch((err) => console.log('err: ', err));
+  //   await fetch('https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/payment-summary', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  //     },
+  //     body: JSON.stringify({}),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setSummaryData(data);
+  //     })
+  //     .catch((err) => console.log('err: ', err));
 
-    setLoading(false);
-  };
+  //   setLoading(false);
+  // };
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
@@ -209,19 +210,27 @@ export default function PaymentHistoryPage() {
           <Container maxWidth={'lg'} sx={{ marginBottom: '30px' }}>
             <Grid container spacing={3}>
               <Grid item xs={12} md={3}>
-                <PaymentHistoryCard title="Total Store Amount" value={summaryData.totalStoreAmout} color="#F1F0E8" />
+                <PaymentHistoryCard
+                  title="Total Store Amount"
+                  value={paymentSummary?.totalStoreAmout}
+                  color="#F1F0E8"
+                />
               </Grid>
 
               <Grid item xs={12} md={3}>
-                <PaymentHistoryCard title="Total Payment Amount" value={summaryData.receivedAmout} color="#C8FFE0" />
+                <PaymentHistoryCard
+                  title="Total Payment Amount"
+                  value={paymentSummary?.receivedAmout}
+                  color="#C8FFE0"
+                />
               </Grid>
 
               <Grid item xs={12} md={3}>
-                <PaymentHistoryCard title="Total Donation Amount" value={summaryData.byDonation} color="#EDE4FF" />
+                <PaymentHistoryCard title="Total Donation Amount" value={paymentSummary?.byDonation} color="#EDE4FF" />
               </Grid>
 
               <Grid item xs={12} md={3}>
-                <PaymentHistoryBkashCard summaryData={summaryData} color="#F79BD3" />
+                <PaymentHistoryBkashCard summaryData={paymentSummary} color="#F79BD3" />
               </Grid>
             </Grid>
           </Container>
