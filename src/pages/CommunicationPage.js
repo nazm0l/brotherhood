@@ -43,25 +43,6 @@ export default function PaymentPage() {
     // Handle form submission here
     setLoading(true);
 
-    try {
-      const response = await axios.post(
-        'https://spread-brotherhood-api-staging.azurewebsites.net/api/PaymentInitiator/registration-payment',
-        JSON.stringify({ ...data, reference: 'user-reg', campaign: 'UR-23', amount: 2 }),
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        window.location.replace(response.data.payment_url);
-      }
-
-      console.log(response.data.payment_url);
-    } catch (error) {
-      toast.error('Something went wrong! Please try again.');
-    }
     setOpen(false);
     setLoading(false);
   };

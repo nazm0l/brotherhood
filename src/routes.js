@@ -21,6 +21,7 @@ import PaymentHistoryPage from './pages/PaymentHistoryPage';
 import RequireAuth from './sections/auth/RequireAuth';
 import RequireAdmin from './sections/auth/RequireAdmin';
 import ProfilePage from './pages/ProfilePage';
+import SingleDonationPage from './pages/SingleDonationPage';
 
 // ----------------------------------------------------------------------
 
@@ -67,6 +68,10 @@ export default function Router() {
         {
           path: 'login',
           element: <LoginPage />,
+        },
+        {
+          path: 'single',
+          element: <SingleDonationPage />,
         },
         {
           path: 'about',

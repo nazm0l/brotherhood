@@ -70,7 +70,7 @@ export default function BlogPostCard({ donation, index }) {
 
   return (
     <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
-      <Link target="_blank" to="/dashboard/communication" style={{ textDecoration: 'none' }}>
+      <Link target="_blank" to="/single" style={{ textDecoration: 'none' }}>
         <Card sx={{ position: 'relative' }}>
           <StyledCardMedia
             sx={{
