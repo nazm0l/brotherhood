@@ -2,7 +2,7 @@
 import { Helmet } from 'react-helmet-async';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Button, Typography, Container, Box, Stack, Grid } from '@mui/material';
+import { Button, Typography, Container, Box, Stack, Grid, Divider } from '@mui/material';
 import { Image } from '@mui/icons-material';
 
 // ----------------------------------------------------------------------
@@ -28,37 +28,44 @@ export default function SingleDonationPage() {
       <StyledContent>
         <Stack sx={{ my: 5 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={12}>
               <img
                 src="https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
                 alt="campaign image"
                 style={{
                   width: '100%',
-                  height: '100%',
+                  height: '400px',
                   objectFit: 'cover',
                   borderRadius: '10px',
                   border: '1px solid #ccc',
                 }}
               />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography variant="h6" gutterBottom>
-                Campaign Description
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              </Typography>
-              <Stack spacing={2} sx={{ marginTop: '20px' }}>
-                <Typography variant="body2">Minimum Amount: 1000 Tk</Typography>
-                <Typography variant="body2">Total Raised: 100000 Tk</Typography>
-                <Typography variant="body2">Closed Date: 10/10/2023</Typography>
+              <Stack direction="row" spacing={3} sx={{ marginY: '15px', justifyContent: 'space-between' }}>
+                <Typography variant="body">Minimum Amount: 1000 Tk</Typography>
+                <Typography variant="body">Total Raised: 100000 Tk</Typography>
+                <Typography variant="body">Closed Date: 10/10/2023</Typography>
               </Stack>
             </Grid>
 
-            <Grid item xs={12} md={12} sx={{ marginY: '40px' }}>
+            <Grid item xs={12} md={12} textAlign="center" sx={{ marginTop: '30px' }}>
+              <Divider variant="fullWidth" sx={{ marginBottom: '30px' }} />
               <Typography variant="h6" gutterBottom>
-                Campaign Video
+                Campaign Title
               </Typography>
+              <Typography variant="body2" align="justify" gutterBottom>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet consectetur
+                adipisicing elit. Consequatur ea optio nulla temporibus culpa explicabo, eveniet dolorum iusto,
+                perferendis maxime quae sed quaerat! Corrupti nesciunt ex architecto, dolorum tempore necessitatibus,
+                adipisci eum corporis repellat cumque ipsam asperiores, quaerat eaque nam quos! Debitis nisi
+                reprehenderit consequatur minima veniam laboriosam rem ab, quo voluptatibus praesentium quaerat commodi?
+                Repellendus numquam enim nesciunt quos.
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} md={12} sx={{ marginY: '20px', display: 'grid', placeItems: 'center' }}>
+              <Button variant="contained" sx={{ padding: { xs: '5px 40px', md: '8px 50px' } }}>
+                Donate Now
+              </Button>
             </Grid>
           </Grid>
         </Stack>

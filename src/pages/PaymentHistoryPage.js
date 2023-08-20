@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
-import { useEffect, useState } from 'react';
+import axios from 'axios';
 // @mui
 import {
   Card,
@@ -86,6 +87,8 @@ function applySortFilter(array, comparator, query) {
 export default function PaymentHistoryPage() {
   const [paymentData, setPaymentData] = useState([]);
 
+  const [headers, setHeaders] = useState({});
+
   const [dataCount, setDataCount] = useState(0);
 
   const [open, setOpen] = useState(null);
@@ -111,18 +114,35 @@ export default function PaymentHistoryPage() {
     console.log('Skipping:', skip);
     const url = `https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/user-payment-history?take=${take}&skip=${skip}`;
 
-    fetch(url, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setPaymentData(data);
-        setDataCount(data.length);
+    // fetch(url, {
+    //   method: 'GET',
+    //   headers: {
+    //     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    //   },
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setPaymentData(data);
+    //     console.log('response data: ', data);
+    //     setDataCount(data.length);
+    //   })
+    //   .catch((err) => console.log('err: ', err));
+
+    // testing
+
+    axios
+      .get(url)
+      .then((response) => {
+        // Get the response headers and convert them to an object
+        const responseHeaders = response.headers;
+        setHeaders(responseHeaders);
+
+        // Set the response data in state
+        setPaymentData(response.data);
       })
-      .catch((err) => console.log('err: ', err));
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
   }, [page, rowsPerPage]);
 
   const handleOpenMenu = (event) => {
