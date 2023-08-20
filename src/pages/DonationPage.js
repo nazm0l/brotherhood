@@ -1,20 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Button, Typography, Container, Box, Stack, DialogContent, Dialog } from '@mui/material';
+import { Button, Typography, Container, Box, Stack, DialogContent, Dialog, Grid } from '@mui/material';
+import DonationCard from '../components/donation-card/DonationCard';
+import Loading from '../components/loading/Loading';
 import uc from '../images/uc.svg';
 
 // ----------------------------------------------------------------------
 
 const StyledContent = styled('div')(({ theme }) => ({
-  maxWidth: 800,
+  maxWidth: 900,
   margin: 'auto',
   minHeight: '100vh',
   display: 'flex',
-  justifyContent: 'center',
   flexDirection: 'column',
+  alignItems: 'center',
   padding: theme.spacing(12, 0),
 }));
 
@@ -22,6 +24,26 @@ const StyledContent = styled('div')(({ theme }) => ({
 
 export default function DonationPage() {
   const [open, setOpen] = useState(false);
+  const [donations, setDonations] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getDonations = async () => {
+    setLoading(true);
+    await fetch('https://spread-admin-api-staging.azurewebsites.net/api/Donation/get-donation-campaign', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setDonations(data));
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getDonations();
+  }, []);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,28 +59,25 @@ export default function DonationPage() {
         <title> Donation | Brotherhood </title>
       </Helmet>
 
-      <Container>
-        <StyledContent sx={{ textAlign: 'center', alignItems: 'center', marginTop: { sm: '30px' } }}>
-          <Typography variant="h3" paragraph>
-            Help us making a sustainable system
-          </Typography>
+      {loading ? (
+        <Container sx={{ display: 'flex', height: '90vh', placeItems: 'center' }}>
+          <Loading />
+        </Container>
+      ) : (
+        <Container>
+          <StyledContent sx={{ marginTop: { sm: '30px' } }}>
+            <Grid container spacing={3}>
+              {donations.map((donation) => (
+                <DonationCard key={donation.donationId} donation={donation} />
+              ))}
+            </Grid>
 
-          <Stack direction="column" spacing={2}>
-            <Typography align="justify" sx={{ color: 'text.secondary' }}>
-              As a nonprofit organization, we rely on the generosity of donors like you to support our work and make an
-              impact. Your donation helps us to provide for the needy people
-            </Typography>
-            <Typography align="justify" sx={{ color: 'text.secondary' }}>
-              Whether you're able to give a little or a lot, every contribution helps. It's easy to donate - simply
-              click the "Donate" button below and follow the prompts to complete your secure online donation. We allow
-              any mobile banking wallet, credit & debit cards. As a part of service we will be collecting service
-              charges respectively. All payment related data will be available in the registered user dashboard.
-            </Typography>
-            <Typography align="justify" sx={{ color: 'text.secondary' }}>
-              Thank you again for your support. We couldn't do it without you!
-            </Typography>
-          </Stack>
-          <Button size="xs" sx={{ marginTop: '25px' }} variant="contained" onClick={handleClickOpen}>
+            {/* <Button
+            size="xs"
+            sx={{ marginTop: '25px', padding: '10px 40px' }}
+            variant="contained"
+            onClick={handleClickOpen}
+          >
             Donate Now
           </Button>
 
@@ -83,9 +102,10 @@ export default function DonationPage() {
                 </Stack>
               </DialogContent>
             </Dialog>
-          </Box>
-        </StyledContent>
-      </Container>
+          </Box> */}
+          </StyledContent>
+        </Container>
+      )}
     </>
   );
 }

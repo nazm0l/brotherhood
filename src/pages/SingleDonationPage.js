@@ -2,8 +2,7 @@
 import { Helmet } from 'react-helmet-async';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Button, Typography, Container, Box, Stack, Grid, Divider } from '@mui/material';
-import { Image } from '@mui/icons-material';
+import { Button, Typography, Stack, Grid, Divider } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
