@@ -84,7 +84,6 @@ export default function BlogPage() {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
     setLoading(true);
     try {
       const response = await fetch(

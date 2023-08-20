@@ -5,6 +5,8 @@ import { Icon } from '@iconify/react';
 import styled from '@emotion/styled';
 import { alpha } from '@mui/material/styles';
 import { Grid, Card, Typography, Divider, Avatar } from '@mui/material';
+// utils
+import charity from '../../images/charity.png';
 
 // ----------------------------------------------------------------------
 
@@ -62,7 +64,7 @@ export default function DonationCard({ donation, ...other }) {
         /> */}
             <Avatar
               alt="Donation"
-              src="https://cdn-icons-png.flaticon.com/512/2746/2746081.png"
+              src={charity}
               sx={{
                 width: 64,
                 height: 64,

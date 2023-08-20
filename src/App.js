@@ -8,7 +8,6 @@ import Router from './routes';
 // theme
 import ThemeProvider from './theme';
 // components
-import { StyledChart } from './components/chart';
 import ScrollToTop from './components/scroll-to-top';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -21,7 +20,6 @@ export default function App() {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <ThemeProvider>
             <ScrollToTop />
-            <StyledChart />
             <Router />
             <ToastContainer />
           </ThemeProvider>
