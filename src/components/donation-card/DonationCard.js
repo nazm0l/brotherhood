@@ -49,7 +49,7 @@ export default function DonationCard({ donation, ...other }) {
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Link target="_blank" to="/single" style={{ textDecoration: 'none' }}>
-        <Card {...other} sx={{ maxWidth: '300px' }}>
+        <Card {...other} sx={{ md: { maxWidth: '300px' } }}>
           <CardMediaStyle>
             {/* <SvgIconStyle
           color="paper"

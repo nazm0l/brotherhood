@@ -127,7 +127,7 @@ export default function BlogPage() {
             </Button>
           </Stack>
 
-          <Typography variant="h6" sx={{ color: 'green', marginBottom: '20px' }}>
+          <Typography variant="h6" sx={{ marginBottom: '20px' }}>
             On Going Campaigns
           </Typography>
           <Divider variant="fullWidth" sx={{ marginBottom: '30px' }} />
@@ -140,7 +140,7 @@ export default function BlogPage() {
             )}
           </Grid>
 
-          <Typography variant="h6" sx={{ color: 'red', marginY: '20px' }}>
+          <Typography variant="h6" sx={{ marginY: '20px' }}>
             Closed Campaigns
           </Typography>
           <Divider variant="fullWidth" sx={{ marginBottom: '30px' }} />
