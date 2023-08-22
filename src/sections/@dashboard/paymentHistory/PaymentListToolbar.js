@@ -35,13 +35,13 @@ const StyledSearch = styled(OutlinedInput)(({ theme }) => ({
 
 PaymentListToolbar.propTypes = {
   numSelected: PropTypes.number,
-  filterTrxId: PropTypes.string,
+  searchTerm: PropTypes.string,
   pickDate: PropTypes.string,
-  onFilterTrxId: PropTypes.func,
+  onSearchTerm: PropTypes.func,
   setPickDate: PropTypes.func,
 };
 
-export default function PaymentListToolbar({ numSelected, filterTrxId, onFilterTrxId, pickDate, setPickDate }) {
+export default function PaymentListToolbar({ numSelected, searchTerm, onSearchTerm, pickDate, setPickDate }) {
   return (
     <StyledRoot
       sx={{
@@ -57,8 +57,8 @@ export default function PaymentListToolbar({ numSelected, filterTrxId, onFilterT
         </Typography>
       ) : (
         <StyledSearch
-          value={filterTrxId}
-          onChange={onFilterTrxId}
+          value={searchTerm}
+          onChange={onSearchTerm}
           placeholder="Search Trx Id..."
           startAdornment={
             <InputAdornment position="start">

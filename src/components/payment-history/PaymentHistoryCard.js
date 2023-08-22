@@ -23,23 +23,9 @@ export default function PaymentHistoryCard({ title, value, color }) {
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', p: 3, backgroundColor: color }}>
       <Box sx={{ flexGrow: 1 }}>
-        <Typography variant="subtitle2">{title}</Typography>
-        <Stack direction="row" alignItems="center" spacing={1} sx={{ mt: 2, mb: 1 }}>
-          {/* <IconWrapperStyle
-            sx={{
-              ...(PERCENT < 0 && {
-                color: 'error.main',
-                bgcolor: alpha(theme.palette.error.main, 0.16)
-              })
-            }}
-          >
-            <Icon width={16} height={16} icon={PERCENT >= 0 ? trendingUpFill : trendingDownFill} />
-          </IconWrapperStyle> */}
-          <Typography component="span" variant="subtitle2">
-            {PERCENT > 0 && '+'}
-            10%
-          </Typography>
-        </Stack>
+        <Typography variant="subtitle2" sx={{ mb: 3 }}>
+          {title}
+        </Typography>
 
         <Typography variant="h3">{value}</Typography>
       </Box>

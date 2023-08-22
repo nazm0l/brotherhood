@@ -9,7 +9,7 @@ import Loading from '../components/loading/Loading';
 import UserCard from '../components/user-card/UserCard';
 import AppSlider from '../components/app-slider/AppSlider';
 import AppDonationTable from '../components/app-donation/AppDonationTable';
-import { AppCurrentVisits, AppBlog, AppWidgetSummary } from '../sections/@dashboard/app';
+import { AppBlog, AppWidgetSummary } from '../sections/@dashboard/app';
 import AppWelcome from '../components/app-welcome/AppWelcome';
 import useAuth from '../hooks/useAuth';
 

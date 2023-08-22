@@ -25,7 +25,6 @@ import {
 // components
 import usePaymentSummary from '../hooks/usePaymentSummary';
 import Loading from '../components/loading/Loading';
-import Label from '../components/label';
 import Iconify from '../components/iconify';
 import Scrollbar from '../components/scrollbar';
 import PaymentHistoryCard from '../components/payment-history/PaymentHistoryCard';
@@ -71,23 +70,18 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function applySortFilter(array, comparator, query) {
+function applySortFilter(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
     return a[1] - b[1];
   });
-  if (query) {
-    return filter(array, (_user) => _user.transactionId.toLowerCase().indexOf(query.toLowerCase()) !== -1);
-  }
   return stabilizedThis.map((el) => el[0]);
 }
 
 export default function PaymentHistoryPage() {
   const [paymentData, setPaymentData] = useState([]);
-
-  const [headers, setHeaders] = useState({});
 
   const [dataCount, setDataCount] = useState(0);
 
@@ -101,7 +95,7 @@ export default function PaymentHistoryPage() {
 
   const [orderBy, setOrderBy] = useState('name');
 
-  const [filterTrxId, setFilterTrxId] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -112,38 +106,23 @@ export default function PaymentHistoryPage() {
     console.log('Taking:', take);
     const skip = page * rowsPerPage; // Number of data to skip
     console.log('Skipping:', skip);
-    const url = `https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/user-payment-history?take=${take}&skip=${skip}`;
+    const url = `https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/user-payment-history?take=${take}&skip=${skip}&searchTerm=${searchTerm}`;
 
-    // fetch(url, {
-    //   method: 'GET',
-    //   headers: {
-    //     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-    //   },
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     setPaymentData(data);
-    //     console.log('response data: ', data);
-    //     setDataCount(data.length);
-    //   })
-    //   .catch((err) => console.log('err: ', err));
-
-    // testing
-
-    axios
-      .get(url)
-      .then((response) => {
-        // Get the response headers and convert them to an object
-        const responseHeaders = response.headers;
-        setHeaders(responseHeaders);
-
-        // Set the response data in state
-        setPaymentData(response.data);
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setPaymentData(data);
+        setDataCount(data.length);
       })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, [page, rowsPerPage]);
+      .catch((err) => console.log('err: ', err));
+  }, [page, rowsPerPage, searchTerm]);
+
+  console.log(pickDate);
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
@@ -168,22 +147,21 @@ export default function PaymentHistoryPage() {
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
-  const handleFilterByTrxId = (event) => {
-    setPage(0);
-    setFilterTrxId(event.target.value);
+  const handleSearchTerm = (event) => {
+    setSearchTerm(event.target.value);
   };
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - dataCount) : 0;
 
-  const filteredPayment = applySortFilter(paymentData, getComparator(order, orderBy), filterTrxId);
+  const filteredPayment = applySortFilter(paymentData, getComparator(order, orderBy));
 
-  const isNotFound = !filteredPayment.length && !!filterTrxId;
+  const isNotFound = !filteredPayment.length && !!searchTerm;
 
   // Add console logs to various parts of the component
-  console.log('page:', page);
-  console.log('rowsPerPage:', rowsPerPage);
-  console.log('dataCount:', dataCount);
-  console.log('filteredPayment:', filteredPayment);
+  // console.log('page:', page);
+  // console.log('rowsPerPage:', rowsPerPage);
+  // console.log('dataCount:', dataCount);
+  // console.log('filteredPayment:', filteredPayment);
 
   return (
     <>
@@ -197,7 +175,6 @@ export default function PaymentHistoryPage() {
         </Container>
       ) : (
         <>
-          {' '}
           <Container maxWidth={'lg'} sx={{ marginBottom: '30px' }}>
             <Grid container spacing={3}>
               <Grid item xs={12} md={3}>
@@ -221,13 +198,13 @@ export default function PaymentHistoryPage() {
               </Grid>
 
               <Grid item xs={12} md={3}>
-                <PaymentHistoryBkashCard summaryData={paymentSummary} color="#F79BD3" />
+                <PaymentHistoryBkashCard summaryData={paymentSummary} color="#E2F6CA" />
               </Grid>
             </Grid>
           </Container>
           <Container>
             <Card>
-              <PaymentListToolbar filterTrxId={filterTrxId} onFilterTrxId={handleFilterByTrxId} />
+              <PaymentListToolbar searchTerm={searchTerm} onSearchTerm={handleSearchTerm} />
 
               <Scrollbar>
                 <TableContainer sx={{ minWidth: 800 }}>
@@ -328,7 +305,7 @@ export default function PaymentHistoryPage() {
 
                                 <Typography variant="body2">
                                   No results found for &nbsp;
-                                  <strong>&quot;{filterTrxId}&quot;</strong>.
+                                  <strong>&quot;{searchTerm}&quot;</strong>.
                                   <br /> Try checking for typos or using complete words.
                                 </Typography>
                               </Paper>
