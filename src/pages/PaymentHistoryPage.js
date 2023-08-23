@@ -122,8 +122,6 @@ export default function PaymentHistoryPage() {
       .catch((err) => console.log('err: ', err));
   }, [page, rowsPerPage, searchTerm]);
 
-  console.log(pickDate);
-
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
   };
