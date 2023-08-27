@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -35,7 +36,9 @@ const StyledContent = styled('div')(({ theme }) => ({
 
 export default function SingleDonationPage() {
   const [open, setOpen] = useState(false);
+  const [donation, setDonation] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { id } = useParams();
 
   const {
     handleSubmit,
@@ -49,6 +52,28 @@ export default function SingleDonationPage() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  useEffect(() => {
+    getSingleCampaign();
+  }, []);
+
+  const getSingleCampaign = async () => {
+    const url = 'https://spread-admin-api-staging.azurewebsites.net/api/Donation/single-donation';
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+      body: JSON.stringify({ donationId: id }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setDonation(data);
+      })
+      .catch((err) => console.log('err: ', err));
   };
 
   const onSubmit = async (data) => {
@@ -105,24 +130,19 @@ export default function SingleDonationPage() {
                   }}
                 />
                 <Stack direction="row" spacing={3} sx={{ marginY: '15px', justifyContent: 'space-between' }}>
-                  <Typography variant="body">Minimum Amount: 1000 Tk</Typography>
-                  <Typography variant="body">Total Raised: 100000 Tk</Typography>
-                  <Typography variant="body">Closed Date: 10/10/2023</Typography>
+                  <Typography variant="body">Minimum Amount: {donation?.baseAmount} Tk</Typography>
+                  <Typography variant="body">Total Raised: {donation?.goalAmount} Tk</Typography>
+                  <Typography variant="body">Closed Date: {donation?.closedDate?.split('T')[0]}</Typography>
                 </Stack>
               </Grid>
 
               <Grid item xs={12} md={12} textAlign="center" sx={{ marginTop: '30px' }}>
                 <Divider variant="fullWidth" sx={{ marginBottom: '30px' }} />
                 <Typography variant="h6" gutterBottom>
-                  Campaign Title
+                  {donation?.title}
                 </Typography>
                 <Typography variant="body2" align="justify" gutterBottom>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet consectetur
-                  adipisicing elit. Consequatur ea optio nulla temporibus culpa explicabo, eveniet dolorum iusto,
-                  perferendis maxime quae sed quaerat! Corrupti nesciunt ex architecto, dolorum tempore necessitatibus,
-                  adipisci eum corporis repellat cumque ipsam asperiores, quaerat eaque nam quos! Debitis nisi
-                  reprehenderit consequatur minima veniam laboriosam rem ab, quo voluptatibus praesentium quaerat
-                  commodi? Repellendus numquam enim nesciunt quos.
+                  {donation?.description}
                 </Typography>
               </Grid>
 
@@ -157,7 +177,7 @@ export default function SingleDonationPage() {
                     label="Amount "
                     type="number"
                     required
-                    inputProps={{ min: 1000 }}
+                    inputProps={{ min: donation.baseAmount }}
                     {...register('minPayment', {
                       required: 'Payment amount should be high',
                       min: {
@@ -166,7 +186,7 @@ export default function SingleDonationPage() {
                       },
                     })}
                     error={Boolean(errors.minPayment)}
-                    helperText={errors.minPayment?.message || `Minimum payment amount: 100`}
+                    helperText={errors.minPayment?.message || `Minimum payment amount: ${donation.baseAmount}`}
                   />
                   <TextField
                     name="name"

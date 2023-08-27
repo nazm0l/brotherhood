@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 // material
 import styled from '@emotion/styled';
 import { alpha } from '@mui/material/styles';
-import { Grid, Card, Typography, Divider, Avatar } from '@mui/material';
+import { Grid, Card, Typography, Divider, Avatar, Box } from '@mui/material';
 // utils
 import charity from '../../images/charity.png';
 
@@ -44,11 +44,17 @@ DonationCard.propTypes = {
 };
 
 export default function DonationCard({ donation, ...other }) {
-  const { title, description, baseAmount, goalAmount, isRunning, closedDate } = donation;
+  const navigate = useNavigate();
+
+  const donationDetails = (id) => {
+    navigate(`/single/${id}`);
+  };
+
+  const { donationId, title, description, baseAmount, goalAmount, isRunning, closedDate } = donation;
 
   return (
     <Grid item xs={12} sm={6} md={4}>
-      <Link target="_blank" to="/single" style={{ textDecoration: 'none' }}>
+      <Box onClick={() => donationDetails(donationId)}>
         <Card {...other} sx={{ md: { maxWidth: '300px' } }}>
           <CardMediaStyle>
             {/* <SvgIconStyle
@@ -107,7 +113,7 @@ export default function DonationCard({ donation, ...other }) {
             </Grid>
           </Grid>
         </Card>
-      </Link>
+      </Box>
     </Grid>
   );
 }

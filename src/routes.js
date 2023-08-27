@@ -70,7 +70,7 @@ export default function Router() {
           element: <LoginPage />,
         },
         {
-          path: 'single',
+          path: 'single/:id',
           element: <SingleDonationPage />,
         },
         {
