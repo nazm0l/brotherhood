@@ -16,7 +16,7 @@ import {
   Select,
   MenuItem,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import axios from 'axios';
 import Loading from '../components/loading/Loading';
@@ -64,6 +64,7 @@ const values = [
 export default function PaymentPage() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [values, setValues] = useState([]);
 
   const {
     handleSubmit,
@@ -79,6 +80,17 @@ export default function PaymentPage() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    fetch('https://spread-brotherhood-api-staging.azurewebsites.net/api/PaymentInitiator/payment-scope?Scope=payment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setValues(data));
+  }, []);
 
   const onSubmit = async (data) => {
     // Handle form submission here
@@ -201,9 +213,12 @@ export default function PaymentPage() {
                         <FormControl error={Boolean(errors.amount)} fullWidth>
                           <InputLabel id="marital-status-label">Select Amount</InputLabel>
                           <Select labelId="marital-status-label" id="marital-status" {...field}>
-                            {values.map((option) => (
-                              <MenuItem key={option.value} value={option.value}>
-                                {option.label}
+                            <MenuItem value="" disabled>
+                              Select Amount
+                            </MenuItem>
+                            {values.map((value) => (
+                              <MenuItem key={value.id} value={value.value}>
+                                {value.scopeName} - {value.value} BDT
                               </MenuItem>
                             ))}
                           </Select>
