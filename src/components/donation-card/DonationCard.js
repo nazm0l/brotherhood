@@ -1,6 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
 // material
 import styled from '@emotion/styled';
 import { alpha } from '@mui/material/styles';
@@ -50,7 +49,7 @@ export default function DonationCard({ donation, ...other }) {
     navigate(`/single/${id}`);
   };
 
-  const { donationId, title, description, baseAmount, goalAmount, isRunning, closedDate } = donation;
+  const { donationId, title, description, baseAmount, goalAmount, closedDate } = donation;
 
   return (
     <Grid item xs={12} sm={6} md={4}>
@@ -94,8 +93,6 @@ export default function DonationCard({ donation, ...other }) {
           <Typography variant="body2" align="justify" sx={{ color: 'text.secondary', padding: '10px' }}>
             {description.slice(0, 80)} ...
           </Typography>
-          {/* 
-      <Box sx={{ textAlign: 'center', mt: 2, mb: 2.5 }}>social</Box> */}
 
           <Divider />
 

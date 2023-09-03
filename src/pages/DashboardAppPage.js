@@ -1,22 +1,20 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Grid, Container, Typography, Divider } from '@mui/material';
+import { Grid, Container, Typography } from '@mui/material';
 // sections
 import usePaymentSummary from '../hooks/usePaymentSummary';
 import Loading from '../components/loading/Loading';
 import UserCard from '../components/user-card/UserCard';
 import AppSlider from '../components/app-slider/AppSlider';
 import AppDonationTable from '../components/app-donation/AppDonationTable';
-import { AppBlog, AppWidgetSummary } from '../sections/@dashboard/app';
+import { AppWidgetSummary } from '../sections/@dashboard/app';
 import AppWelcome from '../components/app-welcome/AppWelcome';
 import useAuth from '../hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
 export default function DashboardAppPage() {
-  const theme = useTheme();
   const { auth } = useAuth();
   const [userList, setUserList] = useState([]);
   const [paymentSummary, loading] = usePaymentSummary();
@@ -110,28 +108,6 @@ export default function DashboardAppPage() {
                 }}
               />
             </Grid>
-
-            {/* <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentVisits
-              title="Current Visits"
-              chartData={[
-                { label: 'America', value: 4344 },
-                { label: 'Asia', value: 5435 },
-                { label: 'Europe', value: 1443 },
-                { label: 'Africa', value: 4443 },
-              ]}
-              chartColors={[
-                theme.palette.primary.main,
-                theme.palette.info.main,
-                theme.palette.warning.main,
-                theme.palette.error.main,
-              ]}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6} lg={8}>
-            <AppBlog />
-          </Grid> */}
           </Grid>
         </Container>
       )}
