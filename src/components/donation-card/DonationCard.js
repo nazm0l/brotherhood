@@ -54,7 +54,7 @@ export default function DonationCard({ donation, ...other }) {
 
   return (
     <Grid item xs={12} sm={6} md={4}>
-      <Box onClick={() => donationDetails(donationId)}>
+      <Box onClick={() => donationDetails(donationId)} sx={{ cursor: 'pointer' }}>
         <Card {...other} sx={{ md: { maxWidth: '300px' } }}>
           <CardMediaStyle>
             {/* <SvgIconStyle

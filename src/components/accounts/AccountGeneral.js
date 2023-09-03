@@ -4,52 +4,30 @@ import { Card, Stack, Grid, TextField, Typography, Box, FormControl } from '@mui
 
 import { LoadingButton } from '@mui/lab';
 import { Controller, useForm } from 'react-hook-form';
-
-// utils
-
-const countries = [
-  {
-    code: 'ID',
-    label: 'Indonesia',
-  },
-  {
-    code: 'US',
-    label: 'United States',
-  },
-  {
-    code: 'SG',
-    label: 'Singapore',
-  },
-  {
-    code: 'MY',
-    label: 'Malaysia',
-  },
-];
+import useAuth from '../../hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
 export default function AccountGeneral() {
+  const { auth } = useAuth();
   const { handleSubmit, control } = useForm({
     defaultValues: {
       name: '',
       email: '',
-      number: '',
-      address: '',
+      fatherName: '',
+      motherName: '',
+      phone: '',
+      alternatePhone: '',
+      presentAddress: '',
+      permanentAddress: '',
+      nid: '',
       country: '',
       state: '',
-      city: '',
-      zipCode: '',
-      about: '',
     },
   });
 
-  // Define validation rules
-  const rules = {
-    required: 'This field is required',
-  };
-
   const onSubmit = (data) => {
-    console.log(data); // Handle form submission
+    console.log({ ...data, acc: 'random' });
   };
 
   return (
@@ -65,7 +43,7 @@ export default function AccountGeneral() {
                 sx={{ width: 500, height: 280, mx: 'auto', mb: 5, borderRadius: '50%' }}
               />
               <Typography variant="subtitle1" sx={{ mb: 2 }}>
-                Mr John Doe
+                {auth?.email}
               </Typography>
             </Card>
           </Grid>
@@ -77,7 +55,6 @@ export default function AccountGeneral() {
                   <Controller
                     name="name"
                     control={control}
-                    rules={rules}
                     render={({ field, fieldState }) => (
                       <TextField
                         {...field}
@@ -91,7 +68,6 @@ export default function AccountGeneral() {
                   <Controller
                     name="email"
                     control={control}
-                    rules={rules}
                     render={({ field, fieldState }) => (
                       <TextField
                         {...field}
@@ -106,9 +82,37 @@ export default function AccountGeneral() {
 
                 <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
                   <Controller
-                    name="number"
+                    name="fatherName"
                     control={control}
-                    rules={rules}
+                    render={({ field, fieldState }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        label="Father's Name"
+                        error={fieldState.invalid}
+                        helperText={fieldState.invalid && 'Please enter your father name'}
+                      />
+                    )}
+                  />
+                  <Controller
+                    name="motherName"
+                    control={control}
+                    render={({ field, fieldState }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        label="Mother's Name"
+                        error={fieldState.invalid}
+                        helperText={fieldState.invalid && 'Please enter your mother name'}
+                      />
+                    )}
+                  />
+                </Stack>
+
+                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                  <Controller
+                    name="phone"
+                    control={control}
                     render={({ field, fieldState }) => (
                       <TextField
                         {...field}
@@ -120,16 +124,45 @@ export default function AccountGeneral() {
                     )}
                   />
                   <Controller
-                    name="address"
+                    name="alternatePhone"
                     control={control}
-                    rules={rules}
                     render={({ field, fieldState }) => (
                       <TextField
                         {...field}
                         fullWidth
-                        label="Address"
+                        label="Alternate Phone Number"
                         error={fieldState.invalid}
-                        helperText={fieldState.invalid && 'Please enter your address'}
+                        helperText={fieldState.invalid && 'Please enter a valid phone number'}
+                      />
+                    )}
+                  />
+                </Stack>
+
+                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                  <Controller
+                    name="presentAddress"
+                    control={control}
+                    render={({ field, fieldState }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        label="Present Address"
+                        error={fieldState.invalid}
+                        helperText={fieldState.invalid && 'Please enter your present address'}
+                      />
+                    )}
+                  />
+
+                  <Controller
+                    name="nid"
+                    control={control}
+                    render={({ field, fieldState }) => (
+                      <TextField
+                        {...field}
+                        fullWidth
+                        label="NID"
+                        error={fieldState.invalid}
+                        helperText={fieldState.invalid && 'Please enter your nid'}
                       />
                     )}
                   />
@@ -139,7 +172,6 @@ export default function AccountGeneral() {
                   <Controller
                     name="country"
                     control={control}
-                    rules={rules}
                     render={({ field, fieldState }) => (
                       <TextField
                         {...field}
@@ -153,7 +185,6 @@ export default function AccountGeneral() {
                   <Controller
                     name="state"
                     control={control}
-                    rules={rules}
                     render={({ field, fieldState }) => (
                       <TextField
                         {...field}
@@ -165,54 +196,6 @@ export default function AccountGeneral() {
                     )}
                   />
                 </Stack>
-
-                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
-                  <Controller
-                    name="city"
-                    control={control}
-                    rules={rules}
-                    render={({ field, fieldState }) => (
-                      <TextField
-                        {...field}
-                        fullWidth
-                        label="City"
-                        error={fieldState.invalid}
-                        helperText={fieldState.invalid && 'Please enter your city'}
-                      />
-                    )}
-                  />
-                  <Controller
-                    name="zipCode"
-                    control={control}
-                    rules={rules}
-                    render={({ field, fieldState }) => (
-                      <TextField
-                        {...field}
-                        fullWidth
-                        label="Zip/Code"
-                        error={fieldState.invalid}
-                        helperText={fieldState.invalid && 'Please enter your zip code'}
-                      />
-                    )}
-                  />
-                </Stack>
-                <Controller
-                  name="about"
-                  control={control}
-                  rules={rules}
-                  render={({ field, fieldState }) => (
-                    <TextField
-                      {...field}
-                      fullWidth
-                      multiline
-                      minRows={4}
-                      maxRows={4}
-                      label="About"
-                      error={fieldState.invalid}
-                      helperText={fieldState.invalid && 'Please enter your about'}
-                    />
-                  )}
-                />
               </Stack>
 
               <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
