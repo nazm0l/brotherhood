@@ -59,7 +59,8 @@ BlogPostCard.propTypes = {
 };
 
 export default function BlogPostCard({ donation, index }) {
-  const { title, description, baseAmount, goalAmount, takingFund, isRunning, createdDate, closedDate } = donation;
+  const { donationId, title, description, baseAmount, goalAmount, takingFund, isRunning, createdDate, closedDate } =
+    donation;
   const latestPostLarge = index === 0;
   const latestPost = index === 1 || index === 2;
 
@@ -70,7 +71,7 @@ export default function BlogPostCard({ donation, index }) {
 
   return (
     <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 8 : 4}>
-      <Link target="_blank" to="/single" style={{ textDecoration: 'none' }}>
+      <Link to={isRunning ? `/single/${donationId}` : '#'} style={{ textDecoration: 'none' }}>
         <Card sx={{ position: 'relative' }}>
           <StyledCardMedia
             sx={{

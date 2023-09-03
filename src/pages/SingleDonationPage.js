@@ -59,21 +59,24 @@ export default function SingleDonationPage() {
   }, []);
 
   const getSingleCampaign = async () => {
+    setLoading(true);
     const url = 'https://spread-admin-api-staging.azurewebsites.net/api/Donation/single-donation';
 
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-      body: JSON.stringify({ donationId: id }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setDonation(data);
-      })
-      .catch((err) => console.log('err: ', err));
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        body: JSON.stringify({ donationId: id }),
+      });
+      const data = await res.json();
+      setDonation(data);
+    } catch (error) {
+      toast.error('Something went wrong! Please try again.');
+    }
+    setLoading(false);
   };
 
   const onSubmit = async (data) => {

@@ -58,8 +58,8 @@ export default function Nav({ openNav, onCloseNav }) {
 
   const handleLogout = () => {
     console.log('logout');
-    setAuth(null);
     localStorage.removeItem('accessToken');
+    setAuth(null);
   };
 
   const renderContent = (

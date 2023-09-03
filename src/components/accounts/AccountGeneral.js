@@ -35,7 +35,7 @@ export default function AccountGeneral() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
-            <Card sx={{ py: 10, px: 3, textAlign: 'center' }}>
+            <Card sx={{ py: 8, px: 3, textAlign: 'center' }}>
               <Box
                 component="img"
                 alt="profile"
