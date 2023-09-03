@@ -2,9 +2,22 @@ import { Helmet } from 'react-helmet-async';
 import { toast } from 'react-toastify';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Button, Typography, Container, Box, Dialog, DialogContent, TextField, Stack } from '@mui/material';
+import {
+  Button,
+  Typography,
+  Container,
+  Box,
+  Dialog,
+  DialogContent,
+  TextField,
+  Stack,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from '@mui/material';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import axios from 'axios';
 import Loading from '../components/loading/Loading';
 
@@ -19,6 +32,33 @@ const StyledContent = styled('div')(({ theme }) => ({
   padding: theme.spacing(12, 0),
 }));
 
+const values = [
+  {
+    value: '',
+    label: 'Select Amount',
+  },
+  {
+    value: 100,
+    label: '100 BDT',
+  },
+  {
+    value: 200,
+    label: '200 BDT',
+  },
+  {
+    value: 300,
+    label: '300 BDT',
+  },
+  {
+    value: 400,
+    label: '400 BDT',
+  },
+  {
+    value: 500,
+    label: '500 BDT',
+  },
+];
+
 // ----------------------------------------------------------------------
 
 export default function PaymentPage() {
@@ -28,6 +68,7 @@ export default function PaymentPage() {
   const {
     handleSubmit,
     register,
+    control,
     formState: { errors },
   } = useForm();
 
@@ -41,12 +82,15 @@ export default function PaymentPage() {
 
   const onSubmit = async (data) => {
     // Handle form submission here
+
+    console.log(data);
+
     setLoading(true);
 
     try {
       const response = await axios.post(
         'https://spread-brotherhood-api-staging.azurewebsites.net/api/PaymentInitiator/registration-payment',
-        JSON.stringify({ ...data, reference: 'user-reg', campaign: 'UR-23', amount: 2 }),
+        JSON.stringify({ ...data, reference: 'user-reg', campaign: 'UR-23' }),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -148,9 +192,32 @@ export default function PaymentPage() {
                 </Stack>
                 <DialogContent sx={{ padding: '20px 40px 40px 40px' }}>
                   <Stack flexBasis={1} spacing={2}>
+                    <Controller
+                      name="amount"
+                      control={control}
+                      defaultValue=""
+                      rules={{ required: 'Amount is required' }}
+                      render={({ field }) => (
+                        <FormControl error={Boolean(errors.amount)} fullWidth>
+                          <InputLabel id="marital-status-label">Select Amount</InputLabel>
+                          <Select labelId="marital-status-label" id="marital-status" {...field}>
+                            {values.map((option) => (
+                              <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                          {errors.maritalStatus && (
+                            <Typography variant="caption" color="error">
+                              {errors.maritalStatus.message}
+                            </Typography>
+                          )}
+                        </FormControl>
+                      )}
+                    />
+
                     <TextField
                       name="name"
-                      autoFocus
                       label="Payee Name"
                       {...register('name', { required: 'Name is required' })}
                       error={Boolean(errors.name)}
