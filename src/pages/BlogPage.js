@@ -233,14 +233,7 @@ export default function BlogPage() {
                       control={control}
                       render={({ field }) => (
                         <FormControl error={Boolean(errors.runningGroup)} fullWidth>
-                          <InputLabel
-                            id="running-group-label"
-                            sx={{
-                              '&.Mui-focused': {
-                                color: 'primary.main',
-                              },
-                            }}
-                          >
+                          <InputLabel id="running-group-label" sx={{ background: 'white', px: 0.5 }}>
                             Running
                           </InputLabel>
                           <Select labelId="running-group-label" id="running-group" {...field}>
@@ -260,14 +253,7 @@ export default function BlogPage() {
                       control={control}
                       render={({ field }) => (
                         <FormControl error={Boolean(errors.takingFundGroup)} fullWidth>
-                          <InputLabel
-                            id="takingFund-group-label"
-                            sx={{
-                              '&.Mui-focused': {
-                                color: 'primary.main',
-                              },
-                            }}
-                          >
+                          <InputLabel id="takingFund-group-label" sx={{ background: 'white', px: 0.5 }}>
                             Taking Fund
                           </InputLabel>
                           <Select labelId="takingFund-group-label" id="takingFund-group" {...field}>

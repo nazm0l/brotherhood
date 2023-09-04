@@ -26,11 +26,10 @@ import axios from '../../../api/axios';
 
 // eslint-disable-next-line react/prop-types
 export default function LoginForm({ setLoading }) {
-  const navigate = useNavigate();
-
   const [showPassword, setShowPassword] = useState(false);
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -63,7 +62,7 @@ export default function LoginForm({ setLoading }) {
 
       const accessToken = response?.data?.accessToken;
       localStorage.setItem('accessToken', accessToken);
-      navigate(from, { replace: true });
+      navigate('/dashboard');
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -73,7 +72,6 @@ export default function LoginForm({ setLoading }) {
         toast.error('Something went wrong');
       }
     }
-    navigate(from, { replace: true });
   };
 
   const handleClickOpen = () => {

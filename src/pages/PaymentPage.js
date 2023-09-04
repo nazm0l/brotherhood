@@ -32,33 +32,6 @@ const StyledContent = styled('div')(({ theme }) => ({
   padding: theme.spacing(12, 0),
 }));
 
-const values = [
-  {
-    value: '',
-    label: 'Select Amount',
-  },
-  {
-    value: 100,
-    label: '100 BDT',
-  },
-  {
-    value: 200,
-    label: '200 BDT',
-  },
-  {
-    value: 300,
-    label: '300 BDT',
-  },
-  {
-    value: 400,
-    label: '400 BDT',
-  },
-  {
-    value: 500,
-    label: '500 BDT',
-  },
-];
-
 // ----------------------------------------------------------------------
 
 export default function PaymentPage() {
@@ -211,7 +184,9 @@ export default function PaymentPage() {
                       rules={{ required: 'Amount is required' }}
                       render={({ field }) => (
                         <FormControl error={Boolean(errors.amount)} fullWidth>
-                          <InputLabel id="marital-status-label">Select Amount</InputLabel>
+                          <InputLabel sx={{ background: 'white', px: 0.5 }} id="marital-status-label">
+                            Select Amount
+                          </InputLabel>
                           <Select labelId="marital-status-label" id="marital-status" {...field}>
                             <MenuItem value="" disabled>
                               Select Amount

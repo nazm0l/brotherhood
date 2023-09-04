@@ -26,22 +26,14 @@ export default function CommunicationPage() {
 
   const { handleSubmit, control } = useForm({
     defaultValues: {
-      name: '',
-      email: '',
-      fatherName: '',
-      motherName: '',
-      phone: '',
-      alternatePhone: '',
-      presentAddress: '',
-      permanentAddress: '',
-      nid: '',
-      country: '',
-      state: '',
+      number: '',
+      message: '',
     },
   });
 
   const onSubmit = async (data) => {
     // Handle form submission here
+    console.log(data);
   };
 
   return (
@@ -57,7 +49,25 @@ export default function CommunicationPage() {
               <Grid item xs={12} md={12}>
                 <Card sx={{ p: 3 }}>
                   <Stack spacing={{ xs: 2, md: 3 }}>
-                    <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                    <Stack direction={{ xs: 'column', md: 'column' }} spacing={2}>
+                      <Typography variant="h6" gutterBottom>
+                        Send Message
+                      </Typography>
+
+                      <Controller
+                        name="number"
+                        control={control}
+                        render={({ field, fieldState }) => (
+                          <TextField
+                            {...field}
+                            fullWidth
+                            label="Add phone number here"
+                            error={fieldState.invalid}
+                            helperText={fieldState.invalid && 'Please add phone number'}
+                          />
+                        )}
+                      />
+
                       <Controller
                         name="message"
                         control={control}
