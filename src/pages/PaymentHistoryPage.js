@@ -79,7 +79,12 @@ function applySortFilter(array, comparator) {
 export default function PaymentHistoryPage() {
   const [paymentData, setPaymentData] = useState([]);
 
-  const [dataCount, setDataCount] = useState(0);
+  const [paginationData, setPaginationData] = useState({
+    currentPage: 1, // Initialize currentPage to 1
+    pageSize: 10,
+    totalItemCount: 0,
+    totalPageCount: 0,
+  });
 
   const [open, setOpen] = useState(null);
 
@@ -98,10 +103,10 @@ export default function PaymentHistoryPage() {
   const [paymentSummary, loading] = usePaymentSummary();
 
   useEffect(() => {
-    const take = rowsPerPage; // Number of data to load per page
-    console.log('Taking:', take);
-    const skip = page * rowsPerPage; // Number of data to skip
-    console.log('Skipping:', skip);
+    const take = rowsPerPage * (page + 1);
+    console.log('take: ', take);
+    const skip = rowsPerPage * page;
+    console.log('skip: ', skip);
     const url = `https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/user-payment-history?take=${take}&skip=${skip}&searchTerm=${searchTerm}`;
 
     fetch(url, {
@@ -112,8 +117,9 @@ export default function PaymentHistoryPage() {
     })
       .then((res) => res.json())
       .then((data) => {
-        setPaymentData(data);
-        setDataCount(data.length);
+        setPaymentData(data.reportModels);
+        console.log('data: ', data);
+        setPaginationData(data.paginationData);
       })
       .catch((err) => console.log('err: ', err));
   }, [page, rowsPerPage, searchTerm]);
@@ -134,6 +140,7 @@ export default function PaymentHistoryPage() {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    console.log('newPage:', newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -145,7 +152,7 @@ export default function PaymentHistoryPage() {
     setSearchTerm(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - dataCount) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - paymentData.length) : 0;
 
   const filteredPayment = applySortFilter(paymentData, getComparator(order, orderBy));
 
@@ -202,7 +209,7 @@ export default function PaymentHistoryPage() {
 
               <Scrollbar>
                 <TableContainer sx={{ minWidth: 800 }}>
-                  {dataCount === 0 ? (
+                  {paymentData.length === 0 ? (
                     <Loading />
                   ) : (
                     <Table>
@@ -215,7 +222,7 @@ export default function PaymentHistoryPage() {
                         setPickDate={setPickDate}
                       />
                       <TableBody>
-                        {filteredPayment.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, i) => {
+                        {filteredPayment.map((row, i) => {
                           const {
                             id,
                             name,
@@ -277,11 +284,11 @@ export default function PaymentHistoryPage() {
                             </TableRow>
                           );
                         })}
-                        {emptyRows > 0 && (
+                        {/* {emptyRows > 0 && (
                           <TableRow style={{ height: 53 * emptyRows }}>
                             <TableCell colSpan={6} />
                           </TableRow>
-                        )}
+                        )} */}
                       </TableBody>
 
                       {isNotFound && (
@@ -315,7 +322,7 @@ export default function PaymentHistoryPage() {
               <TablePagination
                 rowsPerPageOptions={[10, 25]}
                 component="div"
-                count={dataCount}
+                count={paginationData?.totalItemCount}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
