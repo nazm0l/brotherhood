@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useLocation, useNavigate, useHistory } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 // @mui
@@ -21,6 +21,7 @@ import { LoadingButton } from '@mui/lab';
 import Loading from '../../../components/loading/Loading';
 import Iconify from '../../../components/iconify';
 import axios from '../../../api/axios';
+import AuthContext from '../../../context/AuthProvider';
 
 // ----------------------------------------------------------------------
 
@@ -30,6 +31,7 @@ export default function LoginForm({ setLoading }) {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { setAuth } = useContext(AuthContext);
   const {
     handleSubmit,
     register,
@@ -62,7 +64,14 @@ export default function LoginForm({ setLoading }) {
 
       const accessToken = response?.data?.accessToken;
       localStorage.setItem('accessToken', accessToken);
-      navigate('/dashboard');
+      setAuth({
+        userId: response?.data?.userId,
+        role: response?.data?.role,
+        user: response?.data?.user,
+        email: response?.data?.email,
+        accessToken,
+      });
+      navigate(from, { replace: true });
       setLoading(false);
     } catch (error) {
       setLoading(false);

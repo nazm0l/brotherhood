@@ -6,6 +6,14 @@
 // export const AuthProvider = ({ children }) => {
 //   const [auth, setAuth] = useState(null);
 
+//   useEffect(() => {
+//     if (auth && auth.accessToken) {
+//       localStorage.setItem('accessToken', auth.accessToken);
+//     } else {
+//       localStorage.removeItem('accessToken');
+//     }
+//   }, []);
+
 //   return <AuthContext.Provider value={{ auth, setAuth }}>{children}</AuthContext.Provider>;
 // };
 
@@ -21,9 +29,7 @@ export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(() => {
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
-      // Parse the stored access token to get the user information
       const decoded = jwt_decode(accessToken);
-      console.log(decoded);
       const authData = {
         userId: decoded?.user_id,
         role: decoded?.['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'],

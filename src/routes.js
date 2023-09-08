@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { Navigate, useRoutes } from 'react-router-dom';
 // layouts
 import DashboardLayout from './layouts/dashboard';
@@ -22,10 +23,15 @@ import RequireAuth from './sections/auth/RequireAuth';
 import RequireAdmin from './sections/auth/RequireAdmin';
 import ProfilePage from './pages/ProfilePage';
 import SingleDonationPage from './pages/SingleDonationPage';
+import AuthContext from './context/AuthProvider';
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
+  const { auth } = useContext(AuthContext);
+
+  const isAdmin = auth?.role === 'Admin';
+
   const routes = useRoutes([
     {
       path: '/dashboard',
@@ -41,11 +47,7 @@ export default function Router() {
         { path: 'communication', element: <CommunicationPage /> },
         {
           path: 'payment-history',
-          element: (
-            <RequireAdmin>
-              <PaymentHistoryPage />
-            </RequireAdmin>
-          ),
+          element: <PaymentHistoryPage />,
         },
         { path: 'donation', element: <BlogPage /> },
         { path: 'profile', element: <ProfilePage /> },
