@@ -18,31 +18,23 @@ const StyledContent = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function ThankYou() {
+export default function Failed() {
   return (
     <>
       <Helmet>
-        <title> Thank You | Brotherhood </title>
+        <title> Payment Failed | Brotherhood </title>
       </Helmet>
 
       <Container>
         <StyledContent sx={{ textAlign: 'center', alignItems: 'center' }}>
-          <Typography variant="h3" paragraph>
-            Thank you for registering!
-          </Typography>
-
-          <Typography sx={{ color: 'text.secondary' }}>
-            Thank you for registering! You will receive an email with further instructions.
-          </Typography>
-
           <Box
             component="img"
-            src="/assets/illustrations/Ok-bb.svg"
-            sx={{ height: 260, mx: 'auto', my: { xs: 5, sm: 10 } }}
+            src="/assets/illustrations/failed-img.png"
+            sx={{ width: 700, height: 260, mx: 'auto', my: { xs: 5, sm: 10 } }}
           />
 
-          <Button to="/login" size="large" variant="contained" component={RouterLink}>
-            Return to Login
+          <Button to="/landing" size="large" variant="contained" component={RouterLink}>
+            Pay Again
           </Button>
         </StyledContent>
       </Container>

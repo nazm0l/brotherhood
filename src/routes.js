@@ -24,6 +24,7 @@ import RequireAdmin from './sections/auth/RequireAdmin';
 import ProfilePage from './pages/ProfilePage';
 import SingleDonationPage from './pages/SingleDonationPage';
 import AuthContext from './context/AuthProvider';
+import Failed from './pages/Failed';
 
 // ----------------------------------------------------------------------
 
@@ -61,6 +62,10 @@ export default function Router() {
     {
       path: 'success',
       element: <Success />,
+    },
+    {
+      path: 'failed',
+      element: <Failed />,
     },
     {
       path: '/',

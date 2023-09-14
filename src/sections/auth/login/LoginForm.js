@@ -18,7 +18,6 @@ import {
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // components
-import Loading from '../../../components/loading/Loading';
 import Iconify from '../../../components/iconify';
 import axios from '../../../api/axios';
 import AuthContext from '../../../context/AuthProvider';

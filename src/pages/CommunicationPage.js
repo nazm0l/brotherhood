@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Controller, useForm } from 'react-hook-form';
-import { Button, Typography, Container, Box, Card, FormControl, Grid, TextField, Stack } from '@mui/material';
+import { Typography, Box, Card, FormControl, Grid, TextField, Stack } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import axios from 'axios';
 
@@ -22,8 +22,6 @@ const StyledContent = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function CommunicationPage() {
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [messageCount, setMessageCount] = useState(0);
 
   const { handleSubmit, control, watch } = useForm({
