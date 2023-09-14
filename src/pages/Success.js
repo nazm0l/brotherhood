@@ -3,6 +3,7 @@ import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Button, Typography, Container, Box } from '@mui/material';
+import { useEffect } from 'react';
 
 // ----------------------------------------------------------------------
 
@@ -19,6 +20,19 @@ const StyledContent = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function ThankYou() {
+  // useEffect(() => {
+  //   console.log('in use effect');
+  //   fetch('https://spread-brotherhood-api-staging.azurewebsites.net/api/PaymentInitiator/payment-callback', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/x-www-form-urlencoded',
+  //     },
+  //     body: 'paymentId=123&status=success',
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => console.log('data:', data));
+  // }, []);
+
   return (
     <>
       <Helmet>
