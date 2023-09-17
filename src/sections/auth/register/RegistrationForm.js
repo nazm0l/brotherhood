@@ -25,21 +25,21 @@ export default function LoginForm() {
 
     try {
       const response = await axios.post(
-        'https://spread-admin-api-staging.azurewebsites.net/api/BrotherhoodUser/CreateBrotherhood',
-        JSON.stringify(data),
+        'https://spread-admin-api-staging.azurewebsites.net/api/UserManagement/AddUser',
+        JSON.stringify({ ...data, userName: 'najmul', roles: ['0DA3649E-E5EC-4C5B-A9C0-EC3B19F86E0C'] }),
         {
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
           },
         }
       );
 
       console.log(response);
+      toast.success('User created successfully');
     } catch (error) {
       toast.error(error.message);
     }
-
-    navigate('/success');
   };
 
   return (

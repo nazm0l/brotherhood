@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Button, Typography, Container, Box, Grid, Divider } from '@mui/material';
+import { Button, Typography, Container, Box, Grid, Divider, Paper } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 // ----------------------------------------------------------------------
@@ -62,31 +62,33 @@ export default function ThankYou() {
       <Container>
         <StyledContent sx={{ textAlign: 'center', alignItems: 'center' }}>
           <Typography variant="h3" paragraph>
-            Thank you for registering!
+            Payment Successful
           </Typography>
 
           <Divider />
           {paymentData && (
-            <Grid container spacing={2} sx={{ marginY: 2 }}>
-              <Grid item xs={6}>
-                <Typography variant="subtitle3">User ID:</Typography>
+            <Paper sx={{ padding: 2, marginY: 2 }}>
+              <Grid container spacing={2} sx={{ marginY: 2 }}>
+                <Grid item xs={6}>
+                  <Typography variant="subtitle3">Transaction ID:</Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="body1">{paymentData?.TrxId || 'N/A'}</Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="subtitle3">Payment Amount:</Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="body1">{paymentData?.PaymentAmount || 0}</Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="subtitle3">Name:</Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="body1">{paymentData?.Name || 'N/A'}</Typography>
+                </Grid>
               </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body1">{paymentData?.UserId || 'N/A'}</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="subtitle3">Payment Amount:</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body1">{paymentData?.PaymentAmount || 0}</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="subtitle3">Name:</Typography>
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="body1">{paymentData?.Name || 'N/A'}</Typography>
-              </Grid>
-            </Grid>
+            </Paper>
           )}
 
           <Typography sx={{ color: 'text.secondary' }}>
