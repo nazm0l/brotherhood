@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 // @mui
 import {
   Card,
@@ -74,6 +75,8 @@ export default function UserPage() {
 
   const [userList, setUserList] = useState([]);
 
+  const [deleteStatus, setDeleteStatus] = useState(false);
+
   const [loading, setLoading] = useState(false);
 
   const [page, setPage] = useState(0);
@@ -88,10 +91,6 @@ export default function UserPage() {
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  useEffect(() => {
-    getUserList();
-  }, []);
-
   const getUserList = async () => {
     setLoading(true);
     await fetch('https://spread-admin-api-staging.azurewebsites.net/api/UserManagement/UserList/user-list', {
@@ -104,6 +103,33 @@ export default function UserPage() {
       .then((data) => setUserList(data));
     setLoading(false);
   };
+
+  const handleDeleteUser = async (id) => {
+    const result = window.confirm('Are you sure you want to delete this user?');
+
+    if (result) {
+      try {
+        const res = await fetch(
+          `https://spread-admin-api-staging.azurewebsites.net/api/UserManagement/DeleteUser/${id}`,
+          {
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            },
+          }
+        );
+
+        toast.success('User deleted successfully');
+        setDeleteStatus(true);
+      } catch (error) {
+        toast.error('Something went wrong');
+      }
+    }
+  };
+
+  useEffect(() => {
+    getUserList();
+  }, [deleteStatus]);
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
@@ -192,7 +218,7 @@ export default function UserPage() {
                   />
                   <TableBody>
                     {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, i) => {
-                      const { name, bloodGroup, professionalStatus } = row;
+                      const { spreadUserId, name, bloodGroup, professionalStatus } = row;
                       const selectedUser = selected.indexOf(name) !== -1;
 
                       return (
@@ -221,8 +247,8 @@ export default function UserPage() {
                           </TableCell>
 
                           <TableCell align="right">
-                            <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                              <Iconify icon={'eva:more-vertical-fill'} />
+                            <IconButton size="large" color="#ff0000" onClick={() => handleDeleteUser(spreadUserId)}>
+                              <Iconify icon={'eva:trash-2-outline'} sx={{ color: 'red' }} />
                             </IconButton>
                           </TableCell>
                         </TableRow>

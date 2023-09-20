@@ -261,7 +261,7 @@ export default function PaymentHistoryPage() {
                               <TableCell align="center">৳ {storeAmount}</TableCell>
 
                               <TableCell align="left">
-                                {vendor === 'bKash' ? (
+                                {vendor === 'bKash-bKash' ? (
                                   <img src={bKash} alt="bkash" width={40} height={32} />
                                 ) : vendor === 'Nagad' ? (
                                   <img src={Nagad} alt="nagad" height="30" width="50" />
