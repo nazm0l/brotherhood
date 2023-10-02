@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 // @mui
@@ -18,15 +19,21 @@ export default function LoginForm() {
     register,
     formState: { errors },
   } = useForm();
+  const [imagePath, setImagePath] = useState('');
 
   const onSubmit = async (data) => {
     // Handle form submission here
-    console.log('Form submitted:', data);
+    console.log('Form submitted:', { ...data, imagePath });
 
     try {
       const response = await axios.post(
         'https://spread-admin-api-staging.azurewebsites.net/api/UserManagement/AddUser',
-        JSON.stringify({ ...data, userName: 'najmul', roles: ['0DA3649E-E5EC-4C5B-A9C0-EC3B19F86E0C'] }),
+        JSON.stringify({
+          ...data,
+          imagePath,
+          userName: 'najmul01',
+          roles: ['0DA3649E-E5EC-4C5B-A9C0-EC3B19F86E0C'],
+        }),
         {
           headers: {
             'Content-Type': 'application/json',
@@ -45,11 +52,49 @@ export default function LoginForm() {
   return (
     <>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-        {/* personal information */}
+        {/* Upload Image */}
+
         <Grid container spacing={2} component="fieldset" sx={{ border: 1, borderColor: '#dddddd' }}>
+          <legend>
+            <Typography variant="h6">Upload Image</Typography>
+          </legend>
+          <Grid item lg={12} xs={12} sm={12}>
+            <Stack spacing={2}>
+              <Box sx={{ display: 'grid', placeItems: 'center' }}>
+                {imagePath ? (
+                  <img
+                    src={URL.createObjectURL(imagePath)}
+                    alt="profile"
+                    width={120}
+                    height={120}
+                    style={{ borderRadius: '50%' }}
+                  />
+                ) : (
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/147/147144.png"
+                    alt="icon"
+                    width={120}
+                    height={120}
+                    style={{ borderRadius: '50%' }}
+                  />
+                )}
+                <TextField
+                  sx={{ marginY: '20px' }}
+                  name="image"
+                  type="file"
+                  onChange={(e) => setImagePath(e.target.files[0])}
+                />
+              </Box>
+            </Stack>
+          </Grid>
+        </Grid>
+
+        {/* personal information */}
+        <Grid container spacing={2} component="fieldset" sx={{ marginTop: '20px', border: 1, borderColor: '#dddddd' }}>
           <legend>
             <Typography variant="h6">Personal Information</Typography>
           </legend>
+
           <Grid item lg={6} xs={12} sm={12}>
             <Stack spacing={2}>
               <TextField
