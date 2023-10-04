@@ -23,21 +23,24 @@ export default function LoginForm() {
 
   const onSubmit = async (data) => {
     // Handle form submission here
-    console.log('Form submitted:', { ...data, imagePath });
+    console.log('Form submitted:', {
+      ...data,
+      imagePath,
+      userName: 'najmul1101',
+      roles: ['0DA3649E-E5EC-4C5B-A9C0-EC3B19F86E0C'],
+    });
 
     try {
       const response = await axios.post(
         'https://spread-admin-api-staging.azurewebsites.net/api/UserManagement/AddUser',
-        JSON.stringify({
+        {
           ...data,
-          imagePath,
-          userName: 'najmul01',
           roles: ['0DA3649E-E5EC-4C5B-A9C0-EC3B19F86E0C'],
-        }),
+          imagePath,
+        },
         {
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            'Content-Type': 'multipart/form-data',
           },
         }
       );
@@ -80,9 +83,17 @@ export default function LoginForm() {
                 )}
                 <TextField
                   sx={{ marginY: '20px' }}
-                  name="image"
+                  name="imagePath"
                   type="file"
                   onChange={(e) => setImagePath(e.target.files[0])}
+                />
+                <TextField
+                  name="userName"
+                  label="User Name"
+                  {...register('userName', { required: 'User Name is required' })}
+                  error={Boolean(errors.userName)}
+                  helperText={errors.userName?.message}
+                  sx={{ width: '50%' }}
                 />
               </Box>
             </Stack>
