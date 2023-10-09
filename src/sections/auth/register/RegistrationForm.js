@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 // @mui
 import { Stack, TextField, Box, Grid, Typography, InputLabel, Select, MenuItem, FormControl } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 
 // ----------------------------------------------------------------------
 
-export default function LoginForm() {
+export default function RegistrationForm({ BrTrxId }) {
   const navigate = useNavigate();
 
   const {
@@ -26,7 +26,6 @@ export default function LoginForm() {
     console.log('Form submitted:', {
       ...data,
       imagePath,
-      userName: 'najmul1101',
       roles: ['0DA3649E-E5EC-4C5B-A9C0-EC3B19F86E0C'],
     });
 
@@ -35,6 +34,8 @@ export default function LoginForm() {
         'https://spread-admin-api-staging.azurewebsites.net/api/UserManagement/AddUser',
         {
           ...data,
+          password: '123456',
+          Trxid: BrTrxId,
           roles: ['0DA3649E-E5EC-4C5B-A9C0-EC3B19F86E0C'],
           imagePath,
         },
@@ -55,38 +56,15 @@ export default function LoginForm() {
   return (
     <>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-        {/* Upload Image */}
+        {/* user name */}
 
         <Grid container spacing={2} component="fieldset" sx={{ border: 1, borderColor: '#dddddd' }}>
-          <legend>
-            <Typography variant="h6">Upload Image</Typography>
-          </legend>
+          {/* <legend>
+            <Typography variant="h6">User Name</Typography>
+          </legend> */}
           <Grid item lg={12} xs={12} sm={12}>
             <Stack spacing={2}>
               <Box sx={{ display: 'grid', placeItems: 'center' }}>
-                {imagePath ? (
-                  <img
-                    src={URL.createObjectURL(imagePath)}
-                    alt="profile"
-                    width={120}
-                    height={120}
-                    style={{ borderRadius: '50%' }}
-                  />
-                ) : (
-                  <img
-                    src="https://cdn-icons-png.flaticon.com/512/147/147144.png"
-                    alt="icon"
-                    width={120}
-                    height={120}
-                    style={{ borderRadius: '50%' }}
-                  />
-                )}
-                <TextField
-                  sx={{ marginY: '20px' }}
-                  name="imagePath"
-                  type="file"
-                  onChange={(e) => setImagePath(e.target.files[0])}
-                />
                 <TextField
                   name="userName"
                   label="User Name"
@@ -335,6 +313,42 @@ export default function LoginForm() {
                 error={Boolean(errors.university)}
                 helperText={errors.university?.message}
               />
+            </Stack>
+          </Grid>
+        </Grid>
+        {/* Upload Image */}
+
+        <Grid container spacing={2} component="fieldset" sx={{ marginTop: '20px', border: 1, borderColor: '#dddddd' }}>
+          <legend>
+            <Typography variant="h6">Upload Image</Typography>
+          </legend>
+          <Grid item lg={12} xs={12} sm={12}>
+            <Stack spacing={2}>
+              <Box sx={{ display: 'grid', placeItems: 'center' }}>
+                {imagePath ? (
+                  <img
+                    src={URL.createObjectURL(imagePath)}
+                    alt="profile"
+                    width={120}
+                    height={120}
+                    style={{ borderRadius: '50%' }}
+                  />
+                ) : (
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/147/147144.png"
+                    alt="icon"
+                    width={120}
+                    height={120}
+                    style={{ borderRadius: '50%' }}
+                  />
+                )}
+                <TextField
+                  sx={{ marginY: '20px' }}
+                  name="imagePath"
+                  type="file"
+                  onChange={(e) => setImagePath(e.target.files[0])}
+                />
+              </Box>
             </Stack>
           </Grid>
         </Grid>

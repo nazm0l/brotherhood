@@ -22,37 +22,6 @@ const StyledContent = styled('div')(({ theme }) => ({
 export default function ThankYou() {
   const [paymentData, setPaymentData] = useState(null);
 
-  // get data from query params
-  const { search } = useLocation();
-  console.log(search);
-  useEffect(() => {
-    // The URL-encoded string
-    const encodedData = search;
-
-    // Decode the URL-encoded string
-    const decodedData = decodeURIComponent(encodedData.split('?data=')[1]);
-
-    try {
-      // Parse the JSON data
-      const jsonData = JSON.parse(decodedData);
-
-      // Access the paymentResponse object
-      const { paymentResponse } = jsonData;
-
-      // Now you can access individual properties from paymentResponse
-      console.log(paymentResponse.UserId);
-      console.log(paymentResponse.PaymentAmount);
-      console.log(paymentResponse.Name);
-      console.log(paymentResponse.TrxId);
-      // ... and so on
-
-      // Set the paymentData state with the extracted data
-      setPaymentData(paymentResponse);
-    } catch (error) {
-      console.error('Error parsing JSON:', error);
-    }
-  }, []);
-
   return (
     <>
       <Helmet>

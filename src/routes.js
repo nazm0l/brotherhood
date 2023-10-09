@@ -17,6 +17,7 @@ import SupportPage from './pages/SupportPage';
 import PayPremiumPage from './pages/PayPremiumPage';
 import DonationPage from './pages/DonationPage';
 import Success from './pages/Success';
+import CancelledPage from './pages/CancelledPage';
 import PaymentPage from './pages/PaymentPage';
 import PaymentHistoryPage from './pages/PaymentHistoryPage';
 import RequireAuth from './sections/auth/RequireAuth';
@@ -66,6 +67,10 @@ export default function Router() {
     {
       path: 'failed',
       element: <Failed />,
+    },
+    {
+      path: 'cancelled',
+      element: <CancelledPage />,
     },
     {
       path: '/',
