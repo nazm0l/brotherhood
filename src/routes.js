@@ -26,6 +26,7 @@ import ProfilePage from './pages/ProfilePage';
 import SingleDonationPage from './pages/SingleDonationPage';
 import AuthContext from './context/AuthProvider';
 import Failed from './pages/Failed';
+import UnfinishedRegistration from './pages/UnfinishedRegistration';
 
 // ----------------------------------------------------------------------
 
@@ -108,6 +109,10 @@ export default function Router() {
         {
           path: 'create-brotherhood-user',
           element: <RegistrationPage />,
+        },
+        {
+          path: 'unfinished-registration',
+          element: <UnfinishedRegistration />,
         },
       ],
     },

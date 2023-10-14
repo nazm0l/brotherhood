@@ -24,7 +24,7 @@ const navItems = [
   { name: 'Pay Premium', link: '/pay-premium' },
   { name: 'Donation', link: '/donation' },
   { name: 'Register', link: '/landing' },
-  { name: 'Unfinished Registration', link: '#' },
+  { name: 'Unfinished Registration', link: '/unfinished-registration' },
   { name: 'Login', link: '/login' },
 ];
 

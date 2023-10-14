@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // @mui
 import { Stack, TextField, Box, Grid, Typography, InputLabel, Select, MenuItem, FormControl } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -34,7 +34,6 @@ export default function RegistrationForm({ BrTrxId }) {
         'https://spread-admin-api-staging.azurewebsites.net/api/UserManagement/AddUser',
         {
           ...data,
-          password: '123456',
           Trxid: BrTrxId,
           roles: ['0DA3649E-E5EC-4C5B-A9C0-EC3B19F86E0C'],
           imagePath,
@@ -48,6 +47,9 @@ export default function RegistrationForm({ BrTrxId }) {
 
       console.log(response);
       toast.success('User created successfully');
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
     } catch (error) {
       toast.error(error.message);
     }
@@ -56,30 +58,8 @@ export default function RegistrationForm({ BrTrxId }) {
   return (
     <>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-        {/* user name */}
-
-        <Grid container spacing={2} component="fieldset" sx={{ border: 1, borderColor: '#dddddd' }}>
-          {/* <legend>
-            <Typography variant="h6">User Name</Typography>
-          </legend> */}
-          <Grid item lg={12} xs={12} sm={12}>
-            <Stack spacing={2}>
-              <Box sx={{ display: 'grid', placeItems: 'center' }}>
-                <TextField
-                  name="userName"
-                  label="User Name"
-                  {...register('userName', { required: 'User Name is required' })}
-                  error={Boolean(errors.userName)}
-                  helperText={errors.userName?.message}
-                  sx={{ width: '50%' }}
-                />
-              </Box>
-            </Stack>
-          </Grid>
-        </Grid>
-
         {/* personal information */}
-        <Grid container spacing={2} component="fieldset" sx={{ marginTop: '20px', border: 1, borderColor: '#dddddd' }}>
+        <Grid container spacing={2} component="fieldset" sx={{ border: 1, borderColor: '#dddddd' }}>
           <legend>
             <Typography variant="h6">Personal Information</Typography>
           </legend>
@@ -88,7 +68,7 @@ export default function RegistrationForm({ BrTrxId }) {
             <Stack spacing={2}>
               <TextField
                 name="name"
-                label="Name"
+                label="Full Name"
                 {...register('name', { required: 'Name is required' })}
                 error={Boolean(errors.name)}
                 helperText={errors.name?.message}
