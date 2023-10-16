@@ -11,19 +11,22 @@ const usePaymentSummary = () => {
   const handlePaymentSummary = async () => {
     setLoading(true);
 
-    await fetch('https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/payment-summary', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-      body: JSON.stringify({}),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setPaymentSummary(data);
+    try {
+      await fetch('https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/payment-summary', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        body: JSON.stringify({}),
       })
-      .catch((err) => console.log('err: ', err));
+        .then((res) => res.json())
+        .then((data) => {
+          setPaymentSummary(data);
+        });
+    } catch (err) {
+      console.log('err: ', err);
+    }
 
     setLoading(false);
   };

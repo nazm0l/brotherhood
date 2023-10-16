@@ -11,6 +11,7 @@ import AppDonationTable from '../components/app-donation/AppDonationTable';
 import { AppWidgetSummary } from '../sections/@dashboard/app';
 import AppWelcome from '../components/app-welcome/AppWelcome';
 import useAuth from '../hooks/useAuth';
+import useAdmin from '../hooks/useAdmin';
 
 // ----------------------------------------------------------------------
 
@@ -18,6 +19,7 @@ export default function DashboardAppPage() {
   const { auth } = useAuth();
   const [userList, setUserList] = useState([]);
   const [paymentSummary, loading] = usePaymentSummary();
+  const admin = useAdmin();
 
   useEffect(() => {
     getDonationList();
@@ -48,43 +50,47 @@ export default function DashboardAppPage() {
         <Container maxWidth="xl">
           <Grid container spacing={3}>
             <Grid item xs={12} md={8}>
-              <AppWelcome displayName={auth.user} />
+              <AppWelcome displayName={auth?.user} />
             </Grid>
 
             <Grid item xs={12} md={4}>
               <AppSlider />
             </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
-              <AppWidgetSummary title="Total Active Users" total={userList.length} icon={'clarity:users-solid'} />
-            </Grid>
+            {admin && (
+              <>
+                <Grid item xs={12} sm={6} md={3}>
+                  <AppWidgetSummary title="Total Active Users" total={userList?.length} icon={'clarity:users-solid'} />
+                </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
-              <AppWidgetSummary
-                title="Total Store Amount"
-                total={paymentSummary.totalStoreAmout}
-                color="info"
-                icon={'nimbus:money'}
-              />
-            </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                  <AppWidgetSummary
+                    title="Total Store Amount"
+                    total={paymentSummary?.totalStoreAmout}
+                    color="info"
+                    icon={'nimbus:money'}
+                  />
+                </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
-              <AppWidgetSummary
-                title="Total Donation Received"
-                total={paymentSummary.byDonation}
-                color="warning"
-                icon={'nimbus:money'}
-              />
-            </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                  <AppWidgetSummary
+                    title="Total Donation Received"
+                    total={paymentSummary?.byDonation}
+                    color="warning"
+                    icon={'nimbus:money'}
+                  />
+                </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
-              <AppWidgetSummary
-                title="Total Payment"
-                total={paymentSummary.receivedAmout}
-                color="error"
-                icon={'vaadin:money-withdraw'}
-              />
-            </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                  <AppWidgetSummary
+                    title="Total Payment"
+                    total={paymentSummary?.receivedAmout}
+                    color="error"
+                    icon={'vaadin:money-withdraw'}
+                  />
+                </Grid>
+              </>
+            )}
 
             <Grid item xs={12} md={12} lg={12}>
               <Typography variant="h5" sx={{ marginY: '15px' }}>
