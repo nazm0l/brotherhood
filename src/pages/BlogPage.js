@@ -21,6 +21,7 @@ import {
 } from '@mui/material';
 import { toast } from 'react-toastify';
 // components
+import useAdmin from '../hooks/useAdmin';
 import Loading from '../components/loading/Loading';
 import Iconify from '../components/iconify';
 import { BlogPostCard } from '../sections/@dashboard/blog';
@@ -33,6 +34,7 @@ export default function BlogPage() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [donations, setDonations] = useState([]);
+  const admin = useAdmin();
 
   const {
     handleSubmit,
@@ -121,11 +123,13 @@ export default function BlogPage() {
         </Container>
       ) : (
         <Container>
-          <Stack direction="row" alignItems="center" justifyContent="end" mb={5}>
-            <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleClickOpen}>
-              New Donation Campaign
-            </Button>
-          </Stack>
+          {admin && (
+            <Stack direction="row" alignItems="center" justifyContent="end" mb={5}>
+              <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleClickOpen}>
+                New Donation Campaign
+              </Button>
+            </Stack>
+          )}
 
           <Typography variant="h6" sx={{ marginBottom: '20px' }}>
             On Going Campaigns

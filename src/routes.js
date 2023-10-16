@@ -24,16 +24,14 @@ import RequireAuth from './sections/auth/RequireAuth';
 import RequireAdmin from './sections/auth/RequireAdmin';
 import ProfilePage from './pages/ProfilePage';
 import SingleDonationPage from './pages/SingleDonationPage';
-import AuthContext from './context/AuthProvider';
 import Failed from './pages/Failed';
 import UnfinishedRegistration from './pages/UnfinishedRegistration';
+import useAdmin from './hooks/useAdmin';
 
 // ----------------------------------------------------------------------
 
 export default function Router() {
-  const { auth } = useContext(AuthContext);
-
-  const isAdmin = auth?.role === 'Admin';
+  const isAdmin = useAdmin();
 
   const routes = useRoutes([
     {
@@ -46,11 +44,18 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
-        { path: 'user', element: <UserPage /> },
+        {
+          path: 'user',
+          element: (
+            <RequireAdmin>
+              <UserPage />
+            </RequireAdmin>
+          ),
+        },
         { path: 'communication', element: <CommunicationPage /> },
         {
           path: 'payment-history',
-          element: <PaymentHistoryPage />,
+          element: isAdmin ? <PaymentHistoryPage /> : <Success />,
         },
         { path: 'donation', element: <BlogPage /> },
         { path: 'profile', element: <ProfilePage /> },

@@ -29,7 +29,7 @@ const StyledContent = styled('div')(({ theme }) => ({
 
 export default function LoginPage() {
   const { search } = useLocation();
-  const [verified, setVerified] = useState(true);
+  const [verified, setVerified] = useState(false);
   const [paymentResponse, setPaymentResponse] = useState({});
 
   // verify transaction id
@@ -42,12 +42,12 @@ export default function LoginPage() {
     // Decode the URL-encoded string
     const decodedData = decodeURIComponent(encodedData.split('?data=')[1]);
 
+    const jsonData = JSON.parse(decodedData);
+    const { paymentResponse } = jsonData;
+    setPaymentResponse(paymentResponse);
+
     if (paymentResponse.BrTrxId) {
       try {
-        const jsonData = JSON.parse(decodedData);
-        const { paymentResponse } = jsonData;
-        setPaymentResponse(paymentResponse);
-
         // Set the paymentData state with the extracted data\
 
         fetch('https://spread-admin-api-staging.azurewebsites.net/api/PaymentReport/payment-validity', {
@@ -80,8 +80,14 @@ export default function LoginPage() {
         <StyledRoot>
           <Container maxWidth="md" sx={{ marginTop: { md: '30px' } }}>
             <StyledContent>
-              <Typography variant="h5" sx={{ mb: 5, padding: '10px', bgcolor: '#e4fde1', color: '#0a5c36' }}>
+              <Typography
+                variant="h5"
+                sx={{ mb: 5, padding: '10px', bgcolor: '#e4fde1', color: '#0a5c36', textAlign: 'center' }}
+              >
                 Your transaction has been verified. Transaction Id - {paymentResponse.BrTrxId}
+                <Typography variant="body2" sx={{ bgcolor: '#e4fde1', color: '#AA4A44', fontWeight: 'bold' }}>
+                  Note: Do not click back or close this page. Otherwise you registration process can be cancelled.
+                </Typography>
               </Typography>
               <RegistrationForm BrTrxId />
             </StyledContent>

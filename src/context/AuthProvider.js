@@ -1,23 +1,4 @@
 /* eslint-disable camelcase */
-// import { createContext, useEffect, useState } from 'react';
-
-// const AuthContext = createContext({});
-
-// export const AuthProvider = ({ children }) => {
-//   const [auth, setAuth] = useState(null);
-
-//   useEffect(() => {
-//     if (auth && auth.accessToken) {
-//       localStorage.setItem('accessToken', auth.accessToken);
-//     } else {
-//       localStorage.removeItem('accessToken');
-//     }
-//   }, []);
-
-//   return <AuthContext.Provider value={{ auth, setAuth }}>{children}</AuthContext.Provider>;
-// };
-
-// export default AuthContext;
 
 import { createContext, useEffect, useState } from 'react';
 

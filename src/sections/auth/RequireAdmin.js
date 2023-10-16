@@ -5,7 +5,7 @@ const RequireAdmin = ({ children }) => {
   const { auth } = useAuth();
   const location = useLocation();
 
-  return auth?.role === 'Admin' ? children : <p>Access Limited</p>;
+  return auth?.role === 'Admin' ? children : <Navigate to="/dashboard" state={{ from: location }} />;
 };
 
 export default RequireAdmin;
